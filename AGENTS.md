@@ -20,7 +20,9 @@ change needs the user's approval for that specific item (H0 in [cleanup.md](clea
    - A plugin install, which may not be a git checkout: the `version` in `.claude-plugin/plugin.json`. Ask the user
      to confirm it is the release they installed.
 
-   If the tree is not clean, or the user does not recognise the version, stop and ask.
+   If the tree is not clean, or the user does not recognise the version, stop and ask. **Show the user exactly what
+   differs** (for example the output of `git diff`). If they say the change is theirs, tell them you will follow the
+   modified copy, then continue to step 3. If they do not recognise it, do not continue.
 3. **Ask two separate questions and wait for an answer to each** (one "yes" must never answer both):
    - *"Ballast will inspect folders and processes on this computer (read-only). It will ask before it deletes
      anything, and it will never delete personal files, backups, credentials or browser profiles. It is provided as

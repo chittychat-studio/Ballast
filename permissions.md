@@ -42,7 +42,7 @@ A general "yes to everything" is not enough for Yellow items or for processes. C
 | Your permission system denied a command | Say exactly what was denied. Options: (a) the user allows it for this task, (b) the user runs it, (c) skip. **Never find another route to the same effect** |
 | Partial delete, or access denied on a few files | Report what remains and its size. Offer to retry the same action once the cause is gone, or leave it. Do not switch to a different method without telling the user and asking |
 | Evidence is incomplete | Move the item to Grey, say what is missing, ask the user to decide or to provide it |
-| The user asks for a Red item | Decline to delete it, explain in one sentence, and tell them how to do it by hand if they are sure |
+| The user asks for a Red item | Decline to delete it, explain in one sentence, and tell them how to do it by hand if they are sure (for a personal folder: File Explorer or their file manager; for an installed program: Settings, Apps; for system folders such as the Windows Installer cache: do not delete by hand at all). Do not ask "are you sure?": the answer cannot change the outcome (H3 wins over H0 here) |
 | You have no shell tool | Say so. Give the user the read-only commands to run and paste back. Do not guess results |
 
 Always give a recommendation, for example "I recommend rebooting because it is the least risky way to release the

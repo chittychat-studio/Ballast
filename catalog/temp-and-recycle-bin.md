@@ -92,6 +92,8 @@ $bin = (New-Object -ComObject Shell.Application).NameSpace(0xA)
 $bin.Items().Count
 ```
 
+For each item's name, original folder, size and date deleted, read the shell view's detail columns
+(`$bin.GetDetailsOf($item, <column>)`; find the column numbers by listing `0..20 | % { $bin.GetDetailsOf($null, $_) }`; on the author's Windows 11 laptop that gave Name 0, Original Location 1, Date Deleted 2, Size 3, but the numbers can differ, so list them first. Reading an item's values was not tested because the Bin was empty).
 Read names, sizes and dates only (H8). Report: how many items, the total size, the oldest and newest deletion dates, and
 the 20 largest items (name and original folder). If you moved items to the Bin during this session, say how many of the
 Bin's items those are, from your own log, so the user sees how much of it Ballast put there.
@@ -133,5 +135,6 @@ drive's profile.
   about 54 seconds. 1,452 were `pip-*` folders (1.47 GB), 1 was the Claude Code scratch folder (0.23 GB), 28 were in
   use, unreadable or held a link (under 0.01 GB together), and the other 6 were small. With age shown but not used
   as a gate, 1,458 entries were Yellow and 29 were Grey.
-- **Recycle Bin, read-only:** the shell view read it and reported 0 items (it had been emptied earlier). Nothing was
+- **Recycle Bin, read-only (the author's laptop; always measure your own):** the shell view read it and reported 0
+  items (it had been emptied earlier). Nothing was
   deleted by these rows, and `Clear-RecycleBin` was **not** run, so BIN-001 emptying is untested.

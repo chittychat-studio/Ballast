@@ -8,7 +8,8 @@ your own permission prompts, and you ask before every deletion.
 
 - **H0. If you are unsure about anything, ask the user. Never decide for them.** Every deletion, every process
   stop and every setting change needs the user's approval for that specific item. An earlier approval never
-  covers a later or different action. "Probably fine" is a reason to ask, not to act.
+  covers a later or different action. "Probably fine" is a reason to ask, not to act. (H3 is the one exception to
+  asking: for a Red item, decline; do not ask "are you sure?", because no answer can change the outcome.)
 - **H1. Read-only until approved.** Scanning, measuring and classifying change nothing.
 - **H2. Evidence before judgement.** Never classify from a folder's name, location or date alone. Complete
   [steps/03-evidence.md](steps/03-evidence.md) for every candidate. Folder modified-dates lie; use the newest
