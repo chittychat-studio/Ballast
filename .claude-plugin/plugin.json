@@ -9,5 +9,5 @@
   "homepage": "https://github.com/chittychat-studio/Ballast",
   "repository": "https://github.com/chittychat-studio/Ballast",
   "license": "Apache-2.0",
-  "keywords": ["cleanup", "disk-space", "ai-tools", "local-models"]
+  "keywords": ["cleanup", "disk-space", "ai-tools", "local-models", "gpu", "vram"]
 }

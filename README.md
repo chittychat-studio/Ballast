@@ -4,16 +4,19 @@
 
 Ballast is a set of plain-text instructions that your AI coding agent follows to find and clear the disk and memory
 leftovers that AI tools leave behind: Claude Code and Claude desktop (chat and Cowork), Codex, Gemini, Antigravity, local
-models and the graphics memory they hold, MCP servers, headless browsers, and the scratch projects agents create.
+models (their files on disk, and the **GPU memory (VRAM)** they keep loaded), MCP servers, headless browsers, and the
+scratch projects agents create.
 
 There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
 page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, and the
-two small JSON files that let Claude Code install it as a plugin. Your own agent reads the instructions, runs read-only checks through its own tools, and **asks you before
-every deletion**.
+two small JSON files that let Claude Code install it as a plugin. Your own agent reads the instructions, runs
+read-only checks through its own tools, and **asks you before every deletion**.
 
 ## What it does
 
-1. **Scans, read-only.** Measures known AI leftovers and finds large unknown folders. Nothing is changed.
+1. **Scans, read-only.** Measures known AI leftovers and finds large unknown folders. For local AI it also reads
+   **GPU memory (dedicated VRAM, and the shared memory integrated graphics borrow from RAM)** and which process holds
+   it ([catalog/gpu-memory.md](catalog/gpu-memory.md)). Nothing is changed.
 2. **Runs eight checks before judging** (last used, in use now, is it a program, anything depends on it, unsaved
    work, cloud or shared, protected name, how to get it back). A folder is never classified from its name or date.
 3. **Sorts everything into tiers** (below) and shows you a dashboard.
@@ -89,8 +92,7 @@ instructions if you tell it to read `AGENTS.md`.
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
 and gives you a link to a local copy. Open the template directly to see it with example data. It has a folder view
-with Keep / Clear / Check first choices, a free-space bar, a graphics-memory line (shown only when your scan measured
-it), charts, a breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
+with Keep / Clear / Check first choices, a free-space bar, a GPU memory line (shown only when your scan measured it), charts, a breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
 
 ## What is in this repo
 
@@ -114,7 +116,9 @@ it), charts, a breakdown table, light and dark themes, and a "Scan again" button
 Windows 11 is the first supported system. The Claude Code, Claude desktop (Cowork) and orphan-process catalogs come
 from observations on one real machine; rows marked `review` have not yet been confirmed across versions. macOS and
 Linux have starter rows in [catalog/macos.md](catalog/macos.md) and [catalog/linux.md](catalog/linux.md). None of
-those has been observed on a real machine yet, so they are all `planned` and Grey. Contributions are welcome: see
+those has been observed on a real machine yet, so they are all `planned` and Grey. GPU memory reading was tested only
+on integrated Intel graphics; the rows for a discrete card (for example NVIDIA with `nvidia-smi`) and for local model
+runners holding VRAM are `planned` until someone with that hardware confirms them. Contributions are welcome: see
 [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Disclaimer
