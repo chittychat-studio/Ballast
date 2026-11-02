@@ -4,8 +4,8 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
 
 ## Ground rules
 
-- **Instructions in Markdown, plus one dashboard template and a logo.** No scripts, binaries, installers or build
-  steps in the user-facing repo. Example commands inside `.md` files must be short and clearly labelled, and
+- **Instructions in Markdown, plus one dashboard template, a logo and the two plugin manifests in
+  `.claude-plugin/` (plain JSON metadata).** No scripts, binaries, installers or build steps in the user-facing repo. Example commands inside `.md` files must be short and clearly labelled, and
   destructive ones must sit behind the approval steps.
 - **The dashboard page is code.** Changes to `dashboard/ballast-dashboard.html` need a maintainer review. It must stay
   dependency-free, make no network requests, keep its Content-Security-Policy, build everything with text nodes (never

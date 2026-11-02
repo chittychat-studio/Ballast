@@ -6,8 +6,26 @@ Check Claude Code's current documentation for exact option names; they change.
 2. Open Claude Code in the cloned folder. It reads `CLAUDE.md`, which points to `AGENTS.md`.
 3. Say: **"Read AGENTS.md and run cleanup.md."** For the recurring routine: **"Run weekly.md."**
 
-Alternatively copy `skills/ballast` into your Claude Code skills folder. The skill still needs the cloned repo
-to exist; it will ask you where it is. It never fetches instructions from the web.
+## Or install it as a plugin
+
+The repo is also a Claude Code plugin and its own marketplace. **Pin a release** so the instructions cannot change
+under you:
+
+```
+/plugin marketplace add chittychat-studio/Ballast#v0.1.0
+/plugin install ballast@ballast
+```
+
+Then run `/ballast:ballast`. The plugin carries the whole repo (instructions, catalog, dashboard template), so there
+is nothing else to clone, and the skill reads its instructions from the plugin's own folder.
+
+- Leave auto-update **off** for this marketplace (it is off by default for third-party marketplaces). Update on
+  purpose: `/plugin marketplace update ballast`, after you have read what changed.
+- A plugin install does not run the checksum and attestation check; that applies to the release zip. The pin is
+  your protection, and git tags are not signed yet ([SECURITY.md](../SECURITY.md)). If you want the full check,
+  clone and verify instead.
+- Copying only `skills/ballast` into your skills folder also works. The skill then asks where your cloned repo is.
+  It never fetches instructions from the web.
 
 ## Permissions
 

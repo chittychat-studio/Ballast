@@ -1,0 +1,13 @@
+{
+  "name": "ballast",
+  "description": "Instructions your AI agent follows to find and clear disk and memory leftovers from AI tools. Read-only scan first; asks before every deletion.",
+  "version": "0.1.0",
+  "author": {
+    "name": "chittychat-studio",
+    "url": "https://github.com/chittychat-studio"
+  },
+  "homepage": "https://github.com/chittychat-studio/Ballast",
+  "repository": "https://github.com/chittychat-studio/Ballast",
+  "license": "Apache-2.0",
+  "keywords": ["cleanup", "disk-space", "ai-tools", "local-models"]
+}

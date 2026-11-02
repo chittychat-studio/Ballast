@@ -1,0 +1,16 @@
+{
+  "name": "ballast",
+  "owner": {
+    "name": "chittychat-studio",
+    "url": "https://github.com/chittychat-studio"
+  },
+  "description": "Ballast: ask-first cleanup of the leftovers AI tools leave behind.",
+  "plugins": [
+    {
+      "name": "ballast",
+      "source": "./",
+      "description": "The Ballast instructions, catalog and dashboard template, with a skill that starts a read-only scan and asks before every deletion.",
+      "license": "Apache-2.0"
+    }
+  ]
+}

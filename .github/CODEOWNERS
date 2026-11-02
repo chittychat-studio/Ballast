@@ -11,6 +11,7 @@
 /skills/            @chittychat-studio
 /dev/               @chittychat-studio
 /.github/           @chittychat-studio
+/.claude-plugin/    @chittychat-studio
 /SAFETY.md          @chittychat-studio
 /SECURITY.md        @chittychat-studio
 /PRIVACY.md         @chittychat-studio

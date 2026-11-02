@@ -6,9 +6,9 @@ Ballast is a set of plain-text instructions that your AI coding agent follows to
 leftovers that AI tools leave behind: Claude Code and Claude desktop (chat and Cowork), Codex, Gemini, Antigravity, local
 models and the graphics memory they hold, MCP servers, headless browsers, and the scratch projects agents create.
 
-There is **nothing to install and no program to run**. The instructions are Markdown. The repo also holds one
-static dashboard page (HTML that runs only in your browser, makes no network requests, and cannot delete anything)
-and a logo. Your own agent reads the instructions, runs read-only checks through its own tools, and **asks you before
+There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
+page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, and the
+two small JSON files that let Claude Code install it as a plugin. Your own agent reads the instructions, runs read-only checks through its own tools, and **asks you before
 every deletion**.
 
 ## What it does
@@ -47,17 +47,32 @@ every deletion**.
 
 ## Quick start
 
-1. Get a release and **pin it**. Do not let an agent fetch and follow instructions from a live URL.
+Pick one way in. Either way, **pin a release**: do not let an agent fetch and follow instructions from a live URL.
 
-   ```
-   git clone --branch v0.1.0 https://github.com/chittychat-studio/Ballast.git
-   ```
+**A. Claude Code plugin** (one install, pinned to a release tag)
 
-   Each release has a checksum file and a build attestation, so you can check what you downloaded
-   ([how](SECURITY.md#verifying-a-release)).
-2. Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md) yourself. They are short.
-3. Open your agent in the cloned folder and say: **"Read AGENTS.md and run cleanup.md."**
-4. For a recurring check, say: **"Run weekly.md."** (Stay present: it never runs unattended.)
+```
+/plugin marketplace add chittychat-studio/Ballast#v0.1.0
+/plugin install ballast@ballast
+```
+
+Then run `/ballast:ballast`. Leave plugin auto-update off and update on purpose. A plugin install does not run the
+checksum check below, so if you want that, use B.
+
+**B. Clone** (works with any agent)
+
+```
+git clone --branch v0.1.0 https://github.com/chittychat-studio/Ballast.git
+```
+
+Each release has a checksum file and a build attestation, so you can check what you downloaded
+([how](SECURITY.md#verifying-a-release)). Open your agent in the cloned folder and say:
+**"Read AGENTS.md and run cleanup.md."**
+
+Then, either way:
+
+1. Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md) yourself. They are short.
+2. For a recurring check, say: **"Run weekly.md."** (Stay present: it never runs unattended.)
 
 Per-tool notes: [Claude Code](providers/claude.md) · [Gemini CLI](providers/gemini.md) · [Codex CLI](providers/codex.md) ·
 [Antigravity](providers/antigravity.md). Any other agent that can read files and run commands can follow the same
@@ -87,7 +102,9 @@ it), charts, a breakdown table, light and dark themes, and a "Scan again" button
 | [steps/](steps) | The eight steps, one file each |
 | [catalog/](catalog) | Known AI leftovers by tool, with tier, evidence needed and status |
 | [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template and the logo |
-| [providers/](providers) | Notes for each AI agent |
+| [providers/](providers) | Notes for each AI agent, including the plugin install |
+| [.claude-plugin/](.claude-plugin) | The plugin and marketplace manifests (JSON) for Claude Code |
+| [skills/](skills) | The `ballast` skill that starts a scan |
 | [dev/](dev) | For maintainers: the test fixtures and tests, with real results |
 | [SAFETY.md](SAFETY.md) · [PRIVACY.md](PRIVACY.md) · [SECURITY.md](SECURITY.md) | The safety, privacy and security promises |
 | [docs/](docs) | Comparison with similar tools, legal notes, claims register |

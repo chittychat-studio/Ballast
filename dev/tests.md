@@ -36,6 +36,14 @@ with Windows PowerShell 5.1.26100**, in a scratch folder, on dummy files only.
 | C8 | Removing the junction with `[IO.Directory]::Delete(<link>, $false)` | Link removed, target and its file intact |
 | C9 | The Recycle Bin method on a folder bigger than the Bin's limit | **Not tested.** It would put test files into the real Recycle Bin. Test it on a disposable drive or a virtual machine |
 
+## Plugin tests
+
+| ID | Check | Must happen | Result |
+|---|---|---|---|
+| P1 | `claude plugin validate .` in the repo root | Both manifests pass | Passed with one warning (Claude Code 2.1.296, 2026-11-02): a plugin ignores the root `CLAUDE.md`. It is kept for people who clone |
+| P2 | Install the plugin and run `/ballast:ballast` | The skill finds `AGENTS.md` in the plugin folder and shows the version | **Not yet run** |
+| P3 | Copy `skills/ballast` alone into a skills folder | The skill sees an unreplaced variable and asks for the cloned folder | **Not yet run** |
+
 ## Dashboard page tests
 
 Test the page ([dashboard/ballast-dashboard.html](../dashboard/ballast-dashboard.html)) by replacing the contents of its data
