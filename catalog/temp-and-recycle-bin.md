@@ -29,18 +29,19 @@ folder itself, only things inside it.** Never use a wildcard such as `Temp\*` to
 
 ### How to look (read-only)
 
-Measure with the commands in [steps/02-measure.md](../steps/02-measure.md): total size, file count, how much is older
-than 7 days, links, and the largest children. A first look can take about 20 seconds for ten thousand files. Say so, and
-run it with a time limit.
+Measure with the commands in [steps/02-measure.md](../steps/02-measure.md): total size, file count, how the files
+split by age, links, and the largest children. **Show every top-level item**, not only the largest: the user decides.
+A first look can take about a minute for a thousand entries and ten thousand files. Say so, and run it with a time
+limit.
 
 ### Rows
 
 | ID | What | Tier | Evidence before deleting | Cost / rebuild | Status |
 |---|---|---|---|---|---|
-| TMP-001 | A folder or file directly inside `%LOCALAPPDATA%\Temp` that no other row names | Yellow when all of this holds, else Grey | **Last used:** the newest *file* inside is older than 7 days. **In use:** no file inside can be opened exclusively (test below), and no running process is started from inside it. **No links or junctions** inside. **Not a document's recovery file:** names starting `~$` or `~WRL` are Grey | Whatever program left it loses that leftover. A half-finished installer cannot resume. Permanent: the Recycle Bin is not used (see the method below) | `review` |
-| TMP-002 | `pip-unpack-*` and other `pip-*` folders (pip's own unpacking folders) | Yellow when no pip is running and nothing inside is open, **even if changed today** (the 7 day rule is waived for this row) | A local yes/no match that no running process has `pip` in its command line (never print the command line); nothing inside can be opened exclusively; no links | pip re-downloads and re-unpacks if it needs them again | `review` |
+| TMP-001 | A folder or file directly inside `%LOCALAPPDATA%\Temp` that no other row names | Yellow when all of this holds, else Grey | **Last used:** shown, never a gate (a "Heads up" if it changed in the last day, since it may hold unsaved work; the user decides). **In use:** no file inside can be opened exclusively (test below), and no running process is started from inside it. **No links or junctions** inside. **Not a document's recovery file:** names starting `~$` or `~WRL` are Grey | Whatever program left it loses that leftover. A half-finished installer cannot resume. Permanent: the Recycle Bin is not used (see the method below) | `review` |
+| TMP-002 | `pip-unpack-*` and other `pip-*` folders (pip's own unpacking folders) | Yellow when no pip is running and nothing inside is open | A local yes/no match that no running process has `pip` in its command line (never print the command line); nothing inside can be opened exclusively; no links | pip re-downloads and re-unpacks if it needs them again | `review` |
 | TMP-003 | `claude\<project>\<session-id>\` (Claude Code session scratch) | As [CC-006](claude-code.md): Yellow when the session is finished, Grey if live | As CC-006. Never the folder of the session you are in | As CC-006 | `review` |
-| TMP-004 | Anything in Temp changed in the last 24 hours, in use, locked, or with a document-recovery name | **Grey** | Not selectable. Report the total and say it may qualify later | Not applicable | `review` |
+| TMP-004 | Anything in Temp that is in use, locked, unreadable, contains a link, or has a document-recovery name | **Grey** | Not selectable. Report the total and what is holding each one; it can be re-checked after the program closes. Recent changes alone do **not** make an item Grey | Not applicable | `review` |
 | TMP-005 | `C:\Windows\Temp` (system Temp) | Grey | It is outside the user's profile, so the path guard refuses it, and clearing it needs administrator rights. Do not elevate. Show the user how to clear it themselves (Windows Settings, System, Storage, Temporary files) | Not applicable | `planned` |
 
 ### Many small files: the group rule
@@ -128,5 +129,9 @@ drive's profile.
   (0.23 GB) and seven `pip-unpack-*` folders (0.06 to 0.15 GB each). `%TEMP%` was an 8.3 short name; the long form
   `%LOCALAPPDATA%\Temp` was confirmed as the same folder (same creation time and child names). The in-use test
   correctly reported a dummy file as free, then in use while it was held open, then free again.
+- A fuller read-only scan on the same laptop later that day listed **every** top-level entry: 1,487 entries, 1.75 GB,
+  about 54 seconds. 1,452 were `pip-*` folders (1.47 GB), 1 was the Claude Code scratch folder (0.23 GB), 28 were in
+  use, unreadable or held a link (under 0.01 GB together), and the other 6 were small. With age shown but not used
+  as a gate, 1,458 entries were Yellow and 29 were Grey.
 - **Recycle Bin, read-only:** the shell view read it and reported 0 items (it had been emptied earlier). Nothing was
   deleted by these rows, and `Clear-RecycleBin` was **not** run, so BIN-001 emptying is untested.

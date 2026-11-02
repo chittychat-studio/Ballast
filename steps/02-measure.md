@@ -38,8 +38,8 @@ Always measure both. Use the long Temp path and confirm it is the same folder as
 ```powershell
 $t = Join-Path $env:LOCALAPPDATA 'Temp'
 $files = Get-ChildItem -LiteralPath $t -Recurse -Force -File -ErrorAction SilentlyContinue -ErrorVariable tempErrors
-$old = $files | Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-7) }
-'{0} files, {1:N2} GB; {2} older than 7 days, {3:N2} GB; {4} read errors' -f $files.Count, (($files|Measure-Object Length -Sum).Sum/1GB), $old.Count, (($old|Measure-Object Length -Sum).Sum/1GB), $tempErrors.Count
+$today = $files | Where-Object { $_.LastWriteTime -ge (Get-Date).AddHours(-24) }   # information only, not a gate
+'{0} files, {1:N2} GB; {2} changed in the last 24 hours, {3:N2} GB; {4} read errors' -f $files.Count, (($files|Measure-Object Length -Sum).Sum/1GB), $today.Count, (($today|Measure-Object Length -Sum).Sum/1GB), $tempErrors.Count
 Get-ChildItem -LiteralPath $t -Recurse -Force -Attributes ReparsePoint -ErrorAction SilentlyContinue | Select-Object FullName, LinkType, Target   # links: do not follow
 (New-Object -ComObject Shell.Application).NameSpace(0xA).Items().Count   # items in the Recycle Bin
 ```

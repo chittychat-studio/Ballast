@@ -62,8 +62,10 @@ An item that is **in use** is Grey, not selectable, whatever its catalog row say
 
 ## Terms used in these files
 
-- **Old enough:** the newest file inside is more than 7 days old, unless the catalog row says otherwise.
-- **Recent:** changed within the last 24 hours.
+- **Age is information, not a gate.** Always show how long ago the newest file inside changed (the *Last used*
+  check), but never hold an item back, or promote it, because of its age. A recently changed item gets a plain
+  "Heads up: changed N hours ago, may hold unsaved work" note, and **the user decides**. What does hold an item back
+  is a fact: it is in use, unreadable, contains a link, is protected, or has an unknown or incomplete check.
 - **List children:** names, sizes and dates only. Never open contents.
 - **Live session:** an agent session whose process is running now.
 

@@ -8,7 +8,7 @@ these files.
 
 | Code | Plain name | The question | How (Windows example) |
 |---|---|---|---|
-| **E1** | **Last used** | When was anything inside last changed? (the newest *file*, not the folder's own date) | `Get-ChildItem -LiteralPath $p -Recurse -Force -File -ErrorVariable e \| Sort-Object LastWriteTime -Descending \| Select -First 1`. **If `$e` is not empty, the answer is unknown** |
+| **E1** | **Last used** | When was anything inside last changed? (the newest *file*, not the folder's own date). Shown as information with a "Heads up" when recent; it never decides a tier by itself | `Get-ChildItem -LiteralPath $p -Recurse -Force -File -ErrorVariable e \| Sort-Object LastWriteTime -Descending \| Select -First 1`. **If `$e` is not empty, the answer is unknown** |
 | **E2** | **In use now** | Is a process running from, or holding, this path? | Compare each process's `ExecutablePath` and working folder with `$p`. Escape wildcards first: `$esc = [WildcardPattern]::Escape($p)`, then `-like "$esc*"`. **A process whose path you cannot read (not elevated, or a system service) means unknown**, not "not in use" |
 | **E3** | **Is it a program?** | Is it an installed program or package rather than a cache? | Check package manifests and install registries (a package manager's `Packages` folder, Program Files). **Do not run anything you find** (H14), including `unins*.exe` |
 | **E4** | **Anything depends on it** | Does anything point at it? | Virtual-environment `pyvenv.cfg` (`home =`), symbolic links and junctions, project config files that name it. Read these as text only |

@@ -12,7 +12,8 @@ Turn evidence into a tier. Apply the rules **in order**; the first one that matc
 5. **In use now (E2) → Grey.** Never selectable while in use, whatever the catalog row says. Explain what is using it.
 6. **Anything depends on it (E4) → Yellow at best**, and name what would break. (An item that is also in use is Grey
    by rule 5 first.)
-7. **A catalog row matches, nothing above applies, and "old enough" (see [cleanup.md](../cleanup.md)) →** the row's tier.
+7. **A catalog row matches and nothing above applies →** the row's tier. Age does not change the tier: show it, with
+   a "Heads up" note when it is recent (see [cleanup.md](../cleanup.md)), and let the user decide.
 8. **No catalog row → Grey.**
 
 **Attribution Low → Grey**, unless rules 1 to 3 already made it Red. A Low attribution never turns a Red item Grey.

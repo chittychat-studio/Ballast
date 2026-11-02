@@ -25,7 +25,7 @@ nothing else under `User Data`.
 
 | ID | Path (under `%LOCALAPPDATA%\Google\Chrome\User Data` or `%LOCALAPPDATA%\Microsoft\Edge\User Data`) | What it is | Tier | Evidence before deleting | Cost / rebuild | Status |
 |---|---|---|---|---|---|---|
-| BR-001 | In each profile folder (`Default`, `Profile 1`, ...): `Cache`, `Code Cache`, `GPUCache`, `Service Worker\CacheStorage` | Chrome's cached web files and compiled code | Yellow | Chrome is not running (no `chrome` process). Newest file is not recent. No links | Pages load more slowly the first time. Offline data of some web apps lives in `CacheStorage` and has to download again | `review` |
+| BR-001 | In each profile folder (`Default`, `Profile 1`, ...): `Cache`, `Code Cache`, `GPUCache`, `Service Worker\CacheStorage` | Chrome's cached web files and compiled code | Yellow | Chrome is not running (no `chrome` process). No links. Age is shown, not a gate | Pages load more slowly the first time. Offline data of some web apps lives in `CacheStorage` and has to download again | `review` |
 | BR-002 | The same four names in each Edge profile folder | Edge's cached web files and compiled code | Yellow | Edge is not running (no `msedge` process; Edge also runs in the background and for embedded web views, so check the process list and ask) | As BR-001 | `review` |
 | BR-003 | Directly under `User Data`: `ShaderCache`, `GrShaderCache`, `DawnGraphiteCache`, `DawnWebGPUCache`, `component_crx_cache`, `ProvenanceData` | Graphics shader caches and downloaded browser components | Yellow | As BR-001 or BR-002 for that browser | Rebuilt by the browser on next use | `review` |
 
@@ -41,7 +41,7 @@ browsers kept working afterwards was **not recorded**, so these rows stay Yellow
 
 | ID | Path | What it is | Tier | Evidence before deleting | Cost / rebuild | Status |
 |---|---|---|---|---|---|---|
-| OFC-001 | `%LOCALAPPDATA%\Microsoft\Office\16.0\Wef` and `%LOCALAPPDATA%\Microsoft\Office\SolutionPackages` | Caches of Office add-ins (web extensions and solution packages) | Yellow | No Office program is running (Word, Excel, PowerPoint, Outlook, OneNote, Access, new Outlook). Not recent. No links | Add-ins reload from their source the next time Office opens | `review` |
+| OFC-001 | `%LOCALAPPDATA%\Microsoft\Office\16.0\Wef` and `%LOCALAPPDATA%\Microsoft\Office\SolutionPackages` | Caches of Office add-ins (web extensions and solution packages) | Yellow | No Office program is running (Word, Excel, PowerPoint, Outlook, OneNote, Access, new Outlook). No links. Age is shown, not a gate | Add-ins reload from their source the next time Office opens | `review` |
 
 The rest of `%LOCALAPPDATA%\Microsoft\Office` can hold Office's own settings and unsent or recovered work: it is Grey,
 not Yellow. *Observed:* a 2.9 GB `Office` folder was removed whole on the owner's own request on the same laptop (they
