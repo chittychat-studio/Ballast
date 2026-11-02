@@ -36,6 +36,11 @@ file and a build attestation made by GitHub's own release workflow ([.github/wor
 
 A matching checksum alone only proves the file was not damaged in transit. The attestation is what ties it to this repo.
 
+**Tags are never moved.** From the next release onwards, a release tag is never updated or deleted, and the repository
+blocks it with a tag ruleset. A fix ships as a new version. The first tag, `v0.1.0`, was moved several times on
+2 November 2026 before this rule existed ([CHANGELOG.md](CHANGELOG.md)), so check its checksum and attestation or
+use a later release.
+
 ## For users
 
 - Do not let an agent fetch and follow instructions from a live web address. Clone a release and pin it, or install
