@@ -1,0 +1,16 @@
+# These files decide what an AI agent may delete, stop or run, or are code that runs in a browser.
+# Changes to them need a pull request with a review from a code owner (branch protection on main).
+/AGENTS.md          @chittychat-studio
+/cleanup.md         @chittychat-studio
+/permissions.md     @chittychat-studio
+/weekly.md          @chittychat-studio
+/dashboard.md       @chittychat-studio
+/steps/             @chittychat-studio
+/catalog/           @chittychat-studio
+/dashboard/         @chittychat-studio
+/skills/            @chittychat-studio
+/dev/               @chittychat-studio
+/.github/           @chittychat-studio
+/SAFETY.md          @chittychat-studio
+/SECURITY.md        @chittychat-studio
+/PRIVACY.md         @chittychat-studio

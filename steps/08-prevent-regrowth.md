@@ -1,6 +1,6 @@
 # Step 8: stop it coming back
 
-Cleaning is temporary if the gunk regrows. For each source that mattered, offer one prevention step. **Offer, do not
+Cleaning is temporary if the leftovers regrow. For each source that mattered, offer one prevention step. **Offer, do not
 apply.** Settings belong to the user and to the tool's own documentation. Check that documentation for the
 current setting names, because they change.
 

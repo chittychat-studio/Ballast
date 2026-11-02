@@ -1,6 +1,6 @@
 ---
 name: ballast
-description: Find and clear, with the user's approval, disk and memory gunk left behind by AI tools (Claude Code, Claude desktop and Cowork, Codex, Gemini, local models, MCP servers, headless browsers, agent-created scratch projects). Use when the user is low on disk space or memory, says their laptop is struggling, or asks to clean up after AI tools. Read-only scan first, asks before every deletion, never touches personal files.
+description: Find and clear, with the user's approval, disk and memory leftovers from AI tools (Claude Code, Claude desktop and Cowork, Codex, Gemini, local models, MCP servers, headless browsers, agent-created scratch projects). Use when the user is low on disk space or memory, says their laptop is struggling, or asks to clean up after AI tools. Read-only scan first, asks before every deletion, never touches personal files.
 ---
 
 # Ballast

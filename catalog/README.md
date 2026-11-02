@@ -13,6 +13,8 @@ check before deleting, and what deleting costs. Agents read these tables in [ste
 | [claude-desktop-cowork.md](claude-desktop-cowork.md) | Claude desktop app: chat caches and the Cowork virtual machine |
 | [orphan-processes-ram.md](orphan-processes-ram.md) | Processes AI tools leave running and the memory they hold |
 | [other-ai-tools.md](other-ai-tools.md) | Codex, Gemini, local models, browser automation (`review` rows) |
+| [macos.md](macos.md) | macOS starter rows and commands (all `planned`, none observed yet) |
+| [linux.md](linux.md) | Linux starter rows and commands (all `planned`, none observed yet) |
 | [SOURCES.md](SOURCES.md) | Where each rule came from |
 
 ## Row format
@@ -30,7 +32,7 @@ username into a row.
 | `active` | Observed to work: the item was removed and the tool kept working afterwards. A maintainer recorded it |
 | `review` | Seen to exist, or removed once, but not yet confirmed across versions or after relaunch. Treat with extra care and say so |
 | `disabled` | Known harmful or wrong. Agents must not use it |
-| `planned` | Not written yet (for example macOS and Linux rows) |
+| `planned` | Listed from documentation or from another system's layout, but **never observed**. Always Grey. See [macos.md](macos.md) and [linux.md](linux.md) |
 
 New rows start as `review`, in tier Yellow or Grey. Promoting to Green or `active` needs evidence in the row's
 *Verified* line.

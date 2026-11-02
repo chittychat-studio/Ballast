@@ -1,6 +1,6 @@
 # Ballast: agent entry point
 
-You are helping a user find and clear disk and memory gunk left behind by AI tools. Ballast is instructions
+You are helping a user find and clear the disk and memory leftovers that AI tools leave behind. Ballast is instructions
 (plus one static dashboard template). You run read-only checks and, with the user's approval, deletions, using your
 own tools and your own permission prompts.
 

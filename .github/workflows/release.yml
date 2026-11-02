@@ -1,0 +1,46 @@
+# Builds a release when a version tag is pushed: a zip of the repository at that tag, a SHA-256 checksum file,
+# and a signed build attestation (so anyone can check the zip came from this repository).
+# Actions are pinned to full commit SHAs, not moving tags.
+name: release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+  id-token: write
+  attestations: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the tagged commit
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Build the zip and its checksum
+        env:
+          TAG: ${{ github.ref_name }}
+        run: |
+          mkdir dist
+          git archive --format=zip --prefix="ballast-${TAG}/" -o "dist/ballast-${TAG}.zip" "${TAG}"
+          cd dist
+          sha256sum "ballast-${TAG}.zip" > SHA256SUMS
+          cat SHA256SUMS
+
+      - name: Attest the build
+        uses: actions/attest-build-provenance@4d101475d8b20a2381f78447822ac1eab6504dd8 # v4.2.2
+        with:
+          subject-path: dist/ballast-*.zip
+
+      - name: Publish the release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG: ${{ github.ref_name }}
+        run: |
+          gh release create "${TAG}" "dist/ballast-${TAG}.zip" dist/SHA256SUMS \
+            --title "Ballast ${TAG}" \
+            --verify-tag \
+            --notes "Check this download before you use it: SECURITY.md, section 'Verifying a release'. Pin this version, and read cleanup.md and permissions.md first."

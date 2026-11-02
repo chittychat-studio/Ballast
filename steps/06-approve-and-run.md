@@ -28,14 +28,18 @@ If the item changed or became active since the scan, skip it and tell the user.
 Do not run a delete unless **all** hold:
 
 - The path is on the approved manifest, exactly, in full.
-- **Resolve it first:** get its full canonical path (expand `..`, 8.3 short names such as `PROGRA~1`, and links).
-  Compare the resolved path, case-insensitively, with the approved one. If they differ, stop.
+- **Resolve it first:** get its full path with `[IO.Path]::GetFullPath($path)` (this expands `..`). Compare it,
+  case-insensitively, with the approved path. If they differ, stop.
+- **No 8.3 short names.** Refuse any path with a segment such as `PROGRA~1` (a `~` followed by a digit). Tested: neither
+  `Get-Item` nor the Windows scripting file-system object expands them, so do not try to resolve them. Ask the user
+  for the long path instead.
 - It is on a **local fixed drive** and lies inside the **current user's profile folder**. Refuse network paths
   (`\\server\share`, mapped drives), removable drives, other users' profiles, and the profile folder itself or its
   standard folders (Desktop, Documents, Downloads, Pictures, Videos, Music, OneDrive, AppData).
 - The path has no trailing dot or space and no `..` segment.
-- **It contains no symbolic link or junction** (reparse point), at the top or anywhere inside. Windows PowerShell 5.1
-  can follow a link when deleting recursively and remove what it points at. Check first:
+- **It contains no symbolic link or junction** (reparse point), at the top or anywhere inside. Some tools and older
+  builds follow a link when deleting recursively and remove what it points at. (A test on Windows PowerShell
+  5.1.26100 did not, but a delete should never depend on that.) Check first:
 
   ```powershell
   $full = (Get-Item -LiteralPath $path -Force).FullName

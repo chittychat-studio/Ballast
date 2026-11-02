@@ -1,6 +1,6 @@
 # Claude Code
 
-Windows paths. macOS and Linux: `planned` (`~/.claude/...` and the system temp folder).
+Windows paths. For macOS and Linux see [macos.md](macos.md) and [linux.md](linux.md) (starter rows, not yet observed).
 
 Evidence for every row: complete [steps/03-evidence.md](../steps/03-evidence.md). Never touch the session you
 are running in, and treat any other running session as in use.

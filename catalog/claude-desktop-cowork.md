@@ -1,7 +1,7 @@
 # Claude desktop app: chat and Cowork
 
 Windows (Store install) paths. `<package-family>` is the app's package family folder under
-`%LOCALAPPDATA%\Claude-Data\` (observed: `claude_pzs8sxrjxfjjc`). macOS and Linux: `planned`.
+`%LOCALAPPDATA%\Claude-Data\` (observed: `claude_pzs8sxrjxfjjc`). For macOS see [macos.md](macos.md); there are no Linux rows ([linux.md](linux.md)).
 
 Evidence for every row: complete [steps/03-evidence.md](../steps/03-evidence.md). The desktop app must be
 closed (including its system-tray process) for most rows to be removable.

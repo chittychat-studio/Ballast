@@ -1,6 +1,6 @@
 # Safety
 
-> **Draft v0.1. Not legal advice.** Have a qualified lawyer review this file before relying on it.
+> **Not legal advice.** Have a qualified lawyer review this file before relying on it.
 
 Deleting files can cause permanent loss. Ballast is built to make that unlikely, but it cannot make it impossible.
 

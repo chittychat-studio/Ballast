@@ -1,6 +1,6 @@
 # Privacy
 
-> **Draft v0.1. Not legal advice.**
+> **Not legal advice.**
 
 **Ballast collects nothing.** It has no account, no analytics, no telemetry, no crash reporting and no servers.
 Its files are text and one static HTML page that makes no network requests, so nothing in it can send data anywhere.

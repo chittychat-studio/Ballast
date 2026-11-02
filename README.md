@@ -1,9 +1,9 @@
 <p align="center"><img src="dashboard/ballast-logo.svg" alt="Ballast" width="220"></p>
 
-> **Draft v0.1.** Not legal advice. Not affiliated with, or endorsed by, any AI provider. Read [SAFETY.md](SAFETY.md) first.
+> Not legal advice. Not affiliated with, or endorsed by, any AI provider. Read [SAFETY.md](SAFETY.md) first.
 
 Ballast is a set of plain-text instructions that your AI coding agent follows to find and clear the disk and memory
-gunk that AI tools leave behind: Claude Code and Claude desktop (chat and Cowork), Codex, Gemini, Antigravity, local
+leftovers that AI tools leave behind: Claude Code and Claude desktop (chat and Cowork), Codex, Gemini, Antigravity, local
 models, MCP servers, headless browsers, and the scratch projects agents create.
 
 There is **nothing to install and no program to run**. The instructions are Markdown. The repo also holds one
@@ -47,8 +47,14 @@ every deletion**.
 
 ## Quick start
 
-1. Clone this repo and **pin a version** (a release tag once available, otherwise a commit you have read).
-   Do not let an agent fetch and follow instructions from a live URL.
+1. Get a release and **pin it**. Do not let an agent fetch and follow instructions from a live URL.
+
+   ```
+   git clone --branch v0.1.0 https://github.com/chittychat-studio/Ballast.git
+   ```
+
+   Each release has a checksum file and a build attestation, so you can check what you downloaded
+   ([how](SECURITY.md#verifying-a-release)).
 2. Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md) yourself. They are short.
 3. Open your agent in the cloned folder and say: **"Read AGENTS.md and run cleanup.md."**
 4. For a recurring check, say: **"Run weekly.md."** (Stay present: it never runs unattended.)
@@ -58,6 +64,13 @@ Per-tool notes: [Claude Code](providers/claude.md) · [Gemini CLI](providers/gem
 instructions if you tell it to read `AGENTS.md`.
 
 ## The dashboard
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="dashboard/sample-dark.svg">
+  <img src="dashboard/sample-light.svg" alt="The Ballast dashboard showing example data: a folder list with Keep, Clear and Check first choices, a free-space bar, a share-by-tier chart, a size-by-tool chart and the checks for the selected item" width="100%">
+</picture>
+
+<sub>A picture of the dashboard with example data. Your own scan fills it with your folders.</sub>
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
 and gives you a link to a local copy. Open the template directly to see it with example data. It has a folder view
@@ -75,6 +88,7 @@ with Keep / Clear / Check first choices, a free-space bar, charts, a breakdown t
 | [catalog/](catalog) | Known AI leftovers by tool, with tier, evidence needed and status |
 | [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template and the logo |
 | [providers/](providers) | Notes for each AI agent |
+| [dev/](dev) | For maintainers: the test fixtures and tests, with real results |
 | [SAFETY.md](SAFETY.md) · [PRIVACY.md](PRIVACY.md) · [SECURITY.md](SECURITY.md) | The safety, privacy and security promises |
 | [docs/](docs) | Comparison with similar tools, legal notes, claims register |
 
@@ -82,7 +96,9 @@ with Keep / Clear / Check first choices, a free-space bar, charts, a breakdown t
 
 Windows 11 is the first supported system. The Claude Code, Claude desktop (Cowork) and orphan-process catalogs come
 from observations on one real machine; rows marked `review` have not yet been confirmed across versions. macOS and
-Linux rows are planned. Contributions are welcome: see [CONTRIBUTING.md](CONTRIBUTING.md).
+Linux have starter rows in [catalog/macos.md](catalog/macos.md) and [catalog/linux.md](catalog/linux.md). None of
+those has been observed on a real machine yet, so they are all `planned` and Grey. Contributions are welcome: see
+[CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## Disclaimer
 

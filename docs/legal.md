@@ -1,6 +1,6 @@
 # Legal notes
 
-> **Draft. Not legal advice.** Written by a non-lawyer to prepare for a proper review. Nothing here guarantees
+> **Not legal advice.** Written by a non-lawyer to prepare for a proper review. Nothing here guarantees
 > that anyone will not make a claim; it records choices intended to reduce and weaken claims.
 
 ## How two comparable projects handle legal matters
@@ -37,7 +37,7 @@ found in the files I read.
   user's browser. That reduces malware-flag and tampered-installer exposure but does not remove it, because a cloned
   repository can be altered. See [SECURITY.md](../SECURITY.md).
 
-## Gaps this draft still has
+## Known gaps
 
 - No lawyer has reviewed any text. The disclaimers may not hold against gross negligence or consumer law in
   some places (for example parts of the EU and UK).

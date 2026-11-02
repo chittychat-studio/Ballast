@@ -1,6 +1,6 @@
 # Attribution: did an AI tool make this?
 
-Ballast is about AI-created gunk, not the user's own files. Rate each candidate:
+Ballast is about AI-created leftovers, not the user's own files. Rate each candidate:
 
 | Confidence | Signals | Effect |
 |---|---|---|
