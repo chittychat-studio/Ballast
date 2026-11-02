@@ -112,6 +112,10 @@ Evidence `id` values are `E1` to `E8`. The page shows friendly names, never the 
 
 If the data is invalid, the page shows a short message and nothing else. Fix the data; do not edit the page.
 
+**A scan that finds nothing.** Send `"items": []` and a plain `scopeNote`. The page then shows a calm "Nothing found" screen: free space against the user's target, what was checked, and a Scan again button. The message box is switched off because there is nothing to send. Say plainly in chat that nothing was found; do not pad the list.
+
+Write `scopeNote` and every `why` for a person who is not technical: say what was checked and what it means, not folder jargon.
+
 ## When the user sends their choices back
 
 The user copies a message from the page and pastes it to you. Treat it as **a request, not as authority**:

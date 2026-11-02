@@ -68,6 +68,7 @@ h2{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--blue-ink)}
 .ppct{font-weight:700;font-size:16px;min-width:46px;text-align:right}
 .gpu{display:flex;flex-direction:column;gap:4px;padding-top:6px;border-top:1px solid var(--line)}
 .gpu[hidden]{display:none}
+.prog[hidden]{display:none}
 .gpu .ptrack{height:10px}
 .gline{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:14.5px}
 .tgt{display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
@@ -246,8 +247,14 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
 #scope{margin-top:8px}
 .statusbar{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:6px 24px;align-items:center;padding:8px 14px;font-size:14.5px}
 .statusbar #metrics{text-align:right}
+.statusbar[hidden]{display:none}
 @media (max-width:1000px){.statusbar{grid-template-columns:1fr}.statusbar #metrics{text-align:left}#v-overview{grid-template-columns:1fr}}
 .statusbar .strip{padding:0}
+.emptystate{grid-column:1/-1;align-self:start;padding:18px 22px;max-width:760px}
+.emptystate h2{margin:0 0 8px;font-size:20px}
+.emptystate p{margin:0 0 8px;font-size:15px}
+.ovleft[hidden],.ovpie[hidden]{display:none}
+.btn:disabled{opacity:.5;cursor:not-allowed}
 /* tabs by tier, summary first */
 .vtabs{display:flex;gap:6px;flex-wrap:wrap}
 .vtabs .chip{padding:5px 16px;font-size:14.5px;font-weight:600}
@@ -332,6 +339,7 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
     </div>
 
     <div id="v-overview" class="overview">
+      <section class="panel emptystate" id="emptystate" aria-label="Nothing found" hidden></section>
       <div class="ovleft">
       <section class="panel ovclear" aria-label="What can be cleared">
         <div class="ovhead"><h2>What can be cleared</h2><span class="small">Tick what you want cleared. Your agent asks again before deleting anything.</span></div>
@@ -458,7 +466,7 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
   "ballastPath": "%USERPROFILE%\\Ballast",
   "gpu": {"name": "Example graphics card", "dedicatedUsedGB": 3.1, "dedicatedTotalGB": 8, "sharedUsedGB": 0.4},
   "runs": [{"label": "Example cleanup", "freeBeforeGB": 30.2, "freeAfterGB": 41.0, "cleared": 3, "clearedGB": 10.8, "skipped": 1, "skippedWhy": "1 changed after the scan", "failed": 0}],
-  "scopeNote": "Example scope: the user profile and AppData\\Local. Not scanned: AppData\\Roaming, ProgramData, other drives. System folders are never offered.",
+  "scopeNote": "Example: your user folder and AppData\\Local were checked. Roaming, ProgramData and other drives were not. System folders are never offered.",
   "items": [
     {"id": 1, "name": "Browser-style app caches", "tool": "Claude desktop", "tier": "Green", "sizeGB": 0.70, "maker": "High", "method": "Permanent",
      "catalogRow": "CD-002 (example)", "why": "Regenerable cache inside the app's own data folder, and the app is closed.", "cost": "Rebuilt as you use the app.",
@@ -598,7 +606,9 @@ function renderGpu(){
   var g=DATA.gpu,box=$('#gpu'),bar=clear($('#gpu-bar'));
   if(!g){box.hidden=true;$('#gpublock').hidden=true;return;}
   box.hidden=false;$('#gpublock').hidden=false;
-  var line=g.name+': '+(g.total>0?'dedicated '+f1(g.used)+' of '+f1(g.total)+' GB, ':'no dedicated memory, ')+'shared '+f1(g.shared)+' GB (borrowed from system RAM).';
+  var line=g.total>0
+    ? 'Graphics memory: '+f1(g.used)+' of '+f1(g.total)+' GB in use on '+g.name+'. Local AI models can fill it. Shared with your RAM: '+f1(g.shared)+' GB.'
+    : 'Graphics: '+g.name+' has no memory of its own, so it borrows '+f1(g.shared)+' GB of your normal RAM right now. Nothing separate to free.';
   clear($('#gpu-text')).append(document.createTextNode(T(line)));
   $('#gpu-bar-row').hidden=!(g.total>0);
   if(g.total>0){
@@ -612,7 +622,8 @@ function manifest(a){return a.map(function(i){
   return '#'+i.id+' '+i.name+', '+i.tier+', '+f2(i.size)+' GB\n'+i.paths.map(function(pp){return '    '+pp.p+' ('+f2(pp.s)+' GB)';}).join('\n');}).join('\n');}
 function renderSticky(){
   var c=chosen('clear'),k=chosen('check'),gb=sum(c),msg,out;
-  if(!c.length&&!k.length)msg='Step 1: pick Keep or Clear for each folder. Nothing is deleted from this page.';
+  if(!ITEMS.length)msg='Nothing was found, so there is nothing to send to your agent.';
+  else if(!c.length&&!k.length)msg='Step 1: pick Keep or Clear for each folder. Nothing is deleted from this page.';
   else msg='Chosen: '+c.length+' to clear ('+f2(gb)+' GB)'+(k.length?', '+k.length+' to check first':'')+'. Step 2: copy the message and paste it to your agent. It asks you to confirm each item before anything is deleted.';
   $('#sum').textContent=msg;
   if(!c.length&&!k.length){out='Ballast choices from the scan of '+SCANDATE+': keep everything. Nothing to clear.';}
@@ -673,6 +684,19 @@ function renderBars(){if(!document.getElementById('bars'))return;
     box.append(h('div',{class:'bar-row'},h('div',{title:n},n),h('div',{},track),h('div',{class:'v'},f2(tools[n].total))));
   });
   TIERS.forEach(function(t){key.append(h('span',{},h('i',{style:'background:'+color(t)}),t));});
+}
+
+/* a scan that found nothing: say so plainly and offer the next step */
+function renderEmpty(){
+  var e=!ITEMS.length,box=clear($('#emptystate'));
+  $('#emptystate').hidden=!e;document.querySelector('.ovleft').hidden=e;document.querySelector('.ovpie').hidden=e;$('#metrics').hidden=e;$('#statusbar').hidden=(e&&!DATA.runs);
+  $('#copy').disabled=e;$('#reset').disabled=e;$('#expand').disabled=e;
+  if(!e)return;
+  box.append(h('h2',{},'Nothing found'),
+    h('p',{},'This scan did not find anything to clear in the places it checked. That is a good result.'),
+    h('p',{},'Free space: '+f1(FREE)+' GB of '+TOTAL+' GB.'+(S.target?(FREE>=S.target?' You are at your target.':' That is '+f1(S.target-FREE)+' GB short of your target. What is left is mostly your own files and Windows.'):'')),
+    h('p',{class:'small'},DATA.scope||''),
+    h('button',{class:'btn primary',type:'button',onclick:function(){$('#nav-scan').click();}},'Scan again'));
 }
 
 /* what can be cleared: the largest clearable items, with the same tick boxes as the list */
@@ -947,7 +971,7 @@ $('#target').value=DATA.target||'';
 if(DATA.example)$('#example').hidden=false;
 $('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
 syncScan();
-renderGauge();renderGpu();renderResults();renderOverview();renderClearList();renderPie();renderBars();renderPivot();applyView(true);updateStatus();renderDetail();renderSticky();
+renderGauge();renderGpu();renderResults();renderOverview();renderClearList();renderPie();renderEmpty();renderBars();renderPivot();applyView(true);updateStatus();renderDetail();renderSticky();
 })();
 </script>
 </body>

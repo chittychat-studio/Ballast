@@ -148,7 +148,7 @@
 <text x="1030" y="562" font-size="14" font-weight="400" fill="#23272c" text-anchor="end"></text>
 <text x="1170" y="562" font-size="14" font-weight="700" fill="#23272c" text-anchor="end">0.60</text>
 <rect x="114" y="570" width="1064" height="1" rx="0" fill="#d2d6dc"/>
-<text x="114" y="594" font-size="12" font-weight="400" fill="#5b6673" text-anchor="start">Example graphics card: dedicated 3.1 of 8.0 GB, shared 0.4 GB (borrowed from system RAM).</text>
+<text x="114" y="594" font-size="12" font-weight="400" fill="#5b6673" text-anchor="start">Graphics memory: 3.1 of 8.0 GB in use on Example graphics card. Local AI models can fill it. Shared with your RAM: 0.4 GB.</text>
 <rect x="100" y="632" width="1092" height="112" rx="3" fill="#ffffff" stroke="#d2d6dc" stroke-width="1"/>
 <text x="114" y="656" font-size="14" font-weight="700" fill="#23272c" text-anchor="start">Step 1: pick Keep or Clear for each folder. Nothing is deleted from this page.</text>
 <rect x="114" y="666" width="860" height="44" rx="3" fill="#eceef1" stroke="#d2d6dc" stroke-width="1"/>
