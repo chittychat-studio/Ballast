@@ -12,7 +12,7 @@ is not saved yet. So nothing in Temp is Green. It is Yellow when the evidence is
 ### Which folder
 
 On Windows the user's Temp folder is `%LOCALAPPDATA%\Temp`. The variable `%TEMP%` points at the same place, but it can
-be an 8.3 short name such as `C:\Users\SANDHY~1\AppData\Local\Temp`, and the path guard in
+be an 8.3 short name such as `C:\Users\USERNA~1\AppData\Local\Temp`, and the path guard in
 [steps/06](../steps/06-approve-and-run.md) refuses short names. **Always use the long form.** Confirm it is the same
 folder before you rely on it:
 
