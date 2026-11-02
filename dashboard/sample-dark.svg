@@ -90,16 +90,16 @@
 <rect x="1080" y="316" width="98" height="24" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
 <text x="1129" y="333" font-size="12.5" font-weight="700" fill="#cccccc" text-anchor="middle">Collapse all</text>
 <text x="114" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="start">Tool</text>
-<text x="760" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Can clear</text>
-<text x="880" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Held back</text>
-<text x="1000" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Protected</text>
-<text x="1170" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Total</text>
+<text x="760" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Can clear (GB)</text>
+<text x="890" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Held back (GB)</text>
+<text x="1030" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Protected (GB)</text>
+<text x="1170" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Total (GB)</text>
 <rect x="114" y="370" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(116,385)" d="M2 3l4 4 4-4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="138" y="394" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude desktop</text>
 <text x="760" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">11.50</text>
-<text x="880" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="1000" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1030" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="394" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">11.50</text>
 <rect x="114" y="402" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(142,410)" d="M1 3a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" fill="#e1c08d"/>
@@ -107,8 +107,8 @@
 <rect x="420" y="409" width="62" height="19" rx="9.5" fill="#e1c08d" stroke="#e1c08d" stroke-width="1"/>
 <text x="451.0" y="422.68" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">Yellow</text>
 <text x="760" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">10.80</text>
-<text x="880" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="1000" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1030" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">10.80</text>
 <rect x="114" y="430" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(142,438)" d="M1 3a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" fill="#74c991"/>
@@ -116,36 +116,36 @@
 <rect x="420" y="437" width="62" height="19" rx="9.5" fill="#74c991" stroke="#74c991" stroke-width="1"/>
 <text x="451.0" y="450.68" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Green</text>
 <text x="760" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.70</text>
-<text x="880" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="1000" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1030" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.70</text>
 <rect x="114" y="458" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(116,469)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="138" y="478" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your files and apps</text>
 <text x="760" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="880" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="1000" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">9.40</text>
+<text x="890" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1030" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">9.40</text>
 <text x="1170" y="478" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">9.40</text>
 <rect x="114" y="486" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(116,497)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="138" y="506" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude Code</text>
 <text x="760" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">3.30</text>
-<text x="880" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
-<text x="1000" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
+<text x="1030" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="506" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">4.10</text>
 <rect x="114" y="514" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(116,525)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="138" y="534" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Unknown maker</text>
 <text x="760" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="880" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
-<text x="1000" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
+<text x="1030" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="534" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.80</text>
 <rect x="114" y="542" width="1064" height="1" rx="0" fill="#181a1f"/>
 <path transform="translate(116,553)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
 <text x="138" y="562" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your projects (agent-made)</text>
 <text x="760" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="880" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.60</text>
-<text x="1000" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="890" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.60</text>
+<text x="1030" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
 <text x="1170" y="562" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.60</text>
 <rect x="114" y="570" width="1064" height="1" rx="0" fill="#181a1f"/>
 <text x="114" y="594" font-size="12" font-weight="400" fill="#9c9ea1" text-anchor="start">Example graphics card: dedicated 3.1 of 8.0 GB, shared 0.4 GB (borrowed from system RAM).</text>

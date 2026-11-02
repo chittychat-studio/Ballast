@@ -368,7 +368,7 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
             <div class="addr" id="addr" aria-label="Location of the selected item"></div>
             <div id="chips" role="group" aria-label="Filter items" style="display:flex;gap:6px;flex-wrap:wrap"></div>
           </div>
-          <div class="colhead" aria-hidden="true"><div>Your choice</div><div>Name</div><div style="text-align:right">Size</div><div>Tier</div></div>
+          <div class="colhead" aria-hidden="true"><div>Your choice</div><div>Name</div><div style="text-align:right">Size (GB)</div><div>Tier</div></div>
           <div id="tree"></div>
           <div class="status" id="status"></div>
         </section>
@@ -694,7 +694,7 @@ function renderOverview(){
   var rows=names.map(function(k){return by[k];}).sort(function(a,b){return (b.clear+b.held+b.prot)-(a.clear+a.held+a.prot);});
   S.tx=S.tx||{};S.toolNames=names;
   var t=clear($('#bytool')),tb=h('tbody');
-  t.append(h('thead',{},h('tr',{},h('th',{},'Tool'),h('th',{class:'num'},'Can clear'),h('th',{class:'num'},'Held back'),h('th',{class:'num'},'Protected'),h('th',{class:'num'},'Total'))));
+  t.append(h('thead',{},h('tr',{},h('th',{},'Tool'),h('th',{class:'num'},'Can clear (GB)'),h('th',{class:'num'},'Held back (GB)'),h('th',{class:'num'},'Protected (GB)'),h('th',{class:'num'},'Total (GB)'))));
   rows.forEach(function(b){
     var open=!!S.tx[b.tool];
     /* open the tool in the folder list; with an item, also select that item */
