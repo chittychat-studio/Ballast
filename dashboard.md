@@ -88,6 +88,12 @@ For a rescan, repeat from step 1 and give a new link.
 | `paths` | **Every full path**, unshortened, with its own size. This is what the user's message will contain, and what you check their reply against |
 | `evidence` | Only checks you really ran. Leave the others out and the page shows "Not checked" |
 
+**A group of many small files (the Temp folder).** The page lists at most 50 paths per item. For a group, put the 50
+largest paths in `paths`, and in `why` state the total number of paths, the total size, the rule, and the path of the
+full manifest text file you wrote ([steps/06](steps/06-approve-and-run.md) section 1). The user's approval covers the
+lines in that file. The Recycle Bin is one item (`method` `Permanent`) whose tier is Grey until the user has confirmed
+they looked inside it ([catalog/temp-and-recycle-bin.md](catalog/temp-and-recycle-bin.md)).
+
 Evidence `id` values are `E1` to `E8`. The page shows friendly names, never the codes:
 
 | Code | The user sees | `state` values the page accepts |

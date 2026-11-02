@@ -44,6 +44,11 @@ A catalog row can name a specific item below Red only where this list says "unle
 - Installed programs and their folders (Program Files, `Local\Programs`, package-manager `Packages` folders).
   Removal, if wanted, goes through the vendor's own uninstaller, on the user's request and approval.
 - Windows, system and boot folders; the pagefile, hibernation and swap files; the registry.
+- **The Windows Installer cache (`C:\Windows\Installer`) and `C:\ProgramData\Package Cache`.** Programs need these to be
+  repaired or uninstalled. Report their size; never offer them ([windows-and-app-caches.md](windows-and-app-caches.md)).
+- **Everything under a browser's `User Data` folder except the cache folders a catalog row names.**
+- **The Temp folder itself** (only things inside it can be rows), and the hidden `$Recycle.Bin` folder (the Recycle Bin
+  is emptied only through BIN-001's two-step rule, never by deleting inside it).
 - Security software and its data.
 
 ## Rules for this list

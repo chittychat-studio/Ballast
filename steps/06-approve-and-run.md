@@ -8,6 +8,12 @@ Take the user's choices (see "When the user sends their choices back" in [dashbo
 them against **your own** scan results. Drop anything not in your results. Build a numbered manifest of full,
 unshortened paths with sizes and tiers, and show it to the user.
 
+**Thousands of small files (the Temp folder).** Do not list ten thousand lines in chat, and do not drop the manifest.
+Write the full manifest, one full path per line, to a text file in your own temporary folder. Show the user the file's
+path, the **count**, the **total size**, the **rule** it was built from (the catalog row and its checks), and the
+20 largest paths. The user's approval covers exactly the lines in that file, nothing added later. Rules and the group
+format are in [catalog/temp-and-recycle-bin.md](../catalog/temp-and-recycle-bin.md). Delete the file at the end (H12).
+
 ## 2. Get approval per item
 
 Use the request format in [permissions.md](../permissions.md). The user's click on the dashboard **selects**; the
@@ -49,7 +55,11 @@ Do not run a delete unless **all** hold:
 
   If a link is present, do not delete recursively. Tell the user; offer to remove only the link itself, or skip.
   If the check errors, treat it as "contains a link".
-- No wildcard reaches outside the approved folder.
+- No wildcard reaches outside the approved folder, and **a wildcard never stands in for a manifest**: delete the
+  approved paths one at a time (`Temp\*` is never a delete target).
+- **Never the Temp folder itself.** The user's Temp folder (`%LOCALAPPDATA%\Temp`) may be reached only through its
+  children. `%TEMP%` can be an 8.3 short name: use the long form after confirming it is the same folder
+  ([catalog/temp-and-recycle-bin.md](../catalog/temp-and-recycle-bin.md)).
 
 ## 5. Methods (Windows examples)
 
@@ -70,7 +80,9 @@ bigger than the Bin's limit, or on a drive without a Bin, can be deleted **perma
    object). **If you cannot confirm it, report the item as permanently deleted**, not as "moved".
 
 Free space does not return until the Recycle Bin is emptied. Offer that **after** step 7 has verified that the
-user's tools still work, and warn that emptying removes everything in the Bin, not only what Ballast moved.
+user's tools still work, and warn that emptying removes everything in the Bin, not only what Ballast moved. Emptying
+has its own two-step approval (the user looks in the Bin first, then confirms): see BIN-001 in
+[catalog/temp-and-recycle-bin.md](../catalog/temp-and-recycle-bin.md).
 
 **Permanent (Green caches the user approved, or an item the user chose to remove for good):**
 

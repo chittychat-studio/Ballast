@@ -19,7 +19,9 @@ recommended and the permission you need from the user.
 ## 4. Offer to empty the Recycle Bin (only now)
 
 Only after section 2 has shown the tools work, offer to empty it. Warn that this removes everything in it, not only
-what Ballast moved, and wait for approval (H0).
+what Ballast moved, and wait for approval (H0). Follow BIN-001 in
+[catalog/temp-and-recycle-bin.md](../catalog/temp-and-recycle-bin.md): show the count, size and dates, ask the user to
+open the Bin and look, then ask a separate question before emptying.
 
 ## 5. Compare with the target
 

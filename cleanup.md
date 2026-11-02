@@ -32,7 +32,9 @@ your own permission prompts, and you ask before every deletion.
   that your AI provider sees every name and path you read or print.
 - **H9. Per-item approval, bound to a manifest.** Before running anything destructive, show the user a numbered
   manifest of **full, unshortened paths** (and, for a process, ID, start time and path). Delete only paths on that
-  approved manifest, exactly as shown. Re-check evidence immediately before each delete (H2).
+  approved manifest, exactly as shown. Re-check evidence immediately before each delete (H2). For thousands of small
+  files (the Temp folder), the manifest may be a text file with one full path per line, plus the count, total size
+  and rule, and the approval covers exactly the lines in that file ([steps/06](steps/06-approve-and-run.md) section 1).
 - **H10. Reversible first, honestly.** Prefer the Recycle Bin or Trash, but verify it worked (see
   [steps/06](steps/06-approve-and-run.md)). Use permanent deletion only for Green caches the user approved, or
   when the user chooses it knowing the item will not be recoverable. Log what actually happened, not what you hoped.

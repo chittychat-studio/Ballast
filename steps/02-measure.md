@@ -30,6 +30,24 @@ Get-ChildItem -LiteralPath $path -Recurse -Force -Attributes ReparsePoint -Error
 
 Rows with no matching path are simply absent: skip them quietly.
 
+## 1a. The Temp folder and the Recycle Bin (read-only)
+
+Always measure both. Use the long Temp path and confirm it is the same folder as `%TEMP%`
+([catalog/temp-and-recycle-bin.md](../catalog/temp-and-recycle-bin.md)). Windows:
+
+```powershell
+$t = Join-Path $env:LOCALAPPDATA 'Temp'
+$files = Get-ChildItem -LiteralPath $t -Recurse -Force -File -ErrorAction SilentlyContinue -ErrorVariable tempErrors
+$old = $files | Where-Object { $_.LastWriteTime -lt (Get-Date).AddDays(-7) }
+'{0} files, {1:N2} GB; {2} older than 7 days, {3:N2} GB; {4} read errors' -f $files.Count, (($files|Measure-Object Length -Sum).Sum/1GB), $old.Count, (($old|Measure-Object Length -Sum).Sum/1GB), $tempErrors.Count
+Get-ChildItem -LiteralPath $t -Recurse -Force -Attributes ReparsePoint -ErrorAction SilentlyContinue | Select-Object FullName, LinkType, Target   # links: do not follow
+(New-Object -ComObject Shell.Application).NameSpace(0xA).Items().Count   # items in the Recycle Bin
+```
+
+A large Temp folder can take a while (about 20 seconds for ten thousand files): say so and run it with a time limit.
+Any read error means the totals are "at least" and the affected items are Grey (H2). Report the Recycle Bin's item
+count, size and dates; do not list its contents beyond names.
+
 ## 1b. Graphics memory (read-only, optional)
 
 If the user uses local models or image tools (or asks about slowness), read graphics memory as described in

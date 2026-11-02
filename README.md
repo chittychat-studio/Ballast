@@ -14,7 +14,9 @@ read-only checks through its own tools, and **asks you before every deletion**.
 
 ## What it does
 
-1. **Scans, read-only.** Measures known AI leftovers and finds large unknown folders. For local AI it also reads
+1. **Scans, read-only.** Measures known AI leftovers, **your Temp folder and the Recycle Bin**, browser and Office
+   caches, and finds large unknown folders. (It shows the Windows Installer cache so you can see where space goes,
+   but never offers it.) For local AI it also reads
    **GPU memory (dedicated VRAM, and the shared memory integrated graphics borrow from RAM)** and which process holds
    it ([catalog/gpu-memory.md](catalog/gpu-memory.md)). Nothing is changed.
 2. **Runs eight checks before judging** (last used, in use now, is it a program, anything depends on it, unsaved

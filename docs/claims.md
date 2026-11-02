@@ -24,6 +24,7 @@ walks this table. If a claim has no enforcement, remove the claim or mark it "pl
 | Signed git tags (SECURITY) | **Planned.** Needs a maintainer signing key | SECURITY.md says "planned" |
 | macOS and Linux rows (README, catalog) | catalog/macos.md and catalog/linux.md say every row is `planned` and Grey because none was observed | Check no row there is Yellow or Green or `active` |
 | Graphics memory (VRAM) is read, never changed, and only measured numbers are shown (README, catalog/gpu-memory.md) | gpu-memory.md rules; cleanup.md H0, H13; the page hides the graphics line when numbers are missing | Read gpu-memory.md; run dev/tests.md D5; confirm no command there stops a process or resets a driver without approval |
+| Temp, the Recycle Bin and browser caches are covered with the same ask-first rules; the Windows Installer cache is shown but never offered (README, catalog) | catalog/temp-and-recycle-bin.md (group rule, two-step Bin emptying); catalog/windows-and-app-caches.md; _protected.md; steps/06 | Read those files; C10 to C13 in dev/tests.md. Emptying the Recycle Bin and deleting Temp through Ballast are **not yet tested** (A12, A13) |
 | The safety tests are written down with real results (dev) | [dev/tests.md](../dev/tests.md) | Each "Result" is either a measured outcome with a date and machine, or "Not yet run" |
 | "A cloned repository can be tampered with, so users pin and check a version" (comparison, SECURITY) | AGENTS.md integrity check (shows the version, refuses a dirty tree) | Read AGENTS.md section "Do this first" |
 

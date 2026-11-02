@@ -13,6 +13,8 @@ check before deleting, and what deleting costs. Agents read these tables in [ste
 | [claude-desktop-cowork.md](claude-desktop-cowork.md) | Claude desktop app: chat caches and the Cowork virtual machine |
 | [orphan-processes-ram.md](orphan-processes-ram.md) | Processes AI tools leave running and the memory they hold |
 | [gpu-memory.md](gpu-memory.md) | Graphics memory (VRAM and shared) held by local AI tools, and how to read it |
+| [temp-and-recycle-bin.md](temp-and-recycle-bin.md) | The user's Temp folder (with a group rule for thousands of small files) and the Recycle Bin |
+| [windows-and-app-caches.md](windows-and-app-caches.md) | Windows Installer cache (shown, never offered), Windows Update downloads, Chrome and Edge caches, Office add-in caches |
 | [other-ai-tools.md](other-ai-tools.md) | Codex, Gemini, local models, image tools, shader caches, browser automation |
 | [macos.md](macos.md) | macOS starter rows and commands (all `planned`, none observed yet) |
 | [linux.md](linux.md) | Linux starter rows and commands (all `planned`, none observed yet) |
