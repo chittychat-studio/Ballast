@@ -197,12 +197,64 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
 }
 @media (prefers-reduced-motion:reduce){.twisty svg{transition:none}}
 
+/* motion: short and quiet */
+@keyframes viewin{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:no-preference){
+  .viewin{animation:viewin .2s ease-out}
+  .chip,.tab,.btn,.trow{transition:background-color .15s,color .15s,border-color .15s}
+}
+.backrow{display:flex;align-items:center;gap:10px;margin:0 0 8px}
+/* Explorer-style rows in the summary */
+.sumhead{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.sumhead h2{margin:0}
+.sumbtns{display:flex;gap:6px}
+.sumbtns .btn{padding:3px 10px;font-size:13px}
+.bytool th[scope=row]{white-space:nowrap}
+.bytool .twisty{all:unset;cursor:pointer;display:inline-flex;width:20px;height:20px;align-items:center;justify-content:center;vertical-align:middle;margin-right:2px;border-radius:3px}
+.bytool .twisty:hover{background:var(--hl)}
+.bytool .twisty:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.bytool .twisty svg{transition:transform .15s}
+.bytool .twisty[aria-expanded=false] svg{transform:rotate(-90deg)}
+.bytool .sub th{font-weight:400}
+.bytool .sub .subname{display:flex;align-items:center;gap:8px;padding-left:28px;max-width:100%}
+.bytool .sublink{color:var(--ink);font-weight:400;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:280px;display:inline-block}
+.bytool .sub .badge{font-size:11px;padding:0 7px}
+.bytool .toolrow th{font-weight:700}
+.ovgrid>.panel,#v-results{scrollbar-width:auto;scrollbar-color:var(--muted) var(--track)}
+/* header gauge, always visible */
+.head .hgauge{margin-left:auto;display:flex;align-items:center;gap:16px;min-width:0;color:#e6e9ee}
+.head .hgauge .gline{font-size:14px;gap:12px;flex-wrap:nowrap;white-space:nowrap;min-width:0}
+.head .hgauge #gtext{overflow:hidden;text-overflow:ellipsis;max-width:36vw}
+.head .hgauge .prog{width:min(260px,22vw);flex:none;gap:10px}
+.head .hgauge .ptrack{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.28)}
+.head .hgauge .ppct{color:#fff;font-size:15px;min-width:40px}
+.head .hgauge input[type=number]{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);color:#fff}
+/* overview: last cleanup, what can be cleared, folders */
+.ovclear{flex:0 1 auto;max-height:42%;overflow:auto;min-height:0}
+.ovfold{flex:1 1 0;min-height:0;overflow:auto}
+.ovhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.ovhead h2{margin:0}
+.ovtotals{font-size:14.5px}
+.crow2{display:grid;grid-template-columns:auto minmax(0,1.4fr) auto auto minmax(0,1.6fr);gap:12px;align-items:center;padding:3px 0;border-top:1px solid var(--line)}
+.crow2 .sz{font-weight:600;text-align:right;min-width:80px}
+.crow2 .cost{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.crow2 fieldset.opts{border:0;padding:0;margin:0}
+#gpublock{margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
+#gpublock[hidden]{display:none}
+#scope{margin-top:8px}
+.statusbar{display:flex;gap:6px 24px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 14px;font-size:14.5px}
+.statusbar .strip{padding:0}
 /* tabs by tier, summary first */
 .vtabs{display:flex;gap:6px;flex-wrap:wrap}
 .vtabs .chip{padding:5px 16px;font-size:14.5px;font-weight:600}
-#v-overview{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:10px}
+#v-overview{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+.ovgrid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:10px}
+#v-results{flex:1;min-height:0;overflow:auto}
+#v-results[hidden]{display:none}
+.strip{display:flex;gap:12px;align-items:center;flex-wrap:wrap;padding:8px 14px;font-size:14.5px}
+.strip[hidden]{display:none}
 #v-overview[hidden],#v-list[hidden]{display:none}
-#v-overview>.panel{min-height:0;overflow:auto}
+.ovgrid>.panel{min-height:0;overflow:auto}
 .ovtop{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:0;padding:0}
 .ovtop .gblock{border-right:1px solid var(--line)}
 .ovmetrics{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px 14px;font-size:15px}
@@ -230,6 +282,8 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
     </svg>
     <h1>Ballast</h1>
     <span class="exlabel" id="example" hidden>EXAMPLE DATA. Ask your agent to run a scan to see your own.</span>
+    <div class="hgauge" aria-label="Free space, always shown"><div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
+        <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div></div>
   </header>
 
   <nav class="rail" aria-label="Sections">
@@ -263,37 +317,37 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
   <div class="content">
     <nav class="vtabs" id="vtabs" aria-label="Views"></nav>
 
+    <div class="panel statusbar" id="statusbar" aria-label="Last cleanup and totals">
+      <div class="strip" id="resultstrip" hidden></div>
+      <div class="ovtotals" id="metrics"></div>
+    </div>
+
     <div id="v-overview" class="overview">
-      <section class="panel ovtop" aria-label="Free space and totals">
-        <div class="gblock">
-        <div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
-        <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div>
-        <div class="gpu" id="gpu" hidden>
+      <section class="panel ovclear" aria-label="What can be cleared">
+        <div class="ovhead"><h2>What can be cleared</h2><span class="small">Tick what you want cleared. Your agent asks again before deleting anything.</span></div>
+        <div id="clearlist"></div>
+      </section>
+      <section class="panel ovfold" aria-label="Folders">
+        <div class="sumhead"><h2>Folders</h2><span class="sumbtns"><button class="btn" id="expAll" type="button">Expand all</button><button class="btn" id="colAll" type="button">Collapse all</button></span></div>
+        <div class="tscroll"><table class="pivot bytool" id="bytool"></table></div>
+        <p class="small">Use the arrow to see a tool's folders here. Click a name to open it in the list.</p>
+        <div class="gblock" id="gpublock">
+          <div class="gpu" id="gpu" hidden>
           <div class="gline" id="gpu-text"></div>
           <div class="prog" id="gpu-bar-row"><div class="ptrack" id="gpu-bar" role="img"></div></div>
         </div>
-      </div>
-        <div class="ovmetrics">
-          <div class="mline" id="metrics"></div>
-          <div class="mline small" id="scope"></div>
         </div>
-      </section>
-      <section class="panel" aria-label="Summary by tool">
-        <h2>Summary by tool</h2>
-        <div class="tscroll"><table class="pivot bytool" id="bytool"></table></div>
-        <p class="small">Click a tool to see its folders and choose what to clear.</p>
-      </section>
-      <section class="panel" aria-label="Share by tier">
-        <h2>Share by tier</h2>
-        <div class="pie-wrap"><svg id="pie" viewBox="0 0 200 200" width="130" height="130" role="img" aria-label="Pie chart of size by tier"></svg><div class="legend" id="pie-legend"></div></div>
-        <div class="row-inline" style="margin-top:4px"><label><input type="checkbox" id="incl" checked> Include protected</label></div>
+        <div class="mline small" id="scope"></div>
       </section>
     </div>
+
+    <section class="panel" id="v-results" aria-label="Cleanup results" hidden></section>
 
     <main id="v-list" hidden>
       <div class="col">
         <section class="panel explorer" aria-label="Folder view">
           <div class="toolbar">
+            <button class="btn" id="backov" type="button">&larr; Overview</button>
             <div class="addr" id="addr" aria-label="Location of the selected item"></div>
             <div id="chips" role="group" aria-label="Filter items" style="display:flex;gap:6px;flex-wrap:wrap"></div>
           </div>
@@ -352,7 +406,6 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
   <p class="small" id="agentHint">The request is the same for every agent: paste it into Claude Code, Codex, Antigravity, Gemini or any agent that can read files and run commands, started in the folder that contains Ballast (edit the folder in the request if yours lives elsewhere). Only Claude Code has a link that fills the request in for you.</p>
 </div>
 
-<div class="pop" id="pop-results" role="dialog" aria-label="Cleanup results" hidden></div>
 <div class="pop" id="pop-about" role="dialog" aria-label="About us" hidden>
   <h3>What Ballast is</h3>
   <p>Plain-text instructions your AI agent follows to find and clear what AI tools leave behind: chat transcripts, virtual machine images, caches, scratch projects and stray processes. Nothing to install. It never deletes personal files.</p>
@@ -526,8 +579,8 @@ function renderGauge(){
 /* graphics memory in use: hidden when the scan has no readable numbers */
 function renderGpu(){
   var g=DATA.gpu,box=$('#gpu'),bar=clear($('#gpu-bar'));
-  if(!g){box.hidden=true;return;}
-  box.hidden=false;
+  if(!g){box.hidden=true;$('#gpublock').hidden=true;return;}
+  box.hidden=false;$('#gpublock').hidden=false;
   var line=g.name+': '+(g.total>0?'dedicated '+f1(g.used)+' of '+f1(g.total)+' GB, ':'no dedicated memory, ')+'shared '+f1(g.shared)+' GB (borrowed from system RAM).';
   clear($('#gpu-text')).append(document.createTextNode(T(line)));
   $('#gpu-bar-row').hidden=!(g.total>0);
@@ -558,8 +611,22 @@ function polar(cx,cy,r,a){return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
 function arc(cx,cy,r0,r1,a0,a1){var big=(a1-a0)>Math.PI?1:0,p0=polar(cx,cy,r1,a0),p1=polar(cx,cy,r1,a1),p2=polar(cx,cy,r0,a1),p3=polar(cx,cy,r0,a0);
   return 'M'+p0[0]+' '+p0[1]+' A'+r1+' '+r1+' 0 '+big+' 1 '+p1[0]+' '+p1[1]+' L'+p2[0]+' '+p2[1]+' A'+r0+' '+r0+' 0 '+big+' 0 '+p3[0]+' '+p3[1]+' Z';}
 function setFilter(f){S.toolFilter=null;S.filter=f;S.view=(f==='Grey')?'held':(f==='Red')?'prot':'clear';applyView();}
-function applyView(){var ov=S.view==='overview';$('#v-overview').hidden=!ov;$('#v-list').hidden=ov;renderChips();if(!ov)renderTree();$('#nav-folders').setAttribute('aria-current',ov?'false':'true');}
-function renderPie(){
+function goOverview(){S.toolFilter=null;S.view='overview';S.filter='all';applyView();}
+var VIEWS=['overview','clear','held','prot','results'];
+function applyView(fromHash){
+  var v=S.view,ov=v==='overview',rs=v==='results';
+  var show=ov?$('#v-overview'):rs?$('#v-results'):$('#v-list');
+  $('#v-overview').hidden=!ov;$('#v-results').hidden=!rs;$('#v-list').hidden=ov||rs;
+  renderChips();
+  if(!ov&&!rs){var cur=ITEMS.filter(function(i){return i.id===S.open;})[0];if(!cur||!passes(cur)){var f=ITEMS.filter(passes)[0];S.open=f?f.id:0;renderDetail();}renderTree();}
+  $('#nav-folders').setAttribute('aria-current',rs?'false':'true');$('#nav-results').setAttribute('aria-current',rs?'true':'false');
+  show.classList.remove('viewin');void show.offsetWidth;show.classList.add('viewin');
+  if(!fromHash){try{if(location.hash!=='#'+v)location.hash='#'+v;}catch(e){}}
+}
+window.addEventListener('hashchange',function(){var v=location.hash.slice(1);
+  if(VIEWS.indexOf(v)<0||v===S.view||(v==='results'&&!DATA.runs))return;
+  S.view=v;S.toolFilter=null;S.filter=v==='clear'?'sel':v==='held'?'Grey':v==='prot'?'Red':'all';applyView(true);});
+function renderPie(){if(!$('#pie'))return;
   var items=visible(),tot=sum(items),svg=clear($('#pie')),lg=clear($('#pie-legend')),a=-Math.PI/2;
   TIERS.forEach(function(t){
     var v=sum(items.filter(function(i){return i.tier===t;}));if(!v)return;
@@ -591,19 +658,45 @@ function renderBars(){if(!document.getElementById('bars'))return;
   TIERS.forEach(function(t){key.append(h('span',{},h('i',{style:'background:'+color(t)}),t));});
 }
 
+/* what can be cleared: the largest clearable items, with the same tick boxes as the list */
+function renderClearList(){
+  var box=clear($('#clearlist')),cl=ITEMS.filter(selectable).sort(function(a,b){return b.size-a.size;}),lim=5;
+  if(!cl.length){box.append(h('p',{class:'small'},'Nothing can be cleared right now. Held back items need something to close first: see the Held back tab.'));return;}
+  cl.slice(0,lim).forEach(function(it){
+    box.append(h('div',{class:'crow2'},radios(it),
+      h('button',{type:'button',class:'toollink sublink',title:it.name,onclick:function(){S.toolFilter=null;S.view='clear';S.filter='sel';applyView();openItem(it);}},it.name),
+      h('span',{class:'badge t-'+it.tier},it.tier),h('span',{class:'sz'},f2(it.size)+' GB'),h('span',{class:'cost',title:it.cost},it.cost)));});
+  if(cl.length>lim)box.append(h('button',{class:'btn',type:'button',style:'margin-top:6px',onclick:function(){S.toolFilter=null;S.view='clear';S.filter='sel';applyView();}},'See all '+cl.length+' in Can clear'));
+}
+
 /* summary by tool: the first screen. Click a tool to drill into its folders */
 function renderOverview(){
-  var by={};
-  ITEMS.forEach(function(i){var b=by[i.tool]=by[i.tool]||{tool:i.tool,clear:0,held:0,prot:0};
-    if(selectable(i))b.clear+=i.size;else if(i.tier==='Grey')b.held+=i.size;else b.prot+=i.size;});
-  var rows=Object.keys(by).map(function(k){return by[k];}).sort(function(a,b){return (b.clear+b.held+b.prot)-(a.clear+a.held+a.prot);});
-  var t=clear($('#bytool'));
+  var by={},names=[];
+  ITEMS.forEach(function(i){var b=by[i.tool];if(!b){b=by[i.tool]={tool:i.tool,clear:0,held:0,prot:0,items:[]};names.push(i.tool);}
+    if(selectable(i))b.clear+=i.size;else if(i.tier==='Grey')b.held+=i.size;else b.prot+=i.size;b.items.push(i);});
+  var rows=names.map(function(k){return by[k];}).sort(function(a,b){return (b.clear+b.held+b.prot)-(a.clear+a.held+a.prot);});
+  S.tx=S.tx||{};S.toolNames=names;
+  var t=clear($('#bytool')),tb=h('tbody');
   t.append(h('thead',{},h('tr',{},h('th',{},'Tool'),h('th',{class:'num'},'Can clear'),h('th',{class:'num'},'Held back'),h('th',{class:'num'},'Protected'),h('th',{class:'num'},'Total'))));
-  var tb=h('tbody');
   rows.forEach(function(b){
-    var go=function(){S.toolFilter=b.tool;S.view=b.clear>0?'clear':(b.held>0?'held':'prot');S.filter=S.view==='clear'?'sel':S.view==='held'?'Grey':'Red';applyView();};
-    tb.append(h('tr',{},h('th',{scope:'row'},h('button',{type:'button',class:'toollink',onclick:go},b.tool)),
+    var open=!!S.tx[b.tool];
+    /* open the tool in the folder list; with an item, also select that item */
+    var go=function(it){S.toolFilter=b.tool;
+      S.view=it?(selectable(it)?'clear':(it.tier==='Grey'?'held':'prot')):(b.clear>0?'clear':(b.held>0?'held':'prot'));
+      S.filter=S.view==='clear'?'sel':S.view==='held'?'Grey':'Red';applyView();if(it)openItem(it);};
+    var tw=h('button',{type:'button',class:'twisty','aria-expanded':open?'true':'false','aria-label':(open?'Collapse ':'Expand ')+b.tool,
+      onclick:function(){S.tx[b.tool]=!open;renderOverview();}},chev());
+    tb.append(h('tr',{class:'toolrow'},h('th',{scope:'row'},tw,h('button',{type:'button',class:'toollink',onclick:function(){go(null);}},b.tool)),
       h('td',{class:'cell'},b.clear?f2(b.clear):''),h('td',{class:'cell'},b.held?f2(b.held):''),h('td',{class:'cell'},b.prot?f2(b.prot):''),h('td',{class:'tot cell'},f2(b.clear+b.held+b.prot))));
+    if(open){
+      b.items.slice().sort(function(a,c){return c.size-a.size;}).slice(0,12).forEach(function(i){
+        var cells=['','',''];cells[selectable(i)?0:(i.tier==='Grey'?1:2)]=f2(i.size);
+        tb.append(h('tr',{class:'sub'},h('th',{scope:'row'},h('div',{class:'subname'},folderIcon(i.tier),
+            h('button',{type:'button',class:'toollink sublink',title:i.name,onclick:function(){go(i);}},i.name),h('span',{class:'badge t-'+i.tier},i.tier))),
+          h('td',{class:'cell'},cells[0]),h('td',{class:'cell'},cells[1]),h('td',{class:'cell'},cells[2]),h('td',{class:'cell'},f2(i.size))));});
+      if(b.items.length>12)tb.append(h('tr',{class:'sub'},h('th',{scope:'row'},h('div',{class:'subname'},
+        h('button',{type:'button',class:'toollink sublink',onclick:function(){go(null);}},'+'+(b.items.length-12)+' more, see the list'))),h('td'),h('td'),h('td'),h('td')));
+    }
   });
   t.append(tb);
 }
@@ -635,9 +728,13 @@ function renderPivot(){
 function renderChips(){
   var n=function(f){return ITEMS.filter(f).length;};
   var defs=[['overview','Overview'],['clear','Can clear '+n(selectable)],['held','Held back '+n(function(i){return i.tier==='Grey';})],['prot','Protected '+n(function(i){return i.tier==='Red';})]];
-  var box=clear($('#vtabs'));
-  defs.forEach(function(d){box.append(h('button',{class:'chip',type:'button','aria-pressed':S.view===d[0]?'true':'false',onclick:function(){
-    S.toolFilter=null;S.view=d[0];S.filter=d[0]==='clear'?'sel':d[0]==='held'?'Grey':d[0]==='prot'?'Red':'all';applyView();}},d[1]));});
+  if(DATA.runs)defs.push(['results','Results']);
+  var box=$('#vtabs');
+  /* build the tabs once, then only update their text and state, so focus and hover are not lost */
+  if(box.children.length!==defs.length){clear(box);
+    defs.forEach(function(d){box.append(h('button',{class:'chip',type:'button',onclick:function(){
+      S.toolFilter=null;S.view=d[0];S.filter=d[0]==='clear'?'sel':d[0]==='held'?'Grey':d[0]==='prot'?'Red':'all';applyView();}},d[1]));});}
+  defs.forEach(function(d,i){var bt=box.children[i];bt.textContent=d[1];bt.setAttribute('aria-pressed',S.view===d[0]?'true':'false');});
   var tb=clear($('#chips'));
   if(S.toolFilter)tb.append(h('button',{class:'chip',type:'button','aria-pressed':'true',onclick:function(){S.toolFilter=null;applyView();}},'Tool: '+S.toolFilter+' (show all)'));
 }
@@ -656,7 +753,7 @@ function buildTree(){
   });
   return root;
 }
-function sizeOf(n){if(n.leaf)return n.leaf.size;return Object.keys(n.kids).reduce(function(t,k){return t+sizeOf(n.kids[k]);},0);}
+function sizeOf(n){if(n.leaf)return passes(n.leaf.item)?n.leaf.size:0;return Object.keys(n.kids).reduce(function(t,k){return t+sizeOf(n.kids[k]);},0);}
 function vis(n){if(n.leaf)return passes(n.leaf.item);return Object.keys(n.kids).some(function(k){return vis(n.kids[k]);});}
 function folderIcon(tier){
   return sv('svg',{viewBox:'0 0 20 16',width:20,height:16,'aria-hidden':'true',style:'flex:none'},
@@ -676,7 +773,7 @@ function radios(it){
   c.checked=S.choice[it.id]===opt[0];
   return h('fieldset',{class:'opts'},h('legend',{},'Your choice for '+it.name),h('label',{class:'o-'+opt[0]},c,opt[1]));
 }
-function openItem(it){S.open=it.id;document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.toggle('open',Number(r.getAttribute('data-item'))===it.id);});renderDetail();showTab('d');}
+function openItem(it){S.fadeDetail=true;S.open=it.id;document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.toggle('open',Number(r.getAttribute('data-item'))===it.id);});renderDetail();showTab('d');}
 function mk(n,depth,key){
   if(!vis(n))return null;
   var name=n.name,k=key;
@@ -707,28 +804,29 @@ function updateStatus(){
   var shown=ITEMS.filter(passes);
   $('#status').textContent=shown.length+' items, '+f2(sum(shown))+' GB. '+chosen('clear').length+' marked Clear, '+chosen('check').length+' marked Check first.';
   var cl=ITEMS.filter(selectable),gr=ITEMS.filter(function(i){return i.tier==='Grey';}),rd=ITEMS.filter(function(i){return i.tier==='Red';});
-  clear($('#metrics')).append(h('div',{},h('b',{},f2(sum(cl))+' GB'),' can be cleared (Green and Yellow), in '+cl.length+' items'),
-    h('div',{},h('b',{},f2(sum(gr))+' GB'),' held back (Grey): in use or unknown'),
-    h('div',{},h('b',{},f2(sum(rd))+' GB'),' protected (Red): never offered'));
+  clear($('#metrics')).append(h('b',{},f2(sum(cl))+' GB'),' can be cleared in '+cl.length+' items  |  ',h('b',{},f2(sum(gr))+' GB'),' held back  |  ',h('b',{},f2(sum(rd))+' GB'),' protected');
 }
 /* what a cleanup did, in numbers: only drawn when the data has a runs block */
 function renderResults(){
-  var R=DATA.runs,box=clear($('#pop-results'));
-  if(!R){$('#nav-results').hidden=true;return;}
+  var R=DATA.runs,box=clear($('#v-results')),strip=clear($('#resultstrip'));
+  if(!R){$('#nav-results').hidden=true;$('#resultstrip').hidden=true;return;}
   $('#nav-results').hidden=false;
   var tc=0,tg=0,ts=0,tf=0;
   R.forEach(function(r){tc+=r.c;tg+=r.cg;ts+=r.s;tf+=r.fl;});
-  box.append(h('h3',{},'Cleanup results'),
+  var last=R[R.length-1],dl=last.f-last.b;
+  strip.append(h('b',{},'Last cleanup:'),
+    h('span',{},'free space '+(dl>=0?'+':'-')+f1(Math.abs(dl))+' GB ('+f1(last.b)+' to '+f1(last.f)+' GB). '+last.c+' cleared, '+last.s+' skipped, '+last.fl+' failed.'+(R.length>1?' In all: '+tc+' items, '+f2(tg)+' GB, in '+R.length+' runs.':'')),
+    h('button',{class:'btn',type:'button',onclick:function(){S.toolFilter=null;S.view='results';S.filter='all';applyView();}},'See results'));
+  $('#resultstrip').hidden=false;
+  box.append(h('div',{class:'backrow'},h('button',{class:'btn',type:'button',onclick:goOverview},'\u2190 Overview'),h('h2',{style:'margin:0'},'Cleanup results')),
     h('p',{},'Cleared '+tc+' items, '+f2(tg)+' GB, in '+R.length+(R.length>1?' runs':' run')+'. Skipped '+ts+'. Failed '+tf+'.'));
-  R.forEach(function(r){
-    var d=r.f-r.b,dl=h('dl',{});
-    dl.append(h('dt',{},'Free space'),h('dd',{},f1(r.b)+' GB to '+f1(r.f)+' GB ('+(d>=0?'+':'-')+f1(Math.abs(d))+' GB)'));
-    dl.append(h('dt',{},'Cleared'),h('dd',{},r.c+' items, '+f2(r.cg)+' GB'));
-    dl.append(h('dt',{},'Skipped'),h('dd',{},r.s+(r.sw?' ('+r.sw+')':'')));
-    dl.append(h('dt',{},'Failed'),h('dd',{},r.fl+(r.fw?' ('+r.fw+')':'')));
-    box.append(h('h3',{},r.label),dl);
-  });
-  box.append(h('p',{},'Free space can fall during a run when a program is writing files at the same time. These numbers are what your agent measured.'));
+  var t=h('table',{class:'pivot'}),tb=h('tbody');
+  t.append(h('thead',{},h('tr',{},h('th',{},'Run'),h('th',{class:'num'},'Free before'),h('th',{class:'num'},'Free after'),h('th',{class:'num'},'Change'),h('th',{class:'num'},'Cleared'),h('th',{},'Skipped'),h('th',{},'Failed'))));
+  R.forEach(function(r){var d=r.f-r.b;
+    tb.append(h('tr',{},h('th',{scope:'row'},r.label),h('td',{class:'cell'},f1(r.b)+' GB'),h('td',{class:'cell'},f1(r.f)+' GB'),h('td',{class:'cell'},(d>=0?'+':'-')+f1(Math.abs(d))+' GB'),
+      h('td',{class:'cell'},r.c+' items, '+f2(r.cg)+' GB'),h('td',{},r.s+(r.sw?' ('+r.sw+')':'')),h('td',{},r.fl+(r.fw?' ('+r.fw+')':''))));});
+  t.append(tb);
+  box.append(h('div',{class:'tscroll'},t),h('p',{class:'small'},'Free space can fall during a run when a program is writing files at the same time. These numbers are what your agent measured.'));
 }
 function expandPath(p){
   var parts=p.split('\\'),first=parts[0],rest=parts.slice(1);
@@ -758,6 +856,7 @@ function renderDetail(){
   rowsEv.filter(function(r){return r.st===cur;}).forEach(function(r){var tx=EVL[r.id]+': '+r.tx;
     ul.append(h('li',{},h('span',{class:'st '+r.st},STL[r.st]),h('span',{class:'tx',title:tx},h('b',{},EVL[r.id]),'  '+r.tx)));});
   box.append(tabs,ul);
+  if(S.fadeDetail){S.fadeDetail=false;box.classList.remove('viewin');void box.offsetWidth;box.classList.add('viewin');}
 }
 
 /* tabs and rail */
@@ -777,13 +876,13 @@ $('#nav-folders').addEventListener('click',function(){closePops();if(S.view==='o
 $('#nav-breakdown').addEventListener('click',function(){closePops();if(S.view==='overview'){S.filter='sel';S.view='clear';}applyView();showTab('p');$('#tab-p').focus();});
 
 /* popovers opened from the rail */
-function closePops(){['results','scan','about'].forEach(function(n){$('#pop-'+n).hidden=true;$('#nav-'+n).setAttribute('aria-expanded','false');});}
+function closePops(){['scan','about'].forEach(function(n){$('#pop-'+n).hidden=true;$('#nav-'+n).setAttribute('aria-expanded','false');});}
 function togglePop(n){var p=$('#pop-'+n),wasHidden=p.hidden;closePops();if(wasHidden){p.hidden=false;$('#nav-'+n).setAttribute('aria-expanded','true');}}
-$('#nav-results').addEventListener('click',function(e){e.stopPropagation();togglePop('results');});
+$('#nav-results').addEventListener('click',function(){closePops();S.toolFilter=null;S.view='results';S.filter='all';applyView();});
 $('#nav-scan').addEventListener('click',function(e){e.stopPropagation();togglePop('scan');});
 $('#nav-about').addEventListener('click',function(e){e.stopPropagation();togglePop('about');});
 document.addEventListener('click',function(e){if(!e.target.closest('.pop'))closePops();});
-document.addEventListener('keydown',function(e){if(e.key==='Escape')closePops();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'){var any=['scan','about'].some(function(n){return !$('#pop-'+n).hidden;});closePops();if(!any&&S.view!=='overview')goOverview();}});
 
 /* theme */
 function setTheme(th,nosave){document.documentElement.setAttribute('data-theme',th);
@@ -813,12 +912,15 @@ fillSel('#rowDim','tool');fillSel('#colDim','tier');
 $('#rowDim').addEventListener('change',function(){S.rowDim=this.value;renderPivot();});
 $('#colDim').addEventListener('change',function(){S.colDim=this.value;renderPivot();});
 $('#measure').addEventListener('change',function(){S.measure=this.value;renderPivot();});
-$('#incl').addEventListener('change',function(){S.incl=this.checked;renderPie();renderBars();renderPivot();});
+if($('#incl'))$('#incl').addEventListener('change',function(){S.incl=this.checked;renderPie();renderBars();renderPivot();});
 $('#target').addEventListener('input',function(){var v=Number(this.value);if(v>0){S.target=v;renderGauge();}});
 /* the message box can grow so the whole message can be read before it is copied */
 $('#expand').addEventListener('click',function(){
   var big=$('#reply').classList.toggle('big');
   this.setAttribute('aria-expanded',big?'true':'false');this.textContent=big?'Collapse message':'Expand message';});
+$('#backov').addEventListener('click',goOverview);
+$('#expAll').addEventListener('click',function(){S.toolNames.forEach(function(n){S.tx[n]=true;});renderOverview();});
+$('#colAll').addEventListener('click',function(){S.tx={};renderOverview();});
 $('#reset').addEventListener('click',function(){ITEMS.forEach(function(i){S.choice[i.id]='keep';});
   document.querySelectorAll('input[type=checkbox][data-item]').forEach(function(r){r.checked=false;});
   document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.remove('marked');});
@@ -828,9 +930,7 @@ $('#target').value=DATA.target;
 if(DATA.example)$('#example').hidden=false;
 $('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
 syncScan();
-renderGauge();renderGpu();renderResults();renderOverview();renderPie();renderBars();renderPivot();applyView();updateStatus();renderDetail();renderSticky();
-/* after a cleanup the page opens on its numbers; the example data does not pop anything open */
-if(DATA.runs&&!DATA.example)togglePop('results');
+renderGauge();renderGpu();renderResults();renderOverview();renderClearList();renderPie();renderBars();renderPivot();applyView(true);updateStatus();renderDetail();renderSticky();
 })();
 </script>
 </body>

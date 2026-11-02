@@ -3,7 +3,7 @@
 **By default, give the user the dashboard link after every scan, and again after every cleanup** (with the numbers
 for what the cleanup did). There are two forms:
 
-1. **The HTML dashboard (default).** A static page in [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html): folder view, Keep / Clear / Check first choices, charts, tier totals, a breakdown table, a **Results** view after a cleanup, and a message the user copies back to you (the box can be expanded to read all of it).
+1. **The HTML dashboard (default).** A static page in [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html). The free-space bar is in the header on every tab. It opens on the **Overview**: the last cleanup, what can be cleared (tick boxes), and folders by tool with expand arrows. Tabs lead to Can clear, Held back, Protected and, after a cleanup, **Results**. The message the user copies back to you is in the footer, and the box can be expanded to read all of it.
 2. **Markdown dashboard (fallback).** A table in chat. Use it only when the user has no browser, declines the page, or you cannot create the file.
 
 **The HTML page is a template.** You fill in **data only** (a JSON block). You never write or edit its code.

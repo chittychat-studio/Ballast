@@ -9,7 +9,7 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
   destructive ones must sit behind the approval steps.
 - **The dashboard page is code.** Changes to `dashboard/ballast-dashboard.html` need a maintainer review. It must stay
   dependency-free, make no network requests, keep its Content-Security-Policy, build everything with text nodes (never
-  `innerHTML`), and validate and sanitise every field. Re-run the dashboard tests D1 to D6 in
+  `innerHTML`), and validate and sanitise every field. Re-run the dashboard tests D1 to D7 in
   [dev/tests.md](dev/tests.md) (injected markup, script tags, text-direction characters, invalid tiers) before
   submitting.
 - **Write your own rules.** Do not copy rules from other cleaners or rule databases without checking

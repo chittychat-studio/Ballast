@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" width="1200" height="760" font-family="Segoe UI, Segoe UI Variable Text, system-ui, -apple-system, Roboto, Arial, sans-serif" role="img" aria-labelledby="t d">
 <title id="t">Ballast dashboard, sample with example data</title>
-<desc id="d">A folder list with Keep, Clear and Check first choices, tabs by tier, a free-space bar, a GPU memory line and bar, totals by tier, a summary by tool, a share-by-tier chart and a message bar for your agent.</desc>
+<desc id="d">A folder list with Keep, Clear and Check first choices, a free-space bar in the header, tabs by tier, the last cleanup, what can be cleared, folders with expand arrows and a prompt bar for your agent.</desc>
 <rect x="0" y="0" width="1200" height="760" rx="0" fill="#21252b"/>
 <rect x="0" y="0" width="1200" height="44" rx="0" fill="#21252b"/>
 <g transform="translate(14,6) scale(0.667)"><rect x="2" y="2" width="44" height="44" rx="10" fill="#2a78cc"/><circle cx="24" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="2.4"/><path d="M17 17.5h14l5 15a2 2 0 0 1-1.9 2.6H13.9a2 2 0 0 1-1.9-2.6z" fill="#fff"/><path d="M9 39.5c3-2 6-2 9 0s6 2 9 0 6-2 9 0" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/></g>
@@ -8,8 +8,9 @@
 <rect x="142" y="10" width="118" height="24" rx="12" fill="#e1c08d"/>
 <text x="201" y="26" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">EXAMPLE DATA</text>
 <rect x="0" y="44" width="88" height="716" rx="0" fill="#333842"/>
-<g transform="translate(29,58) scale(1.25)" fill="none" stroke="#d7dae0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v8.5A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/></g>
-<text x="44" y="110" font-size="12.5" font-weight="600" fill="#d7dae0" text-anchor="middle">Folders</text>
+<rect x="0" y="44" width="88" height="80" rx="0" fill="#4d78cc"/>
+<g transform="translate(29,58) scale(1.25)" fill="none" stroke="#ffffff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v8.5A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/></g>
+<text x="44" y="110" font-size="12.5" font-weight="600" fill="#ffffff" text-anchor="middle">Folders</text>
 <rect x="0" y="123" width="88" height="1" rx="0" fill="#ffffff" fill-opacity="0.07"/>
 <g transform="translate(29,138) scale(1.25)" fill="none" stroke="#d7dae0" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 20V11M12 20V5M19 20v-7"/></g>
 <text x="44" y="190" font-size="12.5" font-weight="600" fill="#d7dae0" text-anchor="middle">Breakdown</text>
@@ -25,6 +26,15 @@
 <rect x="0" y="443" width="88" height="1" rx="0" fill="#ffffff" fill-opacity="0.07"/>
 <g transform="translate(29,694) scale(1.25)" fill="none" stroke="#d7dae0" stroke-width="1.8"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="#d7dae0"/></g>
 <text x="44" y="746" font-size="12.5" font-weight="600" fill="#d7dae0" text-anchor="middle">Dark</text>
+<text x="300" y="28" font-size="13.5" font-weight="400" fill="#e6e9ee" text-anchor="start">Free 41.0 GB of 256 GB, projected 51.8 GB. 8.2 GB short.</text>
+<text x="655" y="28" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="start">Target</text>
+<rect x="702" y="11" width="44" height="22" rx="3" fill="#3b414b" stroke="#5d6570" stroke-width="1"/>
+<text x="724" y="27" font-size="14" font-weight="700" fill="#ffffff" text-anchor="middle">60</text>
+<text x="752" y="28" font-size="13.5" font-weight="700" fill="#ffffff" text-anchor="start">GB</text>
+<rect x="790" y="14" width="300" height="14" rx="2" fill="#3b414b" stroke="#5d6570" stroke-width="1"/>
+<rect x="791" y="15" width="204" height="12" rx="0" fill="#74c991"/>
+<rect x="995" y="15" width="50" height="12" rx="0" fill="#74c991" fill-opacity="0.45"/>
+<text x="1186" y="28" font-size="14" font-weight="700" fill="#ffffff" text-anchor="end">68%</text>
 <rect x="100" y="56" width="98" height="30" rx="15" fill="#4d78cc" stroke="#4d78cc" stroke-width="1"/>
 <text x="149.0" y="76" font-size="14.5" font-weight="600" fill="#ffffff" text-anchor="middle">Overview</text>
 <rect x="206" y="56" width="112" height="30" rx="15" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
@@ -33,90 +43,112 @@
 <text x="382.0" y="76" font-size="14.5" font-weight="600" fill="#cccccc" text-anchor="middle">Held back 3</text>
 <rect x="446" y="56" width="112" height="30" rx="15" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
 <text x="502.0" y="76" font-size="14.5" font-weight="600" fill="#cccccc" text-anchor="middle">Protected 2</text>
-<rect x="100" y="96" width="1092" height="140" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
-<rect x="480" y="97" width="1" height="138" rx="0" fill="#181a1f"/>
-<text x="114" y="122" font-size="13.5" font-weight="400" fill="#cccccc" text-anchor="start">Free 41.0 GB of 256 GB, projected 51.8 GB. 8.2 GB short.</text>
-<text x="114" y="146" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">Target</text>
-<rect x="160" y="131" width="44" height="22" rx="3" fill="#1b1d23" stroke="#181a1f" stroke-width="1"/>
-<text x="182" y="147" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="middle">60</text>
-<text x="210" y="146" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">GB</text>
-<rect x="114" y="162" width="330" height="14" rx="2" fill="#1b1d23" stroke="#181a1f" stroke-width="1"/>
-<rect x="115" y="163" width="224" height="12" rx="0" fill="#74c991"/>
-<rect x="339" y="163" width="53" height="12" rx="0" fill="#74c991" fill-opacity="0.45"/>
-<text x="462" y="175" font-size="15" font-weight="700" fill="#d7dae0" text-anchor="end">68%</text>
-<rect x="114" y="186" width="350" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="203" font-size="12" font-weight="400" fill="#cccccc" text-anchor="start">Example graphics card: dedicated 3.1 of 8.0 GB,</text>
-<text x="114" y="217" font-size="12" font-weight="400" fill="#cccccc" text-anchor="start">shared 0.4 GB (borrowed from system RAM).</text>
-<rect x="114" y="222" width="330" height="8" rx="2" fill="#1b1d23" stroke="#181a1f" stroke-width="1"/>
-<rect x="115" y="223" width="128" height="6" rx="0" fill="#74c991"/>
-<text x="500" y="134" font-size="15" font-weight="700" fill="#d7dae0" text-anchor="start">14.80 GB</text>
-<text x="568.8" y="134" font-size="15" font-weight="400" fill="#cccccc" text-anchor="start"> can be cleared (Green and Yellow), in 3 items</text>
-<text x="500" y="162" font-size="15" font-weight="700" fill="#d7dae0" text-anchor="start">2.20 GB</text>
-<text x="560.2" y="162" font-size="15" font-weight="400" fill="#cccccc" text-anchor="start"> held back (Grey): in use or unknown</text>
-<text x="500" y="190" font-size="15" font-weight="700" fill="#d7dae0" text-anchor="start">9.40 GB</text>
-<text x="560.2" y="190" font-size="15" font-weight="400" fill="#cccccc" text-anchor="start"> protected (Red): never offered</text>
-<text x="500" y="220" font-size="12.5" font-weight="400" fill="#9c9ea1" text-anchor="start">Example scope: the user profile and AppData\Local. System folders are never offered.</text>
-<rect x="100" y="246" width="598" height="374" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
-<text x="114" y="272" font-size="15" font-weight="700" fill="#3794ff" text-anchor="start">Summary by tool</text>
-<text x="114" y="304" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="start">Tool</text>
-<text x="410" y="304" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Can clear</text>
-<text x="510" y="304" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Held back</text>
-<text x="610" y="304" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Protected</text>
-<text x="684" y="304" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Total</text>
-<rect x="114" y="312" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="336" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude desktop</text>
-<text x="410" y="336" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">11.50</text>
-<text x="510" y="336" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="610" y="336" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="684" y="336" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">11.50</text>
-<rect x="114" y="346" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="364" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your files and apps</text>
-<text x="410" y="364" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="510" y="364" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="610" y="364" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">9.40</text>
-<text x="684" y="364" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">9.40</text>
-<rect x="114" y="374" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="392" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude Code</text>
-<text x="410" y="392" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">3.30</text>
-<text x="510" y="392" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
-<text x="610" y="392" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="684" y="392" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">4.10</text>
-<rect x="114" y="402" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="420" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Unknown maker</text>
-<text x="410" y="420" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="510" y="420" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
-<text x="610" y="420" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="684" y="420" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.80</text>
-<rect x="114" y="430" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="448" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your projects (agent-made)</text>
-<text x="410" y="448" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="510" y="448" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.60</text>
-<text x="610" y="448" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
-<text x="684" y="448" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.60</text>
-<rect x="114" y="458" width="570" height="1" rx="0" fill="#181a1f"/>
-<text x="114" y="496" font-size="13" font-weight="400" fill="#9c9ea1" text-anchor="start">Click a tool to see its folders and choose what to clear.</text>
-<rect x="710" y="246" width="482" height="374" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
-<text x="724" y="272" font-size="15" font-weight="700" fill="#3794ff" text-anchor="start">Share by tier</text>
-<path d="M790.0 310.0 A62 62 0 0 1 800.3 310.9 L795.3 340.4 A32 32 0 0 0 790.0 340.0Z" fill="#74c991" stroke="#282c34" stroke-width="3"/>
-<path d="M800.3 310.9 A62 62 0 1 1 767.0 429.6 L778.1 401.7 A32 32 0 1 0 795.3 340.4Z" fill="#e1c08d" stroke="#282c34" stroke-width="3"/>
-<path d="M767.0 429.6 A62 62 0 0 1 741.3 410.3 L764.8 391.8 A32 32 0 0 0 778.1 401.7Z" fill="#7f848e" stroke="#282c34" stroke-width="3"/>
-<path d="M741.3 410.3 A62 62 0 0 1 790.0 310.0 L790.0 340.0 A32 32 0 0 0 764.8 391.8Z" fill="#c74e39" stroke="#282c34" stroke-width="3"/>
-<text x="790" y="376" font-size="18" font-weight="700" fill="#d7dae0" text-anchor="middle">26.4</text>
-<text x="790" y="392" font-size="11" font-weight="600" fill="#9c9ea1" text-anchor="middle">GB</text>
-<rect x="880" y="320" width="12" height="12" rx="2" fill="#74c991"/>
-<text x="898" y="330" font-size="13" font-weight="400" fill="#cccccc" text-anchor="start">Green</text>
-<text x="1176" y="330" font-size="13" font-weight="600" fill="#cccccc" text-anchor="end">0.70 GB</text>
-<rect x="880" y="344" width="12" height="12" rx="2" fill="#e1c08d"/>
-<text x="898" y="354" font-size="13" font-weight="400" fill="#cccccc" text-anchor="start">Yellow</text>
-<text x="1176" y="354" font-size="13" font-weight="600" fill="#cccccc" text-anchor="end">14.10 GB</text>
-<rect x="880" y="368" width="12" height="12" rx="2" fill="#7f848e"/>
-<text x="898" y="378" font-size="13" font-weight="400" fill="#cccccc" text-anchor="start">Grey</text>
-<text x="1176" y="378" font-size="13" font-weight="600" fill="#cccccc" text-anchor="end">2.20 GB</text>
-<rect x="880" y="392" width="12" height="12" rx="2" fill="#c74e39"/>
-<text x="898" y="402" font-size="13" font-weight="400" fill="#cccccc" text-anchor="start">Red</text>
-<text x="1176" y="402" font-size="13" font-weight="600" fill="#cccccc" text-anchor="end">9.40 GB</text>
-<rect x="724" y="452" width="14" height="14" rx="3" fill="#4d78cc"/>
-<text x="744" y="464" font-size="13" font-weight="400" fill="#9c9ea1" text-anchor="start">Include protected</text>
+<rect x="566" y="56" width="90" height="30" rx="15" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="611.0" y="76" font-size="14.5" font-weight="600" fill="#cccccc" text-anchor="middle">Results</text>
+<rect x="100" y="94" width="1092" height="58" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="114" y="116" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">Last cleanup:</text>
+<text x="220" y="116" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">free space +10.8 GB (30.2 to 41.0 GB). 3 cleared, 1 skipped, 0 failed.</text>
+<rect x="760" y="101" width="100" height="24" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="810" y="118" font-size="13" font-weight="700" fill="#cccccc" text-anchor="middle">See results</text>
+<text x="114" y="140" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">14.80 GB</text>
+<text x="190" y="140" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">can be cleared in 3 items   |   </text>
+<text x="382" y="140" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">2.20 GB</text>
+<text x="440" y="140" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">held back   |   </text>
+<text x="528" y="140" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">9.40 GB</text>
+<text x="586" y="140" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">protected</text>
+<rect x="100" y="162" width="1092" height="136" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="114" y="186" font-size="15" font-weight="700" fill="#3794ff" text-anchor="start">What can be cleared</text>
+<text x="1178" y="186" font-size="12.5" font-weight="400" fill="#9c9ea1" text-anchor="end">Tick what you want cleared. Your agent asks again before deleting anything.</text>
+<rect x="114" y="220" width="1064" height="1" rx="0" fill="#181a1f"/>
+<rect x="114" y="204" width="14" height="14" rx="2" fill="#1b1d23" stroke="#9c9ea1" stroke-width="1"/>
+<text x="134" y="216" font-size="14" font-weight="700" fill="#c74e39" text-anchor="start">Clear</text>
+<text x="204" y="216" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">vm_bundles\claudevm.bundle</text>
+<rect x="520" y="202" width="62" height="20" rx="10.0" fill="#e1c08d" stroke="#e1c08d" stroke-width="1"/>
+<text x="551.0" y="216.4" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">Yellow</text>
+<text x="700" y="216" font-size="14" font-weight="600" fill="#cccccc" text-anchor="end">10.80 GB</text>
+<text x="720" y="216" font-size="13" font-weight="400" fill="#9c9ea1" text-anchor="start">Wipes Cowork session data; the app rebuilds it.</text>
+<rect x="114" y="250" width="1064" height="1" rx="0" fill="#181a1f"/>
+<rect x="114" y="234" width="14" height="14" rx="2" fill="#1b1d23" stroke="#9c9ea1" stroke-width="1"/>
+<text x="134" y="246" font-size="14" font-weight="700" fill="#c74e39" text-anchor="start">Clear</text>
+<text x="204" y="246" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">projects\*.jsonl</text>
+<rect x="520" y="232" width="62" height="20" rx="10.0" fill="#e1c08d" stroke="#e1c08d" stroke-width="1"/>
+<text x="551.0" y="246.4" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">Yellow</text>
+<text x="700" y="246" font-size="14" font-weight="600" fill="#cccccc" text-anchor="end">3.30 GB</text>
+<text x="720" y="246" font-size="13" font-weight="400" fill="#9c9ea1" text-anchor="start">Old chats can no longer be resumed.</text>
+<rect x="114" y="280" width="1064" height="1" rx="0" fill="#181a1f"/>
+<rect x="114" y="264" width="14" height="14" rx="2" fill="#1b1d23" stroke="#9c9ea1" stroke-width="1"/>
+<text x="134" y="276" font-size="14" font-weight="700" fill="#c74e39" text-anchor="start">Clear</text>
+<text x="204" y="276" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Cache, Code Cache</text>
+<rect x="520" y="262" width="62" height="20" rx="10.0" fill="#74c991" stroke="#74c991" stroke-width="1"/>
+<text x="551.0" y="276.4" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Green</text>
+<text x="700" y="276" font-size="14" font-weight="600" fill="#cccccc" text-anchor="end">0.70 GB</text>
+<text x="720" y="276" font-size="13" font-weight="400" fill="#9c9ea1" text-anchor="start">Rebuilt as you use the app.</text>
+<rect x="100" y="308" width="1092" height="312" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="114" y="332" font-size="15" font-weight="700" fill="#3794ff" text-anchor="start">Folders</text>
+<rect x="978" y="316" width="92" height="24" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="1024" y="333" font-size="12.5" font-weight="700" fill="#cccccc" text-anchor="middle">Expand all</text>
+<rect x="1080" y="316" width="98" height="24" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
+<text x="1129" y="333" font-size="12.5" font-weight="700" fill="#cccccc" text-anchor="middle">Collapse all</text>
+<text x="114" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="start">Tool</text>
+<text x="760" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Can clear</text>
+<text x="880" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Held back</text>
+<text x="1000" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Protected</text>
+<text x="1170" y="362" font-size="13.5" font-weight="700" fill="#cccccc" text-anchor="end">Total</text>
+<rect x="114" y="370" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(116,385)" d="M2 3l4 4 4-4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="394" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude desktop</text>
+<text x="760" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">11.50</text>
+<text x="880" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1000" y="394" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="394" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">11.50</text>
+<rect x="114" y="402" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(142,410)" d="M1 3a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" fill="#e1c08d"/>
+<text x="168" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">vm_bundles\claudevm.bundle</text>
+<rect x="420" y="409" width="62" height="19" rx="9.5" fill="#e1c08d" stroke="#e1c08d" stroke-width="1"/>
+<text x="451.0" y="422.68" font-size="12" font-weight="700" fill="#000000" text-anchor="middle">Yellow</text>
+<text x="760" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">10.80</text>
+<text x="880" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1000" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="422" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">10.80</text>
+<rect x="114" y="430" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(142,438)" d="M1 3a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z" fill="#74c991"/>
+<text x="168" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="start">Cache, Code Cache</text>
+<rect x="420" y="437" width="62" height="19" rx="9.5" fill="#74c991" stroke="#74c991" stroke-width="1"/>
+<text x="451.0" y="450.68" font-size="12" font-weight="700" fill="#ffffff" text-anchor="middle">Green</text>
+<text x="760" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.70</text>
+<text x="880" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1000" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="450" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.70</text>
+<rect x="114" y="458" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(116,469)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="478" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your files and apps</text>
+<text x="760" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="880" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1000" y="478" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">9.40</text>
+<text x="1170" y="478" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">9.40</text>
+<rect x="114" y="486" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(116,497)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="506" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Claude Code</text>
+<text x="760" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">3.30</text>
+<text x="880" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
+<text x="1000" y="506" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="506" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">4.10</text>
+<rect x="114" y="514" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(116,525)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="534" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Unknown maker</text>
+<text x="760" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="880" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.80</text>
+<text x="1000" y="534" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="534" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.80</text>
+<rect x="114" y="542" width="1064" height="1" rx="0" fill="#181a1f"/>
+<path transform="translate(116,553)" d="M3 2l4 4-4 4" fill="none" stroke="#9c9ea1" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+<text x="138" y="562" font-size="14" font-weight="700" fill="#3794ff" text-anchor="start">Your projects (agent-made)</text>
+<text x="760" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="880" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end">0.60</text>
+<text x="1000" y="562" font-size="14" font-weight="400" fill="#cccccc" text-anchor="end"></text>
+<text x="1170" y="562" font-size="14" font-weight="700" fill="#cccccc" text-anchor="end">0.60</text>
+<rect x="114" y="570" width="1064" height="1" rx="0" fill="#181a1f"/>
+<text x="114" y="594" font-size="12" font-weight="400" fill="#9c9ea1" text-anchor="start">Example graphics card: dedicated 3.1 of 8.0 GB, shared 0.4 GB (borrowed from system RAM).</text>
 <rect x="100" y="632" width="1092" height="112" rx="3" fill="#282c34" stroke="#181a1f" stroke-width="1"/>
 <text x="114" y="656" font-size="14" font-weight="700" fill="#d7dae0" text-anchor="start">Step 1: pick Keep or Clear for each folder. Nothing is deleted from this page.</text>
 <rect x="114" y="666" width="860" height="44" rx="3" fill="#1b1d23" stroke="#181a1f" stroke-width="1"/>

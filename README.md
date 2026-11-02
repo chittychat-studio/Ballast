@@ -94,11 +94,16 @@ instructions if you tell it to read `AGENTS.md`.
 <sub>A picture of the dashboard with example data. Your own scan fills it with your folders.</sub>
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
-and gives you a link to a local copy. Open the template directly to see it with example data. It opens on an
-**Overview** (free space, totals, a summary by tool, a chart by tier). Tabs by tier lead to what you can clear, what is
-held back and what is protected; click a tool to see its folders and tick what to clear. After a cleanup it opens on a
-**Results** view with the numbers. It also has a GPU memory line (shown only when your scan measured it), a
-breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
+and gives you a link to a local copy. Open the template directly to see it with example data.
+
+- **Header:** your free-space bar and target, on every tab.
+- **Overview (opens here):** the last cleanup, what can be cleared (with tick boxes), and your folders by tool, each with
+  an expand arrow like Windows Explorer. The prompt for your agent is in the footer, and you can expand it to read all of it.
+- **Tabs:** Can clear, Held back (in use or unknown), Protected (never offered) and, after a cleanup, **Results** with the
+  numbers: space freed, items cleared, skipped and failed. There is a back button and the Esc key.
+- Also: a GPU memory line (only when your scan measured it), a breakdown table, light and dark themes, and "Scan again".
+
+See [dashboard.md](dashboard.md).
 
 ## What is in this repo
 
