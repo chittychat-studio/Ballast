@@ -1,0 +1,712 @@
+<!doctype html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; base-uri 'none'; form-action 'none'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- Ballast dashboard template. Your agent fills only the JSON block with id ballast-data. It never edits the code. See dashboard.md. -->
+<title>Ballast</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 48'%3E%3Crect x='2' y='2' width='44' height='44' rx='10' fill='%232a78cc'/%3E%3Ccircle cx='24' cy='12' r='3.6' fill='none' stroke='white' stroke-width='2.4'/%3E%3Cpath d='M17 17.5h14l5 15a2 2 0 0 1-1.9 2.6H13.9a2 2 0 0 1-1.9-2.6z' fill='white'/%3E%3Cpath d='M9 39.5c3-2 6-2 9 0s6 2 9 0 6-2 9 0' fill='none' stroke='white' stroke-width='2' opacity='.85'/%3E%3C/svg%3E">
+<script>
+/* apply the saved theme before first paint so a refresh does not flash light */
+try{var t=localStorage.getItem('ballast-theme');if(t==='dark'||t==='light')document.documentElement.setAttribute('data-theme',t);}catch(e){}
+</script>
+<style>
+:root{
+  --bg:#eceef1; --panel:#ffffff; --ink:#23272c; --muted:#5b6673; --line:#d2d6dc; --track:#e4e7eb;
+  --head:#23272b; --rail:#383c41; --rail-h:#474c52; --rail-ink:#cfd5db;
+  --blue:#2a78cc; --blue-ink:#1b6bc0; --prog:#72c79d;
+  --green:#4a9a6c; --yellow:#b98a1f; --grey:#7f8a97; --red:#c2574a;
+  --green-t:#e7f3ec; --yellow-t:#fbf4de; --grey-t:#eff1f4; --red-t:#f9e7e3;
+  --green-b:var(--green); --yellow-b:var(--yellow); --grey-b:var(--grey); --red-b:var(--red);
+  --input:var(--bg); --select:var(--panel); --thumb:#c3c8cf; --ink-strong:var(--ink); --bar:var(--grey-t); --focus:var(--blue);
+}
+/* dark: the Atom One Dark palette that VS Code and its Claude Code panel use */
+:root[data-theme=dark]{
+  --bg:#21252b; --panel:#282c34; --ink:#cccccc; --ink-strong:#d7dae0; --muted:#9c9ea1; --line:#181a1f; --track:#1b1d23;
+  --head:#21252b; --rail:#333842; --rail-h:#3d4350; --rail-ink:#d7dae0;
+  --blue:#4d78cc; --blue-ink:#3794ff; --focus:#528bff; --bar:#21252b; --prog:#74c991;
+  --green:#74c991; --yellow:#e1c08d; --grey:#7f848e; --red:#c74e39;
+  --green-t:rgba(116,201,145,.14); --yellow-t:rgba(225,192,141,.14); --grey-t:#2c313a; --red-t:rgba(199,78,57,.2);
+  --green-b:rgba(116,201,145,.45); --yellow-b:rgba(225,192,141,.4); --grey-b:#3e4451; --red-b:rgba(199,78,57,.55);
+  --input:#1b1d23; --select:#353b45; --thumb:#4e566680;
+}
+*{box-sizing:border-box;scrollbar-width:thin;scrollbar-color:var(--thumb) transparent}
+:root{color-scheme:light}
+:root[data-theme=dark]{color-scheme:dark}
+html,body{height:100%;margin:0;overflow:hidden}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,Roboto,Arial,sans-serif;font-variant-numeric:tabular-nums}
+.app{height:100vh;display:grid;grid-template-rows:48px minmax(0,1fr);grid-template-columns:88px minmax(0,1fr)}
+.head{grid-column:1/-1;background:var(--head);color:#fff;display:flex;align-items:center;gap:10px;padding:0 18px}
+.logo{flex:none;display:block}
+.exlabel{margin-left:14px;padding:2px 10px;border-radius:999px;background:#e1c08d;color:#000;font-size:13px;font-weight:700}
+.exlabel[hidden]{display:none}
+.head h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.2px}
+.rail{background:var(--rail);display:flex;flex-direction:column}
+.rail-btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:80px;color:var(--rail-ink);font-size:12.5px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.07)}
+.rail-btn:hover{background:var(--rail-h)}
+.rail-btn[aria-current=true]{background:var(--blue);color:#fff}
+.rail-btn:focus-visible{outline:2px solid #fff;outline-offset:-4px}
+.rail-btn svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.rail .grow{flex:1}
+.content{padding:10px 14px;display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:3px;padding:10px 14px;min-width:0}
+h2{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--blue-ink)}
+/* one box: free space on the left, the message for your agent beside it */
+.topbox{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.7fr);gap:0;padding:0}
+.gblock{display:flex;flex-direction:column;justify-content:center;gap:8px;padding:10px 14px;border-right:1px solid var(--line)}
+.prog{display:flex;align-items:center;gap:10px}
+.ptrack{flex:1;position:relative;height:16px;background:var(--track);border:1px solid var(--line);border-radius:2px;overflow:hidden}
+.pfill{position:absolute;inset:0;background:var(--prog);transform-origin:left center}
+.pgain{position:absolute;top:0;bottom:0;background:var(--prog);opacity:.45}
+.ppct{font-weight:700;font-size:16px;min-width:46px;text-align:right}
+.gline{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:14.5px}
+.tgt{display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
+input[type=number]{width:58px;padding:2px 6px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:inherit;font-weight:600}
+select{padding:3px 8px;border:1px solid var(--line);border-radius:3px;background:var(--select);color:var(--ink);font:inherit;font-size:14px}
+input[type=radio],input[type=checkbox]{accent-color:var(--blue);width:16px;height:16px;margin:0}
+label{cursor:pointer}
+:focus-visible{outline:2px solid var(--focus);outline-offset:1px}
+.choices{display:flex;flex-direction:column;gap:6px;padding:8px 12px;min-width:0}
+.sum{font-size:14.5px;font-weight:600;line-height:1.3}
+.crow{display:flex;gap:10px;align-items:stretch}
+.reply{flex:1;min-width:0;height:60px;resize:none;padding:5px 8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:12.5px/1.35 Consolas,"Cascadia Mono",monospace;white-space:pre}
+.cbtns{display:flex;flex-direction:column;gap:6px;width:206px}
+button.btn,a.btn{box-sizing:border-box;display:block;text-align:center;text-decoration:none;cursor:pointer;padding:5px 12px;border-radius:3px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:14.5px;font-weight:600}
+button.btn:hover,a.btn:hover{border-color:var(--blue)}
+button.btn.primary{background:var(--blue);border-color:var(--blue);color:#f3f6f9}
+button.btn.primary:hover{filter:brightness(1.07)}
+main{flex:1;min-height:0;display:grid;grid-template-columns:1.1fr 1fr;gap:10px}
+.col{display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0}
+.charts{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);gap:14px}
+.pie-wrap{display:grid;grid-template-columns:118px 1fr;gap:10px;align-items:center}
+.legend{display:flex;flex-direction:column;gap:2px;font-size:14px}
+.legend button{all:unset;cursor:pointer;display:grid;grid-template-columns:12px 1fr auto;gap:7px;align-items:center;padding:2px 4px;border-radius:3px}
+.legend button:hover,.legend button:focus-visible{background:var(--grey-t)}
+.sw{width:12px;height:12px;border-radius:2px}
+svg text{fill:var(--ink)}
+.bars{display:flex;flex-direction:column;gap:5px}
+.bar-row{display:grid;grid-template-columns:118px 1fr 56px;gap:8px;align-items:center;font-size:13.5px}
+.bar-row>div:first-child{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bar-track{display:flex;height:15px;transform-origin:left center}
+.bar-track>div{height:100%}
+.bar-row .v{text-align:right;font-weight:600}
+.seg-key{display:flex;gap:12px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin-top:5px}
+.seg-key i{display:inline-block;width:10px;height:10px;border-radius:2px;margin-right:4px;vertical-align:-1px}
+.row-inline{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center;font-size:14px;color:var(--muted)}
+table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:3px 8px;border-bottom:1px solid var(--line);text-align:left;white-space:nowrap}
+th{font-weight:700}
+td.num,th.num{text-align:right}
+.pivot td.cell{text-align:right}
+.pivot tfoot td,.pivot td.tot{font-weight:700}
+.chip{all:unset;cursor:pointer;padding:2px 10px;border:1px solid var(--line);border-radius:999px;font-size:13.5px;font-weight:600;background:var(--panel)}
+.chip[aria-pressed=true]{background:var(--blue);color:#fff;border-color:var(--blue)}
+.badge{display:inline-block;padding:0 8px;border-radius:999px;font-size:12.5px;font-weight:700;border:1px solid;white-space:nowrap;line-height:1.5}
+.t-Green{background:var(--green-t);border-color:var(--green-b)} .t-Yellow{background:var(--yellow-t);border-color:var(--yellow-b)}
+.t-Grey{background:var(--grey-t);border-color:var(--grey-b)} .t-Red{background:var(--red-t);border-color:var(--red-b)}
+/* dark: solid status pills like the Claude Code panel (green and red with white letters, yellow with dark letters) */
+:root[data-theme=dark] .t-Green{background:#74c991;border-color:#74c991;color:#fff}
+:root[data-theme=dark] .t-Yellow{background:#e1c08d;border-color:#e1c08d;color:#000}
+:root[data-theme=dark] .t-Red{background:#c74e39;border-color:#c74e39;color:#fff}
+/* folder list */
+.explorer{flex:1;min-height:0;display:flex;flex-direction:column;padding:0;overflow:hidden}
+.toolbar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--bar)}
+.addr{flex:1 1 200px;min-width:0;padding:3px 10px;border:1px solid var(--line);border-radius:3px;background:var(--input);font-size:14px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.colhead,.trow{display:grid;grid-template-columns:172px minmax(0,1fr) 62px 66px;gap:8px;align-items:center;padding:2px 10px}
+.colhead{font-size:13.5px;font-weight:700;color:var(--muted);border-bottom:1px solid var(--line);padding-top:5px;padding-bottom:5px}
+#tree{flex:1;min-height:0;overflow:auto}
+.trow{min-height:26px;font-size:15px}
+.trow:hover,.trow.open{background:var(--grey-t)}
+.trow.leaf{cursor:pointer}
+.trow.marked{box-shadow:inset 4px 0 0 var(--blue)}
+.trow:not(.leaf) .t{color:var(--blue-ink);font-weight:700}
+ul.tree,ul.tree ul{list-style:none;margin:0;padding:0}
+.nm{display:flex;align-items:center;gap:6px;min-width:0}
+.nm .t{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.twisty{all:unset;cursor:pointer;width:18px;height:18px;display:inline-grid;place-items:center;flex:none;border-radius:3px}
+.twisty:hover{background:var(--line)}
+.twisty svg{transition:transform .15s}
+.twisty[aria-expanded=false] svg{transform:rotate(-90deg)}
+.spacer{width:18px;flex:none}
+.sz{text-align:right;font-weight:600}
+.opts{display:flex;gap:6px;font-size:14.5px;border:0;margin:0;padding:0;min-width:0}
+.opts label{display:flex;gap:5px;align-items:center;white-space:nowrap;font-weight:700;padding:1px 7px;border:1px solid transparent;border-radius:3px}
+.opts label.o-keep{color:var(--green)} .opts label.o-keep input{accent-color:var(--green)}
+.opts label.o-clear{color:var(--red)} .opts label.o-clear input{accent-color:var(--red)}
+.opts label.o-check{color:var(--yellow)} .opts label.o-check input{accent-color:var(--yellow)}
+.opts label.o-keep:has(input:checked){background:var(--green-t);border-color:var(--green-b)}
+.opts label.o-clear:has(input:checked){background:var(--red-t);border-color:var(--red-b)}
+.opts label.o-check:has(input:checked){background:var(--yellow-t);border-color:var(--yellow-b)}
+.opts legend{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+.prot{font-size:13.5px;color:var(--muted);font-weight:600}
+.status{padding:5px 12px;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);background:var(--bar)}
+.status.scope{border-top:0;padding-top:0;font-size:12.5px}
+/* right lower panel */
+.lower{flex:1;min-height:0;display:flex;flex-direction:column;padding:0;overflow:hidden}
+.tablist{display:flex;border-bottom:1px solid var(--line);background:var(--bar)}
+.tab{all:unset;cursor:pointer;padding:7px 18px;font-weight:700;font-size:15px;border-bottom:3px solid transparent;color:var(--muted)}
+.tab[aria-selected=true]{color:var(--blue-ink);border-bottom-color:var(--blue);background:var(--panel)}
+.tab:focus-visible{outline:2px solid var(--blue);outline-offset:-3px}
+.pane{flex:1;min-height:0;overflow:auto;padding:10px 14px}
+.pane[hidden]{display:none}
+.pane h3{margin:0;font-size:18px;line-height:1.25;color:var(--ink-strong)}
+.sub{font-size:14px;color:var(--muted);margin:2px 0 6px}
+.kv{display:grid;grid-template-columns:70px 1fr;gap:2px 10px;font-size:14.5px;margin:6px 0 8px}
+.kv dt{color:var(--muted);font-weight:600} .kv dd{margin:0;word-break:break-word}
+.ev{display:grid;grid-template-columns:100px 1fr;gap:3px 10px;font-size:14px;margin:0;padding:0;list-style:none}
+.ev li{display:contents}
+.ev .id{color:var(--muted);font-weight:700}
+.ev .st{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:0 6px;border-radius:3px;border-left:4px solid;align-self:start;line-height:1.6}
+.ev .tx{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.st.ok{border-color:var(--green-b);background:var(--green-t)} .st.note{border-color:var(--yellow-b);background:var(--yellow-t)}
+.st.block{border-color:var(--red-b);background:var(--red-t)} .st.unknown{border-color:var(--grey-b);background:var(--grey-t)} .st.na{border-color:var(--line)}
+.path{font:13px/1.35 Consolas,"Cascadia Mono",monospace;background:var(--grey-t);padding:1px 6px;border-radius:3px;display:block;margin:2px 0;word-break:break-all}
+/* popovers opened from the rail */
+.pop{position:fixed;left:98px;top:58px;width:min(520px,calc(100vw - 112px));background:var(--panel);border:1px solid var(--line);border-radius:3px;box-shadow:0 6px 22px rgba(0,0,0,.22);padding:14px 16px;z-index:20;font-size:14.5px;max-height:calc(100vh - 72px);overflow:auto}
+.pop[hidden]{display:none}
+.pop h3{margin:10px 0 4px;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted)}
+.pop h3:first-child{margin-top:0}
+.pop p{margin:0 0 4px}
+.pop dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px;align-items:baseline}
+.pop dd,.pop dt{margin:0}
+textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:13px/1.4 Consolas,"Cascadia Mono",monospace;margin:8px 0}
+.pop .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pop .row .btn{display:inline-block}
+.small{font-size:13px;color:var(--muted);margin-top:8px}
+@media (max-width:1000px){
+  html,body{overflow:auto;height:auto}
+  .app{height:auto;grid-template-columns:1fr;grid-template-rows:48px auto auto}
+  .rail{flex-direction:row;flex-wrap:wrap}
+  .rail-btn{height:64px;flex:1 1 80px}
+  .rail .grow{display:none}
+  .topbox,main,.charts{grid-template-columns:1fr}
+  .gblock{border-right:0;border-bottom:1px solid var(--line)}
+  .explorer,.lower{max-height:70vh}
+  .pop{left:12px}
+}
+@media (prefers-reduced-motion:reduce){.twisty svg{transition:none}}
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="head">
+    <svg class="logo" viewBox="0 0 48 48" width="32" height="32" role="img" aria-label="Ballast logo">
+      <rect x="2" y="2" width="44" height="44" rx="10" fill="#2a78cc"/>
+      <circle cx="24" cy="12" r="3.6" fill="none" stroke="#fff" stroke-width="2.4"/>
+      <path d="M17 17.5h14l5 15a2 2 0 0 1-1.9 2.6H13.9a2 2 0 0 1-1.9-2.6z" fill="#fff"/>
+      <path d="M9 39.5c3-2 6-2 9 0s6 2 9 0 6-2 9 0" fill="none" stroke="#fff" stroke-width="2" opacity=".85"/>
+    </svg>
+    <h1>Ballast</h1>
+    <span class="exlabel" id="example" hidden>EXAMPLE DATA. Ask your agent to run a scan to see your own.</span>
+  </header>
+
+  <nav class="rail" aria-label="Sections">
+    <button class="rail-btn" id="nav-folders" type="button" aria-current="true">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6.5A1.5 1.5 0 0 1 4.5 5H9l2 2.5h8.5A1.5 1.5 0 0 1 21 9v8.5A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/></svg>
+      <span>Folders</span>
+    </button>
+    <button class="rail-btn" id="nav-breakdown" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-7"/></svg>
+      <span>Breakdown</span>
+    </button>
+    <button class="rail-btn" id="nav-scan" type="button" aria-expanded="false" aria-controls="pop-scan">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5 5"/></svg>
+      <span>Scan again</span>
+    </button>
+    <button class="rail-btn" id="nav-about" type="button" aria-expanded="false" aria-controls="pop-about">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="M12 11v5M12 8v.01"/></svg>
+      <span>About us</span>
+    </button>
+    <div class="grow"></div>
+    <button class="rail-btn" id="nav-theme" type="button" aria-label="Switch to dark theme">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8"/><path d="M12 4a8 8 0 0 1 0 16z" fill="currentColor"/></svg>
+      <span id="theme-label">Light</span>
+    </button>
+  </nav>
+
+  <div class="content">
+    <section class="panel topbox" aria-label="Free space and your choices">
+      <div class="gblock">
+        <div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
+        <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div>
+      </div>
+      <div class="choices">
+        <div class="sum" id="sum" aria-live="polite"></div>
+        <div class="crow">
+          <textarea class="reply" id="reply" rows="3" readonly aria-label="Message to paste to your agent"></textarea>
+          <div class="cbtns">
+            <button class="btn primary" id="copy" type="button">Copy message for my agent</button>
+            <button class="btn" id="reset" type="button">Reset to Keep</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <main>
+      <div class="col">
+        <section class="panel explorer" aria-label="Folder view">
+          <div class="toolbar">
+            <div class="addr" id="addr" aria-label="Location of the selected item"></div>
+            <div id="chips" role="group" aria-label="Filter items" style="display:flex;gap:6px;flex-wrap:wrap"></div>
+          </div>
+          <div class="colhead" aria-hidden="true"><div>Your choice</div><div>Name</div><div style="text-align:right">Size</div><div>Tier</div></div>
+          <div id="tree"></div>
+          <div class="status" id="status"></div>
+          <div class="status scope" id="scope"></div>
+        </section>
+      </div>
+      <div class="col">
+        <section class="panel" aria-label="Charts">
+          <div class="charts">
+            <div>
+              <h2>Share by tier</h2>
+              <div class="pie-wrap"><svg id="pie" viewBox="0 0 200 200" width="118" height="118" role="img" aria-label="Pie chart of size by tier"></svg><div class="legend" id="pie-legend"></div></div>
+              <div class="row-inline" style="margin-top:4px"><label><input type="checkbox" id="incl" checked> Include protected</label></div>
+            </div>
+            <div>
+              <h2>Size by tool</h2>
+              <div class="bars" id="bars"></div>
+              <div class="seg-key" id="barkey"></div>
+            </div>
+          </div>
+        </section>
+        <section class="panel lower" aria-label="Item detail and breakdown">
+          <div class="tablist" role="tablist" aria-label="Detail views">
+            <button class="tab" role="tab" id="tab-d" aria-selected="true" aria-controls="pane-d" type="button">Item detail</button>
+            <button class="tab" role="tab" id="tab-p" aria-selected="false" aria-controls="pane-p" type="button" tabindex="-1">Breakdown</button>
+          </div>
+          <div class="pane" id="pane-d" role="tabpanel" aria-labelledby="tab-d" aria-live="polite"></div>
+          <div class="pane" id="pane-p" role="tabpanel" aria-labelledby="tab-p" hidden>
+            <div class="row-inline" style="margin:0 0 8px;color:var(--ink)">
+              <label>Group by <select id="rowDim"></select></label>
+              <label>Split by <select id="colDim"></select></label>
+              <label>Show <select id="measure"><option value="gb">Size in GB</option><option value="count">Number of items</option></select></label>
+            </div>
+            <div style="overflow-x:auto"><table class="pivot" id="pivot"></table></div>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+
+<div class="pop" id="pop-scan" role="dialog" aria-label="Scan again" hidden>
+  <h3>Scan again</h3>
+  <p>This page cannot run a scan itself. It is read-only by design. Send this request to your agent. It scans first, shows you a new dashboard, and asks before anything is deleted.</p>
+  <fieldset class="opts" style="margin-top:8px;flex-wrap:wrap"><legend>Your agent</legend>
+    <label class="o-keep"><input type="radio" name="agent" value="claude" checked>Claude Code</label>
+    <label class="o-keep"><input type="radio" name="agent" value="codex">Codex</label>
+    <label class="o-keep"><input type="radio" name="agent" value="antigravity">Antigravity</label>
+    <label class="o-keep"><input type="radio" name="agent" value="other">Other</label>
+  </fieldset>
+  <fieldset class="opts" style="margin-top:8px"><legend>Kind of scan</legend>
+    <label class="o-keep"><input type="radio" name="scankind" value="full" checked>Full scan</label>
+    <label class="o-keep"><input type="radio" name="scankind" value="weekly">Weekly check</label>
+  </fieldset>
+  <textarea class="req" id="scanReq" rows="5" readonly aria-label="Request for your agent"></textarea>
+  <div class="row">
+    <button class="btn primary" id="scanCopy" type="button">Copy request</button>
+    <a class="btn" id="scanOpen" href="#" rel="noopener">Open in Claude Code (VS Code)</a>
+  </div>
+  <p class="small" id="agentHint"></p>
+</div>
+
+<div class="pop" id="pop-about" role="dialog" aria-label="About us" hidden>
+  <h3>What Ballast is</h3>
+  <p>Plain-text instructions your AI agent follows to find and clear what AI tools leave behind: chat transcripts, virtual machine images, caches, scratch projects and stray processes. Nothing to install. It never deletes personal files.</p>
+  <h3>What this page is</h3>
+  <p>A read-only snapshot of one scan. It cannot delete anything. Decide here, then send your choices to your agent, which asks again before every deletion. Everything on this page comes from this computer and stays on it.</p>
+  <h3>Tiers</h3>
+  <dl>
+    <dt><span class="badge t-Green">Green</span></dt><dd>Regenerable cache. No data loss.</dd>
+    <dt><span class="badge t-Yellow">Yellow</span></dt><dd>Rebuildable at a cost. The cost is shown.</dd>
+    <dt><span class="badge t-Grey">Grey</span></dt><dd>In use or unknown. Ask first.</dd>
+    <dt><span class="badge t-Red">Red</span></dt><dd>Personal or protected. Locked.</dd>
+  </dl>
+  <h3>Your choice</h3>
+  <dl>
+    <dt><b>Keep</b></dt><dd>Leave it alone. The default for everything.</dd>
+    <dt><b>Clear</b></dt><dd>You want it cleared. Your agent confirms it with you again.</dd>
+    <dt><b>Check first</b></dt><dd>Grey items: gather more evidence before deciding.</dd>
+  </dl>
+  <h3>If something is blocked</h3>
+  <p>Locked files, administrator rights and denied permissions are common. The message you send tells your agent not to stop at "I can't". It must say what is blocking the item, ask you for the permission it needs, and show the workaround or the exact command you can run yourself.</p>
+  <h3>The eight checks</h3>
+  <p>Every item is checked before it gets a tier: when it was last used, whether it is in use right now, whether it is really an installed program, whether anything depends on it, whether it holds unsaved work, whether it is cloud-synced or shared, whether its name marks it as protected, and how to get it back. A check shows Good, Heads up, Blocker, Not checked or Not relevant.</p>
+</div>
+
+<script type="application/json" id="ballast-data">
+{
+  "schema": 1,
+  "example": true,
+  "scanDate": "example",
+  "freeGB": 41.0,
+  "totalGB": 256,
+  "targetGB": 60,
+  "ballastPath": "%USERPROFILE%\\Ballast",
+  "scopeNote": "Example scope: the user profile and AppData\\Local. Not scanned: AppData\\Roaming, ProgramData, other drives. System folders are never offered.",
+  "items": [
+    {"id": 1, "name": "Browser-style app caches", "tool": "Claude desktop", "tier": "Green", "sizeGB": 0.70, "maker": "High", "method": "Permanent",
+     "catalogRow": "CD-002 (example)", "why": "Regenerable cache inside the app's own data folder, and the app is closed.", "cost": "Rebuilt as you use the app.",
+     "paths": [{"path": "%LOCALAPPDATA%\\Claude-Data\\<package-family>\\Cache", "sizeGB": 0.40}, {"path": "%LOCALAPPDATA%\\Claude-Data\\<package-family>\\Code Cache", "sizeGB": 0.30}],
+     "evidence": [{"id": "E1", "state": "ok", "text": "Newest file is 3 weeks old."}, {"id": "E2", "state": "ok", "text": "App is not running."}, {"id": "E3", "state": "ok", "text": "Cache, not an installed program."}, {"id": "E8", "state": "ok", "text": "Rebuilt automatically."}]},
+    {"id": 2, "name": "Cowork virtual machine bundle", "tool": "Claude desktop", "tier": "Yellow", "sizeGB": 10.8, "maker": "High", "method": "Recycle Bin",
+     "catalogRow": "CD-001 (example)", "why": "The app is closed and the VM worker is stopped.", "cost": "Wipes Cowork session data in the VM. The app rebuilds it (about 9 GB) on next use.",
+     "paths": [{"path": "%LOCALAPPDATA%\\Claude-Data\\<package-family>\\vm_bundles\\claudevm.bundle", "sizeGB": 10.8}],
+     "evidence": [{"id": "E1", "state": "note", "text": "Modified today. Re-checked right before any delete."}, {"id": "E2", "state": "ok", "text": "No process holds the files."}, {"id": "E8", "state": "note", "text": "Rebuild expected, not yet confirmed."}]},
+    {"id": 3, "name": "Old chat transcripts", "tool": "Claude Code", "tier": "Yellow", "sizeGB": 3.3, "maker": "High", "method": "Recycle Bin",
+     "catalogRow": "CC-001 (example)", "why": "Session transcripts for sessions that are not running. Each project's memory folder is kept.", "cost": "Old chats can no longer be resumed or searched.",
+     "paths": [{"path": "%USERPROFILE%\\.claude\\projects\\<project>\\<session-id>.jsonl", "sizeGB": 3.3}],
+     "evidence": [{"id": "E1", "state": "ok", "text": "Newest write is older than 7 days."}, {"id": "E2", "state": "ok", "text": "No live session uses them."}, {"id": "E7", "state": "note", "text": "The memory folder next to them is protected and stays."}]},
+    {"id": 4, "name": "Plugin copies", "tool": "Claude Code", "tier": "Grey", "sizeGB": 0.8, "maker": "High", "method": "Not offered",
+     "catalogRow": "CC-004 (example)", "why": "Would be Yellow, but live sessions use plugins now.", "cost": "Plugins re-download.", "missing": "End or confirm the live sessions, then re-check.",
+     "paths": [{"path": "%USERPROFILE%\\.claude\\plugins\\cache", "sizeGB": 0.8}],
+     "evidence": [{"id": "E2", "state": "block", "text": "2 live sessions are running."}]},
+    {"id": 5, "name": "Dev server virtual environment", "tool": "Your projects (agent-made)", "tier": "Grey", "sizeGB": 0.6, "maker": "Medium", "method": "Not offered",
+     "catalogRow": "No catalog row yet", "why": "A server is running from it right now.", "cost": "Recreate and reinstall.", "missing": "Stop the server (your call), then re-check.",
+     "paths": [{"path": "%USERPROFILE%\\projects\\example-app\\.venv", "sizeGB": 0.6}],
+     "evidence": [{"id": "E2", "state": "block", "text": "A server process runs from this environment."}]},
+    {"id": 6, "name": "Unidentified tool folder", "tool": "Unknown maker", "tier": "Grey", "sizeGB": 0.8, "maker": "Low", "method": "Not offered",
+     "catalogRow": "No catalog row", "why": "Cannot tell what made it or whether anything needs it.", "cost": "Unknown.", "missing": "Identify the maker, then check E2 to E4.",
+     "paths": [{"path": "%LOCALAPPDATA%\\example-unknown-tool", "sizeGB": 0.8}], "evidence": []},
+    {"id": 7, "name": "Documents\\Backup", "tool": "Your files and apps", "tier": "Red", "sizeGB": 8.6, "maker": "n/a", "method": "Not offered",
+     "catalogRow": "Protected list", "why": "Personal files, named backup. Never offered.", "cost": "Not applicable.",
+     "paths": [{"path": "%USERPROFILE%\\Documents\\Backup", "sizeGB": 8.6}], "evidence": [{"id": "E7", "state": "block", "text": "Name matches the backup pattern."}]},
+    {"id": 8, "name": "Installed programs (package manager)", "tool": "Your files and apps", "tier": "Red", "sizeGB": 0.8, "maker": "n/a", "method": "Not offered",
+     "catalogRow": "Protected list", "why": "Installed programs, not a cache.", "cost": "Not applicable.",
+     "paths": [{"path": "%LOCALAPPDATA%\\Microsoft\\WinGet\\Packages", "sizeGB": 0.8}], "evidence": [{"id": "E3", "state": "block", "text": "Package manifests show installed programs."}]}
+  ]
+}
+</script>
+<script>
+(function(){
+'use strict';
+var TIERS=['Green','Yellow','Grey','Red'];
+var TV={Green:'--green',Yellow:'--yellow',Grey:'--grey',Red:'--red'};
+var EVL={E1:'Last used',E2:'In use now',E3:'Is it a program?',E4:'Anything depends on it',E5:'Unsaved work',E6:'Cloud or shared',E7:'Protected name',E8:'How to get it back'};
+var STL={ok:'Good',note:'Heads up',block:'Blocker',unknown:'Not checked',na:'Not relevant'};
+/* The page reads its data from the JSON block (id ballast-data). The agent fills data, never code. */
+var BLOCKED='If you cannot delete something (it is locked, needs administrator rights, or permission is denied), do not stop at "I can\'t". Tell me exactly what is blocking it, ask me for the permission you need, and show me the workaround or the exact command I can run myself.';
+function num(x,min,max){x=Number(x);return (isFinite(x)&&x>=min&&x<=max)?x:null;}
+function validate(d){
+  var k,j,it,pp,ps,id,size,paths,ev,seen={},items=[];
+  if(!d||d.schema!==1||!Array.isArray(d.items)||d.items.length>500)return null;
+  var free=num(d.freeGB,0,1e6),total=num(d.totalGB,0,1e6);
+  if(free===null||total===null)return null;
+  for(k=0;k<d.items.length;k++){
+    it=d.items[k];
+    if(!it||typeof it!=='object')return null;
+    id=Number(it.id);
+    if(!(id>0&&id%1===0)||seen[id])return null;
+    seen[id]=1;
+    if(TIERS.indexOf(it.tier)<0)return null;
+    size=num(it.sizeGB,0,1e6);
+    if(size===null)return null;
+    if(!Array.isArray(it.paths)||!it.paths.length||it.paths.length>50)return null;
+    paths=[];
+    for(j=0;j<it.paths.length;j++){
+      pp=it.paths[j];ps=num(pp&&pp.sizeGB,0,1e6);
+      if(!pp||typeof pp.path!=='string'||!pp.path||ps===null)return null;
+      paths.push({p:T(pp.path),s:ps});
+    }
+    ev=[];
+    (Array.isArray(it.evidence)?it.evidence:[]).forEach(function(e){
+      if(e&&/^E[1-8]$/.test(String(e.id))&&STL[e.state]&&typeof e.text==='string')ev.push([e.id,e.state,T(e.text)]);});
+    items.push({id:id,name:T(String(it.name||'Unnamed item')),tool:T(String(it.tool||'Unknown')),tier:it.tier,size:size,
+      maker:['High','Medium','Low','n/a'].indexOf(it.maker)<0?'Low':it.maker,
+      /* only Green and Yellow items can ever be offered for deletion, whatever the data says */
+      method:(it.tier==='Green'||it.tier==='Yellow')?(it.method==='Permanent'?'Permanent':'Recycle Bin'):'Not offered',
+      row:T(String(it.catalogRow||'')),paths:paths,why:T(String(it.why||'')),cost:T(String(it.cost||'')),missing:it.missing?T(String(it.missing)):'',ev:ev});
+  }
+  return {free:free,total:total,date:T(String(d.scanDate||'')),ballast:T(String(d.ballastPath||'')),target:num(d.targetGB,1,1e6)||90,
+    example:!!d.example,scope:T(String(d.scopeNote||'')),items:items};
+}
+var DATA=null;
+try{DATA=validate(JSON.parse(document.getElementById('ballast-data').textContent));}catch(err){DATA=null;}
+if(!DATA){document.body.textContent='Ballast could not read its data block, so nothing is shown. Ask your agent to regenerate the dashboard.';return;}
+var FREE=DATA.free, TOTAL=DATA.total, SCANDATE=DATA.date, BALLAST=DATA.ballast, ITEMS=DATA.items;
+var DIMS={tool:'Tool',tier:'Tier',maker:'Maker confidence',method:'Method'};
+var S={target:DATA.target,choice:{},filter:'all',incl:true,open:1,rowDim:'tool',colDim:'tier',measure:'gb',closed:{}};
+ITEMS.forEach(function(i){S.choice[i.id]='keep';});
+
+function $(q){return document.querySelector(q);}
+/* every string shown goes through T: control and bidi-override characters cannot fake rows */
+function T(s){s=String(s);var o='',i,c;for(i=0;i<s.length;i++){c=s.charCodeAt(i);o+=((c<32&&c!==9&&c!==10)||c===127||(c>=8234&&c<=8238)||(c>=8294&&c<=8297))?'?':s.charAt(i);}return o;}
+function h(tag,attrs){var e=document.createElement(tag),k,v,i,c;attrs=attrs||{};
+  for(k in attrs){v=attrs[k];if(k==='class')e.className=v;else if(k.indexOf('on')===0)e.addEventListener(k.slice(2),v);else if(v===true)e.setAttribute(k,'');else if(v!==false&&v!=null)e.setAttribute(k,T(v));}
+  for(i=2;i<arguments.length;i++){c=arguments[i];if(Array.isArray(c)){c.forEach(function(x){if(x!=null&&x!==false)e.append(x.nodeType?x:document.createTextNode(T(x)));});}
+    else if(c!=null&&c!==false)e.append(c.nodeType?c:document.createTextNode(T(c)));}
+  return e;}
+function sv(tag,attrs){var e=document.createElementNS('http://www.w3.org/2000/svg',tag),k;for(k in (attrs||{}))e.setAttribute(k,attrs[k]);for(var i=2;i<arguments.length;i++)if(arguments[i])e.append(arguments[i]);return e;}
+function clear(e){while(e.firstChild)e.removeChild(e.firstChild);return e;}
+function f2(n){return n.toFixed(2);}
+function f1(n){return n.toFixed(1);}
+function sum(a){return a.reduce(function(s,i){return s+i.size;},0);}
+function selectable(i){return i.tier==='Green'||i.tier==='Yellow';}
+function visible(){return S.incl?ITEMS:ITEMS.filter(function(i){return i.tier!=='Red';});}
+function chosen(v){return ITEMS.filter(function(i){return S.choice[i.id]===v;});}
+function color(t){return 'var('+TV[t]+')';}
+
+/* progress toward the free-space target */
+function renderGauge(){
+  var sel=sum(chosen('clear')),proj=FREE+sel,tg=Math.max(1,S.target),box=clear($('#gauge'));
+  var f=Math.min(1,FREE/tg),g=Math.min(1,proj/tg);
+  var fill=h('div',{class:'pfill'});fill.style.transform='scaleX('+f+')';
+  var gain=h('div',{class:'pgain'});gain.style.left=(f*100)+'%';gain.style.width=Math.max(0,(g-f)*100)+'%';
+  box.setAttribute('aria-label','Free space '+f1(FREE)+' gigabytes, target '+tg+' gigabytes');
+  box.append(fill,gain);
+  $('#ppct').textContent=Math.floor(g*100)+'%';
+  $('#gtext').textContent='Free '+f1(FREE)+' GB of '+TOTAL+' GB'+(sel>0?', projected '+f1(proj)+' GB':'')+'. '+(proj>=tg?'Target reached.':f1(tg-proj)+' GB short.');
+}
+/* the message that goes to the agent: every chosen item with its full paths */
+function manifest(a){return a.map(function(i){
+  return '#'+i.id+' '+i.name+', '+i.tier+', '+f2(i.size)+' GB\n'+i.paths.map(function(pp){return '    '+pp.p+' ('+f2(pp.s)+' GB)';}).join('\n');}).join('\n');}
+function renderSticky(){
+  var c=chosen('clear'),k=chosen('check'),gb=sum(c),msg,out;
+  if(!c.length&&!k.length)msg='Step 1: pick Keep or Clear for each folder. Nothing is deleted from this page.';
+  else msg='Chosen: '+c.length+' to clear ('+f2(gb)+' GB)'+(k.length?', '+k.length+' to check first':'')+'. Step 2: copy the message and paste it to your agent. It asks you to confirm each item before anything is deleted.';
+  $('#sum').textContent=msg;
+  if(!c.length&&!k.length){out='Ballast choices from the scan of '+SCANDATE+': keep everything. Nothing to clear.';}
+  else{out='Ballast choices from the scan of '+SCANDATE+'.\n';
+    if(c.length)out+='\nCLEAR (re-check each item, then ask me to confirm it before deleting):\n'+manifest(c)+'\n';
+    if(k.length)out+='\nCHECK FIRST (gather evidence and tell me what you find; do not delete):\n'+manifest(k)+'\n';
+    out+='\nKEEP everything else. Do not touch anything not listed above.\n\n'+BLOCKED;}
+  $('#reply').value=T(out);
+}
+
+/* pie */
+function polar(cx,cy,r,a){return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
+function arc(cx,cy,r0,r1,a0,a1){var big=(a1-a0)>Math.PI?1:0,p0=polar(cx,cy,r1,a0),p1=polar(cx,cy,r1,a1),p2=polar(cx,cy,r0,a1),p3=polar(cx,cy,r0,a0);
+  return 'M'+p0[0]+' '+p0[1]+' A'+r1+' '+r1+' 0 '+big+' 1 '+p1[0]+' '+p1[1]+' L'+p2[0]+' '+p2[1]+' A'+r0+' '+r0+' 0 '+big+' 0 '+p3[0]+' '+p3[1]+' Z';}
+function setFilter(f){S.filter=f;renderChips();renderTree();}
+function renderPie(){
+  var items=visible(),tot=sum(items),svg=clear($('#pie')),lg=clear($('#pie-legend')),a=-Math.PI/2;
+  TIERS.forEach(function(t){
+    var v=sum(items.filter(function(i){return i.tier===t;}));if(!v)return;
+    var frac=v/tot,a1=a+Math.min(frac,0.9999)*2*Math.PI;
+    var p=sv('path',{d:arc(100,100,54,94,a,a1),fill:color(t),stroke:'var(--panel)','stroke-width':3,tabindex:0,role:'button','aria-label':t+' '+f2(v)+' GB, show these items'},sv('title',{}));
+    p.firstChild.textContent=t+': '+f2(v)+' GB ('+Math.round(frac*100)+'%)';
+    p.style.cursor='pointer';p.addEventListener('click',function(){setFilter(t);});
+    p.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();setFilter(t);}});
+    svg.append(p);a=a1;
+    lg.append(h('button',{type:'button',onclick:function(){setFilter(t);}},h('span',{class:'sw',style:'background:'+color(t)}),t,h('span',{},f2(v)+' GB')));
+  });
+  var c1=sv('text',{x:100,y:104,'text-anchor':'middle','font-size':30,'font-weight':700});c1.textContent=f1(tot);
+  var c2=sv('text',{x:100,y:128,'text-anchor':'middle','font-size':16,'font-weight':600});c2.textContent='GB';
+  svg.append(c1,c2);
+}
+
+/* bars */
+function renderBars(){
+  var items=visible(),tools={},box=clear($('#bars')),key=clear($('#barkey')),max=0;
+  items.forEach(function(i){tools[i.tool]=tools[i.tool]||{Green:0,Yellow:0,Grey:0,Red:0,total:0};tools[i.tool][i.tier]+=i.size;tools[i.tool].total+=i.size;});
+  var names=Object.keys(tools).sort(function(x,y){return tools[y].total-tools[x].total;});
+  names.forEach(function(n){max=Math.max(max,tools[n].total);});
+  names.forEach(function(n){
+    var track=h('div',{class:'bar-track',role:'img','aria-label':n+' '+f2(tools[n].total)+' GB'});
+    track.style.width=(tools[n].total/max*100)+'%';
+    TIERS.forEach(function(t){var v=tools[n][t];if(!v)return;var seg=h('div',{title:n+', '+t+': '+f2(v)+' GB'});seg.style.width=(v/tools[n].total*100)+'%';seg.style.background=color(t);track.append(seg);});
+    box.append(h('div',{class:'bar-row'},h('div',{title:n},n),h('div',{},track),h('div',{class:'v'},f2(tools[n].total))));
+  });
+  TIERS.forEach(function(t){key.append(h('span',{},h('i',{style:'background:'+color(t)}),t));});
+}
+
+/* breakdown (pivot) */
+function order(dim,items){
+  var keys=[],seen={},tot={};items.forEach(function(i){var k=i[dim];if(!seen[k]){seen[k]=1;keys.push(k);}tot[k]=(tot[k]||0)+i.size;});
+  if(dim==='tier')return TIERS.filter(function(t){return seen[t];});
+  return keys.sort(function(a,b){return tot[b]-tot[a];});
+}
+function renderPivot(){
+  var items=visible(),rd=S.rowDim,cd=S.colDim,gb=S.measure==='gb',rows=order(rd,items),cols=order(cd,items),m={},rt={},ct={},max=0,gt=0;
+  items.forEach(function(i){var r=i[rd],c=i[cd],v=gb?i.size:1;m[r]=m[r]||{};m[r][c]=(m[r][c]||0)+v;rt[r]=(rt[r]||0)+v;ct[c]=(ct[c]||0)+v;gt+=v;});
+  rows.forEach(function(r){cols.forEach(function(c){max=Math.max(max,m[r][c]||0);});});
+  var fmt=function(v){return gb?f2(v):String(v);};
+  var t=clear($('#pivot'));
+  t.append(h('thead',{},h('tr',{},h('th',{},DIMS[rd]+' / '+DIMS[cd]),cols.map(function(c){return h('th',{class:'num'},c);}),h('th',{class:'num'},'Total'))));
+  var tb=h('tbody');
+  rows.forEach(function(r){
+    var tr=h('tr',{},h('th',{scope:'row'},r));
+    cols.forEach(function(c){var v=(m[r]&&m[r][c])||0,td=h('td',{class:'cell'},v?fmt(v):'');if(v)td.style.background='rgba(63,134,212,'+(0.07+0.22*v/max)+')';tr.append(td);});
+    tr.append(h('td',{class:'tot cell'},fmt(rt[r])));tb.append(tr);
+  });
+  t.append(tb);
+  t.append(h('tfoot',{},h('tr',{},h('td',{},'Total'),cols.map(function(c){return h('td',{class:'cell'},fmt(ct[c]||0));}),h('td',{class:'cell'},fmt(gt)))));
+}
+
+/* folder view */
+function renderChips(){
+  var n=function(f){return ITEMS.filter(f).length;};
+  var defs=[['all','All '+ITEMS.length],['sel','Can choose '+n(selectable)],['Grey','Grey '+n(function(i){return i.tier==='Grey';})],['Red','Red '+n(function(i){return i.tier==='Red';})]];
+  var box=clear($('#chips'));
+  defs.forEach(function(d){var on=S.filter===d[0]||(d[0]==='sel'&&(S.filter==='Green'||S.filter==='Yellow'));
+    box.append(h('button',{class:'chip',type:'button','aria-pressed':on?'true':'false',onclick:function(){setFilter(d[0]);}},d[1]));});
+}
+function passes(i){var f=S.filter;return f==='all'||(f==='sel'&&selectable(i))||i.tier===f;}
+/* each item sits in its folder; items with several paths sit once, at their common folder */
+function buildTree(){
+  var root={kids:{}};
+  ITEMS.forEach(function(it){
+    var parts=it.paths.map(function(pp){return pp.p.split('\\');}),dir,label;
+    if(parts.length===1){dir=parts[0].slice(0,-1);label=parts[0][parts[0].length-1];}
+    else{var base=parts[0].slice(0,-1);
+      parts.forEach(function(pt){var d=pt.slice(0,-1),k=0;while(k<base.length&&k<d.length&&base[k]===d[k])k++;base=base.slice(0,k);});
+      dir=base;label=parts.map(function(pt){return pt.slice(dir.length).join('\\');}).join(', ');}
+    var n=root;dir.forEach(function(seg){n.kids[seg]=n.kids[seg]||{name:seg,kids:{}};n=n.kids[seg];});
+    n.kids['#'+it.id]={name:label,kids:{},leaf:{item:it,size:it.paths.reduce(function(s,pp){return s+pp.s;},0)}};
+  });
+  return root;
+}
+function sizeOf(n){if(n.leaf)return n.leaf.size;return Object.keys(n.kids).reduce(function(t,k){return t+sizeOf(n.kids[k]);},0);}
+function vis(n){if(n.leaf)return passes(n.leaf.item);return Object.keys(n.kids).some(function(k){return vis(n.kids[k]);});}
+function folderIcon(tier){
+  return sv('svg',{viewBox:'0 0 20 16',width:20,height:16,'aria-hidden':'true',style:'flex:none'},
+    sv('path',{d:'M1 3a1 1 0 0 1 1-1h5l2 2h9a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1z',fill:tier?color(tier):'var(--track)',stroke:tier?'none':'var(--muted)','stroke-width':tier?0:1}));
+}
+function chev(){return sv('svg',{viewBox:'0 0 10 10',width:10,height:10,'aria-hidden':'true'},sv('path',{d:'M2 3l3 4 3-4',fill:'none',stroke:'var(--muted)','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));}
+function setChoice(id,v){
+  S.choice[id]=v;
+  document.querySelectorAll('input[data-item="'+id+'"]').forEach(function(r){r.checked=(r.value===v);});
+  document.querySelectorAll('.trow[data-item="'+id+'"]').forEach(function(r){r.classList.toggle('marked',v!=='keep');});
+  renderGauge();renderSticky();renderDetail();updateStatus();
+}
+function radios(it){
+  var opts=selectable(it)?[['keep','Keep'],['clear','Clear']]:(it.tier==='Grey'?[['keep','Keep'],['check','Check first']]:null);
+  if(!opts)return h('span',{class:'prot'},'Protected, locked');
+  return h('fieldset',{class:'opts'},h('legend',{},'Your choice for '+it.name),opts.map(function(o){
+    var r=h('input',{type:'radio',name:'r-'+it.id,value:o[0],'data-item':it.id,onclick:function(e){e.stopPropagation();setChoice(it.id,o[0]);}});
+    r.checked=S.choice[it.id]===o[0];
+    return h('label',{class:'o-'+o[0]},r,o[1]);}));
+}
+function openItem(it){S.open=it.id;document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.toggle('open',Number(r.getAttribute('data-item'))===it.id);});renderDetail();showTab('d');}
+function mk(n,depth,key){
+  if(!vis(n))return null;
+  var name=n.name,k=key;
+  while(!n.leaf&&Object.keys(n.kids).length===1){var c=Object.keys(n.kids)[0];if(!vis(n.kids[c]))break;n=n.kids[c];name+='\\'+n.name;k+='\\'+n.name;}
+  var li=h('li',{role:'treeitem'}),pad='padding-left:'+(depth*14)+'px';
+  if(n.leaf){
+    var it=n.leaf.item;
+    var row=h('div',{class:'trow leaf'+(S.open===it.id?' open':'')+(S.choice[it.id]!=='keep'?' marked':''),'data-item':it.id,tabindex:0,
+      onclick:function(){openItem(it);},onkeydown:function(e){if(e.key==='Enter'&&e.target===row){openItem(it);}}},
+      h('div',{},radios(it)),
+      h('div',{class:'nm',style:pad},h('span',{class:'spacer'}),folderIcon(it.tier),h('span',{class:'t',title:it.paths.map(function(p){return p.p;}).join('\n')},name)),
+      h('div',{class:'sz'},f2(n.leaf.size)),h('div',{},h('span',{class:'badge t-'+it.tier},it.tier)));
+    li.append(row);return li;
+  }
+  var open=!S.closed[k],ul=h('ul',{role:'group'});
+  var tw=h('button',{class:'twisty',type:'button','aria-expanded':open?'true':'false','aria-label':(open?'Collapse ':'Expand ')+name,onclick:function(e){e.stopPropagation();S.closed[k]=open;renderTree();}},chev());
+  li.setAttribute('aria-expanded',open?'true':'false');
+  li.append(h('div',{class:'trow'},h('div',{}),h('div',{class:'nm',style:pad},tw,folderIcon(null),h('span',{class:'t',title:name},name)),h('div',{class:'sz'},f2(sizeOf(n))),h('div',{})));
+  if(open){Object.keys(n.kids).sort(function(a,b){return n.kids[a].name.localeCompare(n.kids[b].name);}).forEach(function(c){var x=mk(n.kids[c],depth+1,k+'\\'+c);if(x)ul.append(x);});li.append(ul);}
+  return li;
+}
+function renderTree(){
+  var box=clear($('#tree')),root=buildTree(),ul=h('ul',{class:'tree',role:'tree','aria-label':'Folders with findings'});
+  Object.keys(root.kids).sort().forEach(function(k){var x=mk(root.kids[k],0,k);if(x)ul.append(x);});
+  box.append(ul);updateStatus();
+}
+function updateStatus(){
+  var shown=ITEMS.filter(passes);
+  $('#status').textContent=shown.length+' items, '+f2(sum(shown))+' GB. '+chosen('clear').length+' marked Clear, '+chosen('check').length+' marked Check first.';
+}
+function expandPath(p){
+  var parts=p.split('\\'),first=parts[0],rest=parts.slice(1);
+  var lead=first==='%USERPROFILE%'?['Users','(you)']:first==='%LOCALAPPDATA%'?['Users','(you)','AppData','Local']:[first];
+  return ['This PC','Local Disk (C:)'].concat(lead,rest).join('  >  ');
+}
+function renderDetail(){
+  var box=clear($('#pane-d')),i=ITEMS.filter(function(x){return x.id===S.open;})[0];
+  if(!i){box.append(h('p',{},'Select a row to see its evidence.'));$('#addr').textContent='This PC';return;}
+  var ap=T(expandPath(i.paths[0].p));$('#addr').textContent=ap;$('#addr').setAttribute('title',ap);
+  var c=S.choice[i.id],cl=c==='clear'?'Clear (confirmed again later)':c==='check'?'Check first':'Keep';
+  box.append(h('h3',{},'#'+i.id+'  '+i.name),h('div',{class:'sub'},h('span',{class:'badge t-'+i.tier},i.tier),'  '+f2(i.size)+' GB  |  '+i.tool+', attribution '+i.maker+'  |  '+(i.tier==='Red'?'Protected':cl)));
+  var kv=h('dl',{class:'kv'});
+  kv.append(h('dt',{},'Why'),h('dd',{},i.why));
+  kv.append(h('dt',{},'Cost'),h('dd',{},i.cost+(i.method==='Recycle Bin'?' Goes to the Recycle Bin.':'')));
+  if(i.missing)kv.append(h('dt',{},'Needed'),h('dd',{},i.missing));
+  kv.append(h('dt',{},i.paths.length>1?'Paths':'Path'),h('dd',{},i.paths.map(function(p){return h('code',{class:'path'},p.p);})));
+  box.append(kv);
+  var have={};i.ev.forEach(function(e){have[e[0]]=e;});
+  var ul=h('ul',{class:'ev'});
+  Object.keys(EVL).forEach(function(id){var e=have[id]||[id,'unknown','Not checked yet.'],tx=EVL[id]+': '+e[2];
+    ul.append(h('li',{},h('span',{class:'st '+e[1]},STL[e[1]]),h('span',{class:'tx',title:tx},h('b',{},EVL[id]),'  '+e[2])));});
+  box.append(ul);
+}
+
+/* tabs and rail */
+function showTab(which){
+  var d=which==='d';
+  $('#tab-d').setAttribute('aria-selected',d?'true':'false');$('#tab-d').tabIndex=d?0:-1;
+  $('#tab-p').setAttribute('aria-selected',d?'false':'true');$('#tab-p').tabIndex=d?-1:0;
+  $('#pane-d').hidden=!d;$('#pane-p').hidden=d;
+  $('#nav-folders').setAttribute('aria-current',d?'true':'false');
+  $('#nav-breakdown').setAttribute('aria-current',d?'false':'true');
+}
+$('#tab-d').addEventListener('click',function(){showTab('d');});
+$('#tab-p').addEventListener('click',function(){showTab('p');});
+['#tab-d','#tab-p'].forEach(function(id){$(id).addEventListener('keydown',function(e){
+  if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var d=id==='#tab-p';showTab(d?'d':'p');$(d?'#tab-d':'#tab-p').focus();}});});
+$('#nav-folders').addEventListener('click',function(){closePops();showTab('d');var r=document.querySelector('.trow.leaf.open')||document.querySelector('.trow.leaf');if(r)r.focus();});
+$('#nav-breakdown').addEventListener('click',function(){closePops();showTab('p');$('#tab-p').focus();});
+
+/* popovers opened from the rail */
+function closePops(){['scan','about'].forEach(function(n){$('#pop-'+n).hidden=true;$('#nav-'+n).setAttribute('aria-expanded','false');});}
+function togglePop(n){var p=$('#pop-'+n),wasHidden=p.hidden;closePops();if(wasHidden){p.hidden=false;$('#nav-'+n).setAttribute('aria-expanded','true');}}
+$('#nav-scan').addEventListener('click',function(e){e.stopPropagation();togglePop('scan');});
+$('#nav-about').addEventListener('click',function(e){e.stopPropagation();togglePop('about');});
+document.addEventListener('click',function(e){if(!e.target.closest('.pop'))closePops();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closePops();});
+
+/* theme */
+function setTheme(th,nosave){document.documentElement.setAttribute('data-theme',th);
+  $('#theme-label').textContent=th==='dark'?'Dark':'Light';
+  $('#nav-theme').setAttribute('aria-label','Switch to '+(th==='dark'?'light':'dark')+' theme');
+  if(!nosave){try{localStorage.setItem('ballast-theme',th);}catch(e){}}}
+$('#nav-theme').addEventListener('click',function(){setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'light':'dark');});
+setTheme(document.documentElement.getAttribute('data-theme')==='dark'?'dark':'light',true);
+
+/* scan again request */
+function scanText(){var k=document.querySelector('input[name=scankind]:checked').value;
+  var base=k==='weekly'?'Read AGENTS.md in my Ballast folder'+(BALLAST?' ('+BALLAST+')':'')+' and run weekly.md.'
+    :'Read AGENTS.md in my Ballast folder'+(BALLAST?' ('+BALLAST+')':'')+' and run cleanup.md for a fresh read-only scan. Show me the dashboard.';
+  return base+' Ask me before deleting anything. '+BLOCKED;}
+function syncScan(){var s=scanText();$('#scanReq').value=s;$('#scanOpen').setAttribute('href','vscode://anthropic.claude-code/open?prompt='+encodeURIComponent(s));}
+var HINTS={
+ claude:'Open in Claude Code starts the request in your VS Code agent. Or copy it and paste it into Claude Code anywhere.',
+ codex:'Open the folder that contains Ballast in Codex, then paste the request into its chat. Codex has no link that fills in a request, so this one is copy and paste.',
+ antigravity:'Open the folder that contains Ballast in Antigravity, then paste the request into its agent panel. Antigravity has no link that fills in a request, so this one is copy and paste.',
+ other:'Paste the request into any agent that can read files and run commands, started in the folder that contains Ballast.'};
+function syncAgent(){var a=document.querySelector('input[name=agent]:checked').value;
+  $('#scanOpen').hidden=(a!=='claude');$('#agentHint').textContent=HINTS[a]+' Edit the folder in the request if your Ballast copy lives elsewhere.';}
+document.querySelectorAll('input[name=scankind]').forEach(function(r){r.addEventListener('change',syncScan);});
+document.querySelectorAll('input[name=agent]').forEach(function(r){r.addEventListener('change',syncAgent);});
+function copyFrom(sel,btn,label){var r=$(sel);r.select();
+  var done=function(){btn.textContent='Copied';setTimeout(function(){btn.textContent=label;},1500);};
+  if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r.value).then(done,function(){document.execCommand('copy');done();});}
+  else{document.execCommand('copy');done();}}
+$('#scanCopy').addEventListener('click',function(){copyFrom('#scanReq',this,'Copy request');});
+$('#copy').addEventListener('click',function(){copyFrom('#reply',this,'Copy message for my agent');});
+
+/* wiring */
+function fillSel(id,val){var s=$(id);Object.keys(DIMS).forEach(function(k){s.append(h('option',{value:k},DIMS[k]));});s.value=val;}
+fillSel('#rowDim','tool');fillSel('#colDim','tier');
+$('#rowDim').addEventListener('change',function(){S.rowDim=this.value;renderPivot();});
+$('#colDim').addEventListener('change',function(){S.colDim=this.value;renderPivot();});
+$('#measure').addEventListener('change',function(){S.measure=this.value;renderPivot();});
+$('#incl').addEventListener('change',function(){S.incl=this.checked;renderPie();renderBars();renderPivot();});
+$('#target').addEventListener('input',function(){var v=Number(this.value);if(v>0){S.target=v;renderGauge();}});
+$('#reset').addEventListener('click',function(){ITEMS.forEach(function(i){S.choice[i.id]='keep';});
+  document.querySelectorAll('input[type=radio][data-item]').forEach(function(r){r.checked=(r.value==='keep');});
+  document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.remove('marked');});
+  renderGauge();renderSticky();renderDetail();updateStatus();});
+
+$('#target').value=DATA.target;
+if(DATA.example)$('#example').hidden=false;
+$('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
+syncScan();syncAgent();
+renderGauge();renderPie();renderBars();renderPivot();renderChips();renderTree();renderDetail();renderSticky();
+})();
+</script>
+</body>
+</html>
