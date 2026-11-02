@@ -1,0 +1,7 @@
+# The release workflow pins its actions to full commit SHAs. Dependabot proposes newer SHAs as pull requests.
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"

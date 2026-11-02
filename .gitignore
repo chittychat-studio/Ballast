@@ -1,0 +1,11 @@
+# Operating system files
+Thumbs.db
+.DS_Store
+desktop.ini
+
+# Editor folders
+.vscode/
+.idea/
+
+# Scratch copies of the dashboard that an agent fills with real scan data
+ballast-dashboard-*.html
