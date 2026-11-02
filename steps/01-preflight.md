@@ -34,7 +34,15 @@ some process details to be hidden. That makes those checks "unknown" (H2), not "
 
 ## 5. The target
 
-Ask: "How much free space do you want?" Remember it for the dashboard.
+**On the first scan, ask the user for their target before you build the dashboard.** Ask it plainly, show the free
+space you measured in step 4, and wait for the answer:
+
+> "You have 78.4 GB free of 219 GB. How much free space would you like to reach? (A number in GB, or say \"no target\".)"
+
+Do not assume a number. Put the answer in the dashboard's `targetGB` field ([dashboard.md](../dashboard.md)); the page
+shows it in the header bar. If the user says "no target", leave `targetGB` out: the page then shows free space against
+the drive's total and lets them type a target themselves. A target is the user's own goal, not a promise about what
+Ballast can reach. For a later scan in the same session, reuse the target they gave and say so.
 
 ## 6. Your own ancestry (mandatory)
 

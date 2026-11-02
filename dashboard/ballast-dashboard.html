@@ -26,7 +26,7 @@ try{var t=localStorage.getItem('ballast-theme');if(t==='dark'||t==='light')docum
   --bg:#21252b; --panel:#282c34; --ink:#cccccc; --ink-strong:#d7dae0; --muted:#9c9ea1; --line:#181a1f; --track:#1b1d23;
   --head:#21252b; --rail:#333842; --rail-h:#3d4350; --rail-ink:#d7dae0;
   --blue:#4d78cc; --blue-ink:#3794ff; --focus:#528bff; --bar:#21252b; --prog:#74c991;
-  --green:#74c991; --yellow:#e1c08d; --grey:#7f848e; --red:#c74e39;
+  --green:#74c991; --yellow:#e1c08d; --grey:#56b6c2; --red:#c74e39;
   --green-t:rgba(116,201,145,.14); --yellow-t:rgba(225,192,141,.14); --grey-t:#2c313a; --red-t:rgba(199,78,57,.2);
   --green-b:rgba(116,201,145,.45); --yellow-b:rgba(225,192,141,.4); --grey-b:#3e4451; --red-b:rgba(199,78,57,.55);
   --input:#1b1d23; --select:#353b45; --thumb:#4e566680;
@@ -119,6 +119,7 @@ td.num,th.num{text-align:right}
 :root[data-theme=dark] .t-Green{background:#74c991;border-color:#74c991;color:#fff}
 :root[data-theme=dark] .t-Yellow{background:#e1c08d;border-color:#e1c08d;color:#000}
 :root[data-theme=dark] .t-Red{background:#c74e39;border-color:#c74e39;color:#fff}
+:root[data-theme=dark] .t-Grey{background:#56b6c2;border-color:#56b6c2;color:#000}
 /* folder list */
 .explorer{flex:1;min-height:0;display:flex;flex-direction:column;padding:0;overflow:hidden}
 .toolbar{display:flex;flex-wrap:wrap;gap:6px 10px;align-items:center;padding:7px 10px;border-bottom:1px solid var(--line);background:var(--bar)}
@@ -230,24 +231,32 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
 .head .hgauge .ppct{color:#fff;font-size:15px;min-width:40px}
 .head .hgauge input[type=number]{background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.32);color:#fff}
 /* overview: last cleanup, what can be cleared, folders */
-.ovclear{flex:0 1 auto;max-height:42%;overflow:auto;min-height:0}
+.ovclear{flex:0 1 auto;max-height:52%;overflow:auto;min-height:0}
 .ovfold{flex:1 1 0;min-height:0;overflow:auto}
 .ovhead{display:flex;align-items:baseline;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:6px}
 .ovhead h2{margin:0}
 .ovtotals{font-size:14.5px}
 .crow2{display:grid;grid-template-columns:auto minmax(0,1.4fr) auto auto minmax(0,1.6fr);gap:12px;align-items:center;padding:3px 0;border-top:1px solid var(--line)}
+.crow2 .sublink{display:block;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:left}
 .crow2 .sz{font-weight:600;text-align:right;min-width:80px}
 .crow2 .cost{color:var(--muted);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .crow2 fieldset.opts{border:0;padding:0;margin:0}
 #gpublock{margin-top:10px;padding-top:8px;border-top:1px solid var(--line)}
 #gpublock[hidden]{display:none}
 #scope{margin-top:8px}
-.statusbar{display:flex;gap:6px 24px;flex-wrap:wrap;align-items:center;justify-content:space-between;padding:8px 14px;font-size:14.5px}
+.statusbar{display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:6px 24px;align-items:center;padding:8px 14px;font-size:14.5px}
+.statusbar #metrics{text-align:right}
+@media (max-width:1000px){.statusbar{grid-template-columns:1fr}.statusbar #metrics{text-align:left}#v-overview{grid-template-columns:1fr}}
 .statusbar .strip{padding:0}
 /* tabs by tier, summary first */
 .vtabs{display:flex;gap:6px;flex-wrap:wrap}
 .vtabs .chip{padding:5px 16px;font-size:14.5px;font-weight:600}
-#v-overview{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px}
+#v-overview{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.7fr) minmax(0,1fr);gap:10px}
+.ovleft{display:flex;flex-direction:column;gap:10px;min-height:0;min-width:0}
+.ovpie{min-height:0;overflow:auto}
+.ovpie .pie-wrap{display:flex;flex-direction:column;align-items:center;gap:12px}
+.ovpie .pie-wrap svg{flex:none}
+.ovpie .legend{width:100%}
 .ovgrid{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:10px}
 #v-results{flex:1;min-height:0;overflow:auto}
 #v-results[hidden]{display:none}
@@ -282,7 +291,7 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
     </svg>
     <h1>Ballast</h1>
     <span class="exlabel" id="example" hidden>EXAMPLE DATA. Ask your agent to run a scan to see your own.</span>
-    <div class="hgauge" aria-label="Free space, always shown"><div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
+    <div class="hgauge" aria-label="Free space, always shown"><div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" step="1" placeholder="none" aria-label="Your target free space in GB"> GB</label></div>
         <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div></div>
   </header>
 
@@ -323,6 +332,7 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
     </div>
 
     <div id="v-overview" class="overview">
+      <div class="ovleft">
       <section class="panel ovclear" aria-label="What can be cleared">
         <div class="ovhead"><h2>What can be cleared</h2><span class="small">Tick what you want cleared. Your agent asks again before deleting anything.</span></div>
         <div id="clearlist"></div>
@@ -338,6 +348,13 @@ textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line)
         </div>
         </div>
         <div class="mline small" id="scope"></div>
+      </section>
+      </div>
+      <section class="panel ovpie" aria-label="Share by tier">
+        <h2>Share by tier</h2>
+        <div class="pie-wrap"><svg id="pie" viewBox="0 0 200 200" width="170" height="170" role="img" aria-label="Pie chart of size by tier"></svg><div class="legend" id="pie-legend"></div></div>
+        <div class="row-inline" style="margin-top:6px"><label><input type="checkbox" id="incl" checked> Include protected</label></div>
+        <p class="small">Click a tier to open it.</p>
       </section>
     </div>
 
@@ -515,7 +532,7 @@ function validate(d){
       method:(it.tier==='Green'||it.tier==='Yellow')?(it.method==='Permanent'?'Permanent':'Recycle Bin'):'Not offered',
       row:T(String(it.catalogRow||'')),paths:paths,why:T(String(it.why||'')),cost:T(String(it.cost||'')),missing:it.missing?T(String(it.missing)):'',ev:ev});
   }
-  return {free:free,total:total,date:T(String(d.scanDate||'')),ballast:T(String(d.ballastPath||'')),target:num(d.targetGB,1,1e6)||90,
+  return {free:free,total:total,date:T(String(d.scanDate||'')),ballast:T(String(d.ballastPath||'')),target:num(d.targetGB,1,1e6),
     example:!!d.example,scope:T(String(d.scopeNote||'')),gpu:gpuOf(d.gpu),runs:runsOf(d.runs),items:items};
 }
 /* cleanup results are optional: anything missing or invalid simply hides the Results button */
@@ -567,14 +584,14 @@ function color(t){return 'var('+TV[t]+')';}
 
 /* progress toward the free-space target */
 function renderGauge(){
-  var sel=sum(chosen('clear')),proj=FREE+sel,tg=Math.max(1,S.target),box=clear($('#gauge'));
+  var sel=sum(chosen('clear')),proj=FREE+sel,tg=S.target?Math.max(1,S.target):Math.max(1,TOTAL),box=clear($('#gauge'));
   var f=Math.min(1,FREE/tg),g=Math.min(1,proj/tg);
   var fill=h('div',{class:'pfill'});fill.style.transform='scaleX('+f+')';
   var gain=h('div',{class:'pgain'});gain.style.left=(f*100)+'%';gain.style.width=Math.max(0,(g-f)*100)+'%';
-  box.setAttribute('aria-label','Free space '+f1(FREE)+' gigabytes, target '+tg+' gigabytes');
+  box.setAttribute('aria-label','Free space '+f1(FREE)+' gigabytes'+(S.target?', target '+tg+' gigabytes':', no target set'));
   box.append(fill,gain);
   $('#ppct').textContent=Math.floor(g*100)+'%';
-  $('#gtext').textContent='Free '+f1(FREE)+' GB of '+TOTAL+' GB'+(sel>0?', projected '+f1(proj)+' GB':'')+'. '+(proj>=tg?'Target reached.':f1(tg-proj)+' GB short.');
+  $('#gtext').textContent='Free '+f1(FREE)+' GB of '+TOTAL+' GB'+(sel>0?', projected '+f1(proj)+' GB':'')+'. '+(S.target?(proj>=tg?'Target reached.':f1(tg-proj)+' GB short.'):'No target set.');
 }
 /* graphics memory in use: hidden when the scan has no readable numbers */
 function renderGpu(){
@@ -815,7 +832,7 @@ function renderResults(){
   R.forEach(function(r){tc+=r.c;tg+=r.cg;ts+=r.s;tf+=r.fl;});
   var last=R[R.length-1],dl=last.f-last.b;
   strip.append(h('b',{},'Last cleanup:'),
-    h('span',{},'free space '+(dl>=0?'+':'-')+f1(Math.abs(dl))+' GB ('+f1(last.b)+' to '+f1(last.f)+' GB). '+last.c+' cleared, '+last.s+' skipped, '+last.fl+' failed.'+(R.length>1?' In all: '+tc+' items, '+f2(tg)+' GB, in '+R.length+' runs.':'')),
+    h('span',{},'free space '+(dl>=0?'+':'-')+f1(Math.abs(dl))+' GB ('+f1(last.b)+' to '+f1(last.f)+' GB). '+last.c+' cleared, '+last.s+' skipped, '+last.fl+' failed.'),
     h('button',{class:'btn',type:'button',onclick:function(){S.toolFilter=null;S.view='results';S.filter='all';applyView();}},'See results'));
   $('#resultstrip').hidden=false;
   box.append(h('div',{class:'backrow'},h('button',{class:'btn',type:'button',onclick:goOverview},'\u2190 Overview'),h('h2',{style:'margin:0'},'Cleanup results')),
@@ -913,7 +930,7 @@ $('#rowDim').addEventListener('change',function(){S.rowDim=this.value;renderPivo
 $('#colDim').addEventListener('change',function(){S.colDim=this.value;renderPivot();});
 $('#measure').addEventListener('change',function(){S.measure=this.value;renderPivot();});
 if($('#incl'))$('#incl').addEventListener('change',function(){S.incl=this.checked;renderPie();renderBars();renderPivot();});
-$('#target').addEventListener('input',function(){var v=Number(this.value);if(v>0){S.target=v;renderGauge();}});
+$('#target').addEventListener('input',function(){var v=Number(this.value);S.target=v>0?v:null;renderGauge();});
 /* the message box can grow so the whole message can be read before it is copied */
 $('#expand').addEventListener('click',function(){
   var big=$('#reply').classList.toggle('big');
@@ -926,7 +943,7 @@ $('#reset').addEventListener('click',function(){ITEMS.forEach(function(i){S.choi
   document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.remove('marked');});
   renderGauge();renderSticky();renderDetail();updateStatus();});
 
-$('#target').value=DATA.target;
+$('#target').value=DATA.target||'';
 if(DATA.example)$('#example').hidden=false;
 $('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
 syncScan();

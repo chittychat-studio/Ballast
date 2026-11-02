@@ -30,7 +30,8 @@ change needs the user's approval for that specific item (H0 in [cleanup.md](clea
    - *"Do you have a backup or restore point for anything you cannot afford to lose, and is this a computer you own
      or are authorised to manage?"*
 4. Read [cleanup.md](cleanup.md) completely, then [permissions.md](permissions.md).
-5. Follow the steps in [steps/](steps) in order. Use [catalog/](catalog) for what to look for.
+5. Follow the steps in [steps/](steps) in order. Use [catalog/](catalog) for what to look for. **On the first scan,
+   step 1 has you ask the user for their target free space (in GB, or "no target"). Never assume a number.**
 6. For a recurring check, follow [weekly.md](weekly.md) instead. Never run it unattended.
 
 ## The rules you must not break
