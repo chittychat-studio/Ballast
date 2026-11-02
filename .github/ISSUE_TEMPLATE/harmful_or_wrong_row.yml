@@ -1,0 +1,61 @@
+name: Harmful or wrong catalog row
+description: A catalog row caused harm, is out of date, or classifies something wrongly.
+labels: ["catalog", "safety"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A row that caused harm is switched to `disabled` quickly. If you lost data, say so plainly. Before you send
+        this, remove usernames and personal paths. Write `%USERPROFILE%`, `%LOCALAPPDATA%` or `~` instead.
+        See [SAFETY.md](https://github.com/chittychat-studio/Ballast/blob/main/SAFETY.md).
+  - type: input
+    id: row-id
+    attributes:
+      label: Row ID
+      description: For example CD-002 or TMP-006.
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      description: For example Windows 11 23H2, macOS 15, Ubuntu 24.04.
+    validations:
+      required: true
+  - type: input
+    id: tool-version
+    attributes:
+      label: Version of the tool that owns the folder
+      description: For example Claude desktop 4.4212.0.0, Claude Code 2.1.x.
+    validations:
+      required: true
+  - type: input
+    id: ballast-version
+    attributes:
+      label: Ballast version
+      description: The release tag or commit your agent showed (for example v0.1.0).
+    validations:
+      required: true
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What the row said, what you or your agent did, and what happened to the tool or your files afterwards.
+    validations:
+      required: true
+  - type: dropdown
+    id: severity
+    attributes:
+      label: How bad was it
+      options:
+        - Data or settings were lost
+        - The tool stopped working or needed a reinstall
+        - The tool rebuilt the folder at a cost (time, download, sign-in)
+        - The row is wrong or out of date, nothing was lost
+    validations:
+      required: true
+  - type: textarea
+    id: suggestion
+    attributes:
+      label: What the row should say instead (optional)
+      description: A different tier, different evidence checks, or `disabled`.
