@@ -1,9 +1,10 @@
 # dashboard.md: showing the user what was found
 
-After a scan, show the user a dashboard so they can choose. There are two forms:
+**By default, give the user the dashboard link after every scan, and again after every cleanup** (with the numbers
+for what the cleanup did). There are two forms:
 
-1. **Markdown dashboard (default, always available).** A table in chat. Use it when the user has no browser, or declines the page.
-2. **The HTML dashboard.** A static page in [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html): folder view, Keep / Clear / Check first choices, charts, a breakdown table, and a message the user copies back to you.
+1. **The HTML dashboard (default).** A static page in [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html): folder view, Keep / Clear / Check first choices, charts, tier totals, a breakdown table, a **Results** view after a cleanup, and a message the user copies back to you (the box can be expanded to read all of it).
+2. **Markdown dashboard (fallback).** A table in chat. Use it only when the user has no browser, declines the page, or you cannot create the file.
 
 **The HTML page is a template.** You fill in **data only** (a JSON block). You never write or edit its code.
 
@@ -54,6 +55,7 @@ For a rescan, repeat from step 1 and give a new link.
 | `ballastPath` | Where the user's Ballast folder is, so "Scan again" can name it. Ask the user; do not search the disk for it |
 | `scopeNote` | An honest sentence saying which locations the scan covered and which it did not |
 | `gpu` | Optional. Graphics memory you measured ([catalog/gpu-memory.md](catalog/gpu-memory.md)): `name`, `dedicatedUsedGB`, `dedicatedTotalGB` (`null` or `0` when there is no dedicated memory or the size is unknown) and `sharedUsedGB`. Leave the whole block out if you did not measure it. If any number is missing or invalid, the page hides the graphics line instead of guessing. The bar is drawn only when `dedicatedTotalGB` is above 0 |
+| `runs` | Optional, up to 20. What each cleanup did, from your own log and measurements: `label`, `freeBeforeGB`, `freeAfterGB`, `cleared` (items), `clearedGB`, `skipped`, `skippedWhy`, `failed`, `failedWhy`. When present, the page shows a **Results** button and opens on it after a cleanup. If any number is missing or invalid the Results button is hidden. Free space can fall during a run when a program writes files at the same time: report the measured numbers, not a promise |
 | `items` | Up to 500 items. Every `id` is a unique whole number, starting at 1 |
 
 ### One item

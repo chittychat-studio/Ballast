@@ -21,7 +21,8 @@ read-only checks through its own tools, and **asks you before every deletion**.
    it ([catalog/gpu-memory.md](catalog/gpu-memory.md)). Nothing is changed.
 2. **Runs eight checks before judging** (last used, in use now, is it a program, anything depends on it, unsaved
    work, cloud or shared, protected name, how to get it back). A folder is never classified from its name or date.
-3. **Sorts everything into tiers** (below) and shows you a dashboard.
+3. **Sorts everything into tiers** (below) and gives you a link to a dashboard by default, again after any cleanup,
+   with the numbers: space freed, items cleared, skipped and failed.
 4. **You choose** Keep, Clear or Check first per item, then paste a message with your choices to your agent.
 5. **Asks again, per item,** with the full path, before anything is deleted. Your choice selects; your approval
    authorises.
@@ -93,8 +94,11 @@ instructions if you tell it to read `AGENTS.md`.
 <sub>A picture of the dashboard with example data. Your own scan fills it with your folders.</sub>
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
-and gives you a link to a local copy. Open the template directly to see it with example data. It has a folder view
-with Keep / Clear / Check first choices, a free-space bar, a GPU memory line (shown only when your scan measured it), charts, a breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
+and gives you a link to a local copy. Open the template directly to see it with example data. It opens on an
+**Overview** (free space, totals, a summary by tool, a chart by tier). Tabs by tier lead to what you can clear, what is
+held back and what is protected; click a tool to see its folders and tick what to clear. After a cleanup it opens on a
+**Results** view with the numbers. It also has a GPU memory line (shown only when your scan measured it), a
+breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
 
 ## What is in this repo
 

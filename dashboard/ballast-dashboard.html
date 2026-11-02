@@ -44,6 +44,12 @@ body{background:var(--bg);color:var(--ink);font:16px/1.4 "Segoe UI Variable Text
 .head h1{margin:0;font-size:22px;font-weight:700;letter-spacing:.2px}
 .rail{background:var(--rail);display:flex;flex-direction:column}
 .rail-btn{all:unset;box-sizing:border-box;cursor:pointer;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;height:80px;color:var(--rail-ink);font-size:12.5px;font-weight:600;border-bottom:1px solid rgba(255,255,255,.07)}
+.rail-btn[hidden]{display:none}
+/* scrolling panels get a scrollbar you can see in both themes */
+.pane,#tree,.pop{scrollbar-width:auto;scrollbar-color:var(--muted) var(--track)}
+.pane::-webkit-scrollbar,#tree::-webkit-scrollbar,.pop::-webkit-scrollbar{width:14px;height:14px}
+.pane::-webkit-scrollbar-track,#tree::-webkit-scrollbar-track,.pop::-webkit-scrollbar-track{background:var(--track)}
+.pane::-webkit-scrollbar-thumb,#tree::-webkit-scrollbar-thumb,.pop::-webkit-scrollbar-thumb{background:var(--muted);border-radius:7px;border:3px solid var(--track)}
 .rail-btn:hover{background:var(--rail-h)}
 .rail-btn[aria-current=true]{background:var(--blue);color:#fff}
 .rail-btn:focus-visible{outline:2px solid #fff;outline-offset:-4px}
@@ -73,7 +79,8 @@ label{cursor:pointer}
 .choices{display:flex;flex-direction:column;gap:6px;padding:8px 12px;min-width:0}
 .sum{font-size:14.5px;font-weight:600;line-height:1.3}
 .crow{display:flex;gap:10px;align-items:stretch}
-.reply{flex:1;min-width:0;height:60px;resize:none;padding:5px 8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:12.5px/1.35 Consolas,"Cascadia Mono",monospace;white-space:pre}
+.reply{flex:1;min-width:0;height:44px;resize:vertical;padding:5px 8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:12.5px/1.35 Consolas,"Cascadia Mono",monospace;white-space:pre}
+.reply.big{height:min(52vh,460px);white-space:pre-wrap}
 .cbtns{display:flex;flex-direction:column;gap:6px;width:206px}
 button.btn,a.btn{box-sizing:border-box;display:block;text-align:center;text-decoration:none;cursor:pointer;padding:5px 12px;border-radius:3px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font:inherit;font-size:14.5px;font-weight:600}
 button.btn:hover,a.btn:hover{border-color:var(--blue)}
@@ -161,7 +168,7 @@ ul.tree,ul.tree ul{list-style:none;margin:0;padding:0}
 .ev li{display:contents}
 .ev .id{color:var(--muted);font-weight:700}
 .ev .st{font-size:11.5px;font-weight:800;text-transform:uppercase;letter-spacing:.3px;padding:0 6px;border-radius:3px;border-left:4px solid;align-self:start;line-height:1.6}
-.ev .tx{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev .tx{}
 .st.ok{border-color:var(--green-b);background:var(--green-t)} .st.note{border-color:var(--yellow-b);background:var(--yellow-t)}
 .st.block{border-color:var(--red-b);background:var(--red-t)} .st.unknown{border-color:var(--grey-b);background:var(--grey-t)} .st.na{border-color:var(--line)}
 .path{font:13px/1.35 Consolas,"Cascadia Mono",monospace;background:var(--grey-t);padding:1px 6px;border-radius:3px;display:block;margin:2px 0;word-break:break-all}
@@ -173,7 +180,7 @@ ul.tree,ul.tree ul{list-style:none;margin:0;padding:0}
 .pop p{margin:0 0 4px}
 .pop dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:5px 10px;align-items:baseline}
 .pop dd,.pop dt{margin:0}
-textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:13px/1.4 Consolas,"Cascadia Mono",monospace;margin:8px 0}
+textarea.req{width:100%;resize:vertical;padding:8px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:13px/1.4 Consolas,"Cascadia Mono",monospace;margin:8px 0}
 .pop .row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
 .pop .row .btn{display:inline-block}
 .small{font-size:13px;color:var(--muted);margin-top:8px}
@@ -189,6 +196,27 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
   .pop{left:12px}
 }
 @media (prefers-reduced-motion:reduce){.twisty svg{transition:none}}
+
+/* tabs by tier, summary first */
+.vtabs{display:flex;gap:6px;flex-wrap:wrap}
+.vtabs .chip{padding:5px 16px;font-size:14.5px;font-weight:600}
+#v-overview{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);grid-template-rows:auto minmax(0,1fr);gap:10px}
+#v-overview[hidden],#v-list[hidden]{display:none}
+#v-overview>.panel{min-height:0;overflow:auto}
+.ovtop{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.3fr);gap:0;padding:0}
+.ovtop .gblock{border-right:1px solid var(--line)}
+.ovmetrics{display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px 14px;font-size:15px}
+.ovmetrics .small{color:var(--muted);font-size:13px}
+.tscroll{overflow:auto}
+.bytool th[scope=row]{text-align:left}
+.toollink{all:unset;cursor:pointer;color:var(--blue-ink);font-weight:700}
+.toollink:hover{text-decoration:underline}
+.toollink:focus-visible{outline:2px solid var(--focus);outline-offset:2px}
+.msgbar{padding:8px 12px}
+.msgbar .choices{padding:0}
+.gblock{border-right:0}
+.ev .tx{overflow-wrap:anywhere}
+.evtabs{display:flex;gap:6px;flex-wrap:wrap;margin:4px 0 8px}
 </style>
 </head>
 <body>
@@ -213,6 +241,10 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
       <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 20V11M12 20V5M19 20v-7"/></svg>
       <span>Breakdown</span>
     </button>
+    <button class="rail-btn" id="nav-results" type="button" aria-expanded="false" aria-controls="pop-results" hidden>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12.5l4.5 4.5L20 6.5"/></svg>
+      <span>Results</span>
+    </button>
     <button class="rail-btn" id="nav-scan" type="button" aria-expanded="false" aria-controls="pop-scan">
       <svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="5.5"/><path d="M15 15l5 5"/></svg>
       <span>Scan again</span>
@@ -229,8 +261,11 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
   </nav>
 
   <div class="content">
-    <section class="panel topbox" aria-label="Free space and your choices">
-      <div class="gblock">
+    <nav class="vtabs" id="vtabs" aria-label="Views"></nav>
+
+    <div id="v-overview" class="overview">
+      <section class="panel ovtop" aria-label="Free space and totals">
+        <div class="gblock">
         <div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
         <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div>
         <div class="gpu" id="gpu" hidden>
@@ -238,19 +273,24 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
           <div class="prog" id="gpu-bar-row"><div class="ptrack" id="gpu-bar" role="img"></div></div>
         </div>
       </div>
-      <div class="choices">
-        <div class="sum" id="sum" aria-live="polite"></div>
-        <div class="crow">
-          <textarea class="reply" id="reply" rows="3" readonly aria-label="Message to paste to your agent"></textarea>
-          <div class="cbtns">
-            <button class="btn primary" id="copy" type="button">Copy message for my agent</button>
-            <button class="btn" id="reset" type="button">Reset to Keep</button>
-          </div>
+        <div class="ovmetrics">
+          <div class="mline" id="metrics"></div>
+          <div class="mline small" id="scope"></div>
         </div>
-      </div>
-    </section>
+      </section>
+      <section class="panel" aria-label="Summary by tool">
+        <h2>Summary by tool</h2>
+        <div class="tscroll"><table class="pivot bytool" id="bytool"></table></div>
+        <p class="small">Click a tool to see its folders and choose what to clear.</p>
+      </section>
+      <section class="panel" aria-label="Share by tier">
+        <h2>Share by tier</h2>
+        <div class="pie-wrap"><svg id="pie" viewBox="0 0 200 200" width="130" height="130" role="img" aria-label="Pie chart of size by tier"></svg><div class="legend" id="pie-legend"></div></div>
+        <div class="row-inline" style="margin-top:4px"><label><input type="checkbox" id="incl" checked> Include protected</label></div>
+      </section>
+    </div>
 
-    <main>
+    <main id="v-list" hidden>
       <div class="col">
         <section class="panel explorer" aria-label="Folder view">
           <div class="toolbar">
@@ -260,24 +300,9 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
           <div class="colhead" aria-hidden="true"><div>Your choice</div><div>Name</div><div style="text-align:right">Size</div><div>Tier</div></div>
           <div id="tree"></div>
           <div class="status" id="status"></div>
-          <div class="status scope" id="scope"></div>
         </section>
       </div>
       <div class="col">
-        <section class="panel" aria-label="Charts">
-          <div class="charts">
-            <div>
-              <h2>Share by tier</h2>
-              <div class="pie-wrap"><svg id="pie" viewBox="0 0 200 200" width="118" height="118" role="img" aria-label="Pie chart of size by tier"></svg><div class="legend" id="pie-legend"></div></div>
-              <div class="row-inline" style="margin-top:4px"><label><input type="checkbox" id="incl" checked> Include protected</label></div>
-            </div>
-            <div>
-              <h2>Size by tool</h2>
-              <div class="bars" id="bars"></div>
-              <div class="seg-key" id="barkey"></div>
-            </div>
-          </div>
-        </section>
         <section class="panel lower" aria-label="Item detail and breakdown">
           <div class="tablist" role="tablist" aria-label="Detail views">
             <button class="tab" role="tab" id="tab-d" aria-selected="true" aria-controls="pane-d" type="button">Item detail</button>
@@ -295,18 +320,26 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
         </section>
       </div>
     </main>
+
+    <section class="panel msgbar" aria-label="Your choices">
+      <div class="choices">
+        <div class="sum" id="sum" aria-live="polite"></div>
+        <div class="crow">
+          <textarea class="reply" id="reply" rows="3" readonly aria-label="Message to paste to your agent"></textarea>
+          <div class="cbtns">
+            <button class="btn primary" id="copy" type="button">Copy message for my agent</button>
+            <button class="btn" id="expand" type="button" aria-expanded="false" aria-controls="reply">Expand message</button>
+            <button class="btn" id="reset" type="button">Reset to Keep</button>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </div>
 
 <div class="pop" id="pop-scan" role="dialog" aria-label="Scan again" hidden>
   <h3>Scan again</h3>
   <p>This page cannot run a scan itself. It is read-only by design. Send this request to your agent. It scans first, shows you a new dashboard, and asks before anything is deleted.</p>
-  <fieldset class="opts" style="margin-top:8px;flex-wrap:wrap"><legend>Your agent</legend>
-    <label class="o-keep"><input type="radio" name="agent" value="claude" checked>Claude Code</label>
-    <label class="o-keep"><input type="radio" name="agent" value="codex">Codex</label>
-    <label class="o-keep"><input type="radio" name="agent" value="antigravity">Antigravity</label>
-    <label class="o-keep"><input type="radio" name="agent" value="other">Other</label>
-  </fieldset>
   <fieldset class="opts" style="margin-top:8px"><legend>Kind of scan</legend>
     <label class="o-keep"><input type="radio" name="scankind" value="full" checked>Full scan</label>
     <label class="o-keep"><input type="radio" name="scankind" value="weekly">Weekly check</label>
@@ -316,9 +349,10 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
     <button class="btn primary" id="scanCopy" type="button">Copy request</button>
     <a class="btn" id="scanOpen" href="#" rel="noopener">Open in Claude Code (VS Code)</a>
   </div>
-  <p class="small" id="agentHint"></p>
+  <p class="small" id="agentHint">The request is the same for every agent: paste it into Claude Code, Codex, Antigravity, Gemini or any agent that can read files and run commands, started in the folder that contains Ballast (edit the folder in the request if yours lives elsewhere). Only Claude Code has a link that fills the request in for you.</p>
 </div>
 
+<div class="pop" id="pop-results" role="dialog" aria-label="Cleanup results" hidden></div>
 <div class="pop" id="pop-about" role="dialog" aria-label="About us" hidden>
   <h3>What Ballast is</h3>
   <p>Plain-text instructions your AI agent follows to find and clear what AI tools leave behind: chat transcripts, virtual machine images, caches, scratch projects and stray processes. Nothing to install. It never deletes personal files.</p>
@@ -353,6 +387,7 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
   "targetGB": 60,
   "ballastPath": "%USERPROFILE%\\Ballast",
   "gpu": {"name": "Example graphics card", "dedicatedUsedGB": 3.1, "dedicatedTotalGB": 8, "sharedUsedGB": 0.4},
+  "runs": [{"label": "Example cleanup", "freeBeforeGB": 30.2, "freeAfterGB": 41.0, "cleared": 3, "clearedGB": 10.8, "skipped": 1, "skippedWhy": "1 changed after the scan", "failed": 0}],
   "scopeNote": "Example scope: the user profile and AppData\\Local. Not scanned: AppData\\Roaming, ProgramData, other drives. System folders are never offered.",
   "items": [
     {"id": 1, "name": "Browser-style app caches", "tool": "Claude desktop", "tier": "Green", "sizeGB": 0.70, "maker": "High", "method": "Permanent",
@@ -428,7 +463,21 @@ function validate(d){
       row:T(String(it.catalogRow||'')),paths:paths,why:T(String(it.why||'')),cost:T(String(it.cost||'')),missing:it.missing?T(String(it.missing)):'',ev:ev});
   }
   return {free:free,total:total,date:T(String(d.scanDate||'')),ballast:T(String(d.ballastPath||'')),target:num(d.targetGB,1,1e6)||90,
-    example:!!d.example,scope:T(String(d.scopeNote||'')),gpu:gpuOf(d.gpu),items:items};
+    example:!!d.example,scope:T(String(d.scopeNote||'')),gpu:gpuOf(d.gpu),runs:runsOf(d.runs),items:items};
+}
+/* cleanup results are optional: anything missing or invalid simply hides the Results button */
+function runsOf(a){
+  if(!Array.isArray(a)||!a.length||a.length>20)return null;
+  var out=[],k,r,b,f,c,cg,s,fl;
+  for(k=0;k<a.length;k++){
+    r=a[k];if(!r||typeof r!=='object')return null;
+    b=num(r.freeBeforeGB,0,1e6);f=num(r.freeAfterGB,0,1e6);cg=num(r.clearedGB,0,1e6);
+    c=num(r.cleared,0,1e7);s=num(r.skipped,0,1e7);fl=num(r.failed,0,1e7);
+    if(b===null||f===null||cg===null||c===null||s===null||fl===null)return null;
+    out.push({label:T(String(r.label||'Cleanup')),b:b,f:f,cg:cg,c:Math.floor(c),s:Math.floor(s),fl:Math.floor(fl),
+      sw:T(String(r.skippedWhy||'')),fw:T(String(r.failedWhy||''))});
+  }
+  return out;
 }
 /* graphics memory is optional: anything missing or unreadable simply hides the bar */
 function gpuOf(g){
@@ -442,7 +491,7 @@ try{DATA=validate(JSON.parse(document.getElementById('ballast-data').textContent
 if(!DATA){document.body.textContent='Ballast could not read its data block, so nothing is shown. Ask your agent to regenerate the dashboard.';return;}
 var FREE=DATA.free, TOTAL=DATA.total, SCANDATE=DATA.date, BALLAST=DATA.ballast, ITEMS=DATA.items;
 var DIMS={tool:'Tool',tier:'Tier',maker:'Maker confidence',method:'Method'};
-var S={target:DATA.target,choice:{},filter:'all',incl:true,open:1,rowDim:'tool',colDim:'tier',measure:'gb',closed:{}};
+var S={view:'overview',toolFilter:null,target:DATA.target,choice:{},filter:'all',incl:true,open:1,rowDim:'tool',colDim:'tier',measure:'gb',closed:{}};
 ITEMS.forEach(function(i){S.choice[i.id]='keep';});
 
 function $(q){return document.querySelector(q);}
@@ -508,7 +557,8 @@ function renderSticky(){
 function polar(cx,cy,r,a){return [cx+r*Math.cos(a),cy+r*Math.sin(a)];}
 function arc(cx,cy,r0,r1,a0,a1){var big=(a1-a0)>Math.PI?1:0,p0=polar(cx,cy,r1,a0),p1=polar(cx,cy,r1,a1),p2=polar(cx,cy,r0,a1),p3=polar(cx,cy,r0,a0);
   return 'M'+p0[0]+' '+p0[1]+' A'+r1+' '+r1+' 0 '+big+' 1 '+p1[0]+' '+p1[1]+' L'+p2[0]+' '+p2[1]+' A'+r0+' '+r0+' 0 '+big+' 0 '+p3[0]+' '+p3[1]+' Z';}
-function setFilter(f){S.filter=f;renderChips();renderTree();}
+function setFilter(f){S.toolFilter=null;S.filter=f;S.view=(f==='Grey')?'held':(f==='Red')?'prot':'clear';applyView();}
+function applyView(){var ov=S.view==='overview';$('#v-overview').hidden=!ov;$('#v-list').hidden=ov;renderChips();if(!ov)renderTree();$('#nav-folders').setAttribute('aria-current',ov?'false':'true');}
 function renderPie(){
   var items=visible(),tot=sum(items),svg=clear($('#pie')),lg=clear($('#pie-legend')),a=-Math.PI/2;
   TIERS.forEach(function(t){
@@ -527,7 +577,7 @@ function renderPie(){
 }
 
 /* bars */
-function renderBars(){
+function renderBars(){if(!document.getElementById('bars'))return;
   var items=visible(),tools={},box=clear($('#bars')),key=clear($('#barkey')),max=0;
   items.forEach(function(i){tools[i.tool]=tools[i.tool]||{Green:0,Yellow:0,Grey:0,Red:0,total:0};tools[i.tool][i.tier]+=i.size;tools[i.tool].total+=i.size;});
   var names=Object.keys(tools).sort(function(x,y){return tools[y].total-tools[x].total;});
@@ -539,6 +589,23 @@ function renderBars(){
     box.append(h('div',{class:'bar-row'},h('div',{title:n},n),h('div',{},track),h('div',{class:'v'},f2(tools[n].total))));
   });
   TIERS.forEach(function(t){key.append(h('span',{},h('i',{style:'background:'+color(t)}),t));});
+}
+
+/* summary by tool: the first screen. Click a tool to drill into its folders */
+function renderOverview(){
+  var by={};
+  ITEMS.forEach(function(i){var b=by[i.tool]=by[i.tool]||{tool:i.tool,clear:0,held:0,prot:0};
+    if(selectable(i))b.clear+=i.size;else if(i.tier==='Grey')b.held+=i.size;else b.prot+=i.size;});
+  var rows=Object.keys(by).map(function(k){return by[k];}).sort(function(a,b){return (b.clear+b.held+b.prot)-(a.clear+a.held+a.prot);});
+  var t=clear($('#bytool'));
+  t.append(h('thead',{},h('tr',{},h('th',{},'Tool'),h('th',{class:'num'},'Can clear'),h('th',{class:'num'},'Held back'),h('th',{class:'num'},'Protected'),h('th',{class:'num'},'Total'))));
+  var tb=h('tbody');
+  rows.forEach(function(b){
+    var go=function(){S.toolFilter=b.tool;S.view=b.clear>0?'clear':(b.held>0?'held':'prot');S.filter=S.view==='clear'?'sel':S.view==='held'?'Grey':'Red';applyView();};
+    tb.append(h('tr',{},h('th',{scope:'row'},h('button',{type:'button',class:'toollink',onclick:go},b.tool)),
+      h('td',{class:'cell'},b.clear?f2(b.clear):''),h('td',{class:'cell'},b.held?f2(b.held):''),h('td',{class:'cell'},b.prot?f2(b.prot):''),h('td',{class:'tot cell'},f2(b.clear+b.held+b.prot))));
+  });
+  t.append(tb);
 }
 
 /* breakdown (pivot) */
@@ -567,12 +634,14 @@ function renderPivot(){
 /* folder view */
 function renderChips(){
   var n=function(f){return ITEMS.filter(f).length;};
-  var defs=[['all','All '+ITEMS.length],['sel','Can choose '+n(selectable)],['Grey','Grey '+n(function(i){return i.tier==='Grey';})],['Red','Red '+n(function(i){return i.tier==='Red';})]];
-  var box=clear($('#chips'));
-  defs.forEach(function(d){var on=S.filter===d[0]||(d[0]==='sel'&&(S.filter==='Green'||S.filter==='Yellow'));
-    box.append(h('button',{class:'chip',type:'button','aria-pressed':on?'true':'false',onclick:function(){setFilter(d[0]);}},d[1]));});
+  var defs=[['overview','Overview'],['clear','Can clear '+n(selectable)],['held','Held back '+n(function(i){return i.tier==='Grey';})],['prot','Protected '+n(function(i){return i.tier==='Red';})]];
+  var box=clear($('#vtabs'));
+  defs.forEach(function(d){box.append(h('button',{class:'chip',type:'button','aria-pressed':S.view===d[0]?'true':'false',onclick:function(){
+    S.toolFilter=null;S.view=d[0];S.filter=d[0]==='clear'?'sel':d[0]==='held'?'Grey':d[0]==='prot'?'Red':'all';applyView();}},d[1]));});
+  var tb=clear($('#chips'));
+  if(S.toolFilter)tb.append(h('button',{class:'chip',type:'button','aria-pressed':'true',onclick:function(){S.toolFilter=null;applyView();}},'Tool: '+S.toolFilter+' (show all)'));
 }
-function passes(i){var f=S.filter;return f==='all'||(f==='sel'&&selectable(i))||i.tier===f;}
+function passes(i){var f=S.filter;if(S.toolFilter&&i.tool!==S.toolFilter)return false;return f==='all'||(f==='sel'&&selectable(i))||i.tier===f;}
 /* each item sits in its folder; items with several paths sit once, at their common folder */
 function buildTree(){
   var root={kids:{}};
@@ -596,17 +665,16 @@ function folderIcon(tier){
 function chev(){return sv('svg',{viewBox:'0 0 10 10',width:10,height:10,'aria-hidden':'true'},sv('path',{d:'M2 3l3 4 3-4',fill:'none',stroke:'var(--muted)','stroke-width':1.8,'stroke-linecap':'round','stroke-linejoin':'round'}));}
 function setChoice(id,v){
   S.choice[id]=v;
-  document.querySelectorAll('input[data-item="'+id+'"]').forEach(function(r){r.checked=(r.value===v);});
+  document.querySelectorAll('input[data-item="'+id+'"]').forEach(function(r){r.checked=(v!=='keep');});
   document.querySelectorAll('.trow[data-item="'+id+'"]').forEach(function(r){r.classList.toggle('marked',v!=='keep');});
   renderGauge();renderSticky();renderDetail();updateStatus();
 }
 function radios(it){
-  var opts=selectable(it)?[['keep','Keep'],['clear','Clear']]:(it.tier==='Grey'?[['keep','Keep'],['check','Check first']]:null);
-  if(!opts)return h('span',{class:'prot'},'Protected, locked');
-  return h('fieldset',{class:'opts'},h('legend',{},'Your choice for '+it.name),opts.map(function(o){
-    var r=h('input',{type:'radio',name:'r-'+it.id,value:o[0],'data-item':it.id,onclick:function(e){e.stopPropagation();setChoice(it.id,o[0]);}});
-    r.checked=S.choice[it.id]===o[0];
-    return h('label',{class:'o-'+o[0]},r,o[1]);}));
+  var opt=selectable(it)?['clear','Clear']:(it.tier==='Grey'?['check','Check first']:null);
+  if(!opt)return h('span',{class:'prot'},'Protected, locked');
+  var c=h('input',{type:'checkbox','data-item':it.id,onclick:function(e){e.stopPropagation();setChoice(it.id,this.checked?opt[0]:'keep');}});
+  c.checked=S.choice[it.id]===opt[0];
+  return h('fieldset',{class:'opts'},h('legend',{},'Your choice for '+it.name),h('label',{class:'o-'+opt[0]},c,opt[1]));
 }
 function openItem(it){S.open=it.id;document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.toggle('open',Number(r.getAttribute('data-item'))===it.id);});renderDetail();showTab('d');}
 function mk(n,depth,key){
@@ -638,6 +706,29 @@ function renderTree(){
 function updateStatus(){
   var shown=ITEMS.filter(passes);
   $('#status').textContent=shown.length+' items, '+f2(sum(shown))+' GB. '+chosen('clear').length+' marked Clear, '+chosen('check').length+' marked Check first.';
+  var cl=ITEMS.filter(selectable),gr=ITEMS.filter(function(i){return i.tier==='Grey';}),rd=ITEMS.filter(function(i){return i.tier==='Red';});
+  clear($('#metrics')).append(h('div',{},h('b',{},f2(sum(cl))+' GB'),' can be cleared (Green and Yellow), in '+cl.length+' items'),
+    h('div',{},h('b',{},f2(sum(gr))+' GB'),' held back (Grey): in use or unknown'),
+    h('div',{},h('b',{},f2(sum(rd))+' GB'),' protected (Red): never offered'));
+}
+/* what a cleanup did, in numbers: only drawn when the data has a runs block */
+function renderResults(){
+  var R=DATA.runs,box=clear($('#pop-results'));
+  if(!R){$('#nav-results').hidden=true;return;}
+  $('#nav-results').hidden=false;
+  var tc=0,tg=0,ts=0,tf=0;
+  R.forEach(function(r){tc+=r.c;tg+=r.cg;ts+=r.s;tf+=r.fl;});
+  box.append(h('h3',{},'Cleanup results'),
+    h('p',{},'Cleared '+tc+' items, '+f2(tg)+' GB, in '+R.length+(R.length>1?' runs':' run')+'. Skipped '+ts+'. Failed '+tf+'.'));
+  R.forEach(function(r){
+    var d=r.f-r.b,dl=h('dl',{});
+    dl.append(h('dt',{},'Free space'),h('dd',{},f1(r.b)+' GB to '+f1(r.f)+' GB ('+(d>=0?'+':'-')+f1(Math.abs(d))+' GB)'));
+    dl.append(h('dt',{},'Cleared'),h('dd',{},r.c+' items, '+f2(r.cg)+' GB'));
+    dl.append(h('dt',{},'Skipped'),h('dd',{},r.s+(r.sw?' ('+r.sw+')':'')));
+    dl.append(h('dt',{},'Failed'),h('dd',{},r.fl+(r.fw?' ('+r.fw+')':'')));
+    box.append(h('h3',{},r.label),dl);
+  });
+  box.append(h('p',{},'Free space can fall during a run when a program is writing files at the same time. These numbers are what your agent measured.'));
 }
 function expandPath(p){
   var parts=p.split('\\'),first=parts[0],rest=parts.slice(1);
@@ -657,10 +748,16 @@ function renderDetail(){
   kv.append(h('dt',{},i.paths.length>1?'Paths':'Path'),h('dd',{},i.paths.map(function(p){return h('code',{class:'path'},p.p);})));
   box.append(kv);
   var have={};i.ev.forEach(function(e){have[e[0]]=e;});
+  var rowsEv=Object.keys(EVL).map(function(id){var e=have[id]||[id,'unknown','Not checked yet.'];return {id:id,st:e[1],tx:e[2]};});
+  var ord=['block','note','ok','unknown','na'],cnt={};
+  ord.forEach(function(k){cnt[k]=rowsEv.filter(function(r){return r.st===k;}).length;});
+  var cur=(S.evTab&&cnt[S.evTab])?S.evTab:ord.filter(function(k){return cnt[k];})[0];
+  var tabs=h('div',{class:'evtabs',role:'group','aria-label':'Checks by result'});
+  ord.forEach(function(k){if(!cnt[k])return;tabs.append(h('button',{class:'chip',type:'button','aria-pressed':k===cur?'true':'false',onclick:function(){S.evTab=k;renderDetail();}},STL[k]+' '+cnt[k]));});
   var ul=h('ul',{class:'ev'});
-  Object.keys(EVL).forEach(function(id){var e=have[id]||[id,'unknown','Not checked yet.'],tx=EVL[id]+': '+e[2];
-    ul.append(h('li',{},h('span',{class:'st '+e[1]},STL[e[1]]),h('span',{class:'tx',title:tx},h('b',{},EVL[id]),'  '+e[2])));});
-  box.append(ul);
+  rowsEv.filter(function(r){return r.st===cur;}).forEach(function(r){var tx=EVL[r.id]+': '+r.tx;
+    ul.append(h('li',{},h('span',{class:'st '+r.st},STL[r.st]),h('span',{class:'tx',title:tx},h('b',{},EVL[r.id]),'  '+r.tx)));});
+  box.append(tabs,ul);
 }
 
 /* tabs and rail */
@@ -676,12 +773,13 @@ $('#tab-d').addEventListener('click',function(){showTab('d');});
 $('#tab-p').addEventListener('click',function(){showTab('p');});
 ['#tab-d','#tab-p'].forEach(function(id){$(id).addEventListener('keydown',function(e){
   if(e.key==='ArrowRight'||e.key==='ArrowLeft'){var d=id==='#tab-p';showTab(d?'d':'p');$(d?'#tab-d':'#tab-p').focus();}});});
-$('#nav-folders').addEventListener('click',function(){closePops();showTab('d');var r=document.querySelector('.trow.leaf.open')||document.querySelector('.trow.leaf');if(r)r.focus();});
-$('#nav-breakdown').addEventListener('click',function(){closePops();showTab('p');$('#tab-p').focus();});
+$('#nav-folders').addEventListener('click',function(){closePops();if(S.view==='overview'){S.filter='sel';S.view='clear';}applyView();showTab('d');var r=document.querySelector('.trow.leaf.open')||document.querySelector('.trow.leaf');if(r)r.focus();});
+$('#nav-breakdown').addEventListener('click',function(){closePops();if(S.view==='overview'){S.filter='sel';S.view='clear';}applyView();showTab('p');$('#tab-p').focus();});
 
 /* popovers opened from the rail */
-function closePops(){['scan','about'].forEach(function(n){$('#pop-'+n).hidden=true;$('#nav-'+n).setAttribute('aria-expanded','false');});}
+function closePops(){['results','scan','about'].forEach(function(n){$('#pop-'+n).hidden=true;$('#nav-'+n).setAttribute('aria-expanded','false');});}
 function togglePop(n){var p=$('#pop-'+n),wasHidden=p.hidden;closePops();if(wasHidden){p.hidden=false;$('#nav-'+n).setAttribute('aria-expanded','true');}}
+$('#nav-results').addEventListener('click',function(e){e.stopPropagation();togglePop('results');});
 $('#nav-scan').addEventListener('click',function(e){e.stopPropagation();togglePop('scan');});
 $('#nav-about').addEventListener('click',function(e){e.stopPropagation();togglePop('about');});
 document.addEventListener('click',function(e){if(!e.target.closest('.pop'))closePops();});
@@ -701,15 +799,7 @@ function scanText(){var k=document.querySelector('input[name=scankind]:checked')
     :'Read AGENTS.md in my Ballast folder'+(BALLAST?' ('+BALLAST+')':'')+' and run cleanup.md for a fresh read-only scan. Show me the dashboard.';
   return base+' Ask me before deleting anything. '+BLOCKED;}
 function syncScan(){var s=scanText();$('#scanReq').value=s;$('#scanOpen').setAttribute('href','vscode://anthropic.claude-code/open?prompt='+encodeURIComponent(s));}
-var HINTS={
- claude:'Open in Claude Code starts the request in your VS Code agent. Or copy it and paste it into Claude Code anywhere.',
- codex:'Open the folder that contains Ballast in Codex, then paste the request into its chat. Codex has no link that fills in a request, so this one is copy and paste.',
- antigravity:'Open the folder that contains Ballast in Antigravity, then paste the request into its agent panel. Antigravity has no link that fills in a request, so this one is copy and paste.',
- other:'Paste the request into any agent that can read files and run commands, started in the folder that contains Ballast.'};
-function syncAgent(){var a=document.querySelector('input[name=agent]:checked').value;
-  $('#scanOpen').hidden=(a!=='claude');$('#agentHint').textContent=HINTS[a]+' Edit the folder in the request if your Ballast copy lives elsewhere.';}
 document.querySelectorAll('input[name=scankind]').forEach(function(r){r.addEventListener('change',syncScan);});
-document.querySelectorAll('input[name=agent]').forEach(function(r){r.addEventListener('change',syncAgent);});
 function copyFrom(sel,btn,label){var r=$(sel);r.select();
   var done=function(){btn.textContent='Copied';setTimeout(function(){btn.textContent=label;},1500);};
   if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(r.value).then(done,function(){document.execCommand('copy');done();});}
@@ -725,16 +815,22 @@ $('#colDim').addEventListener('change',function(){S.colDim=this.value;renderPivo
 $('#measure').addEventListener('change',function(){S.measure=this.value;renderPivot();});
 $('#incl').addEventListener('change',function(){S.incl=this.checked;renderPie();renderBars();renderPivot();});
 $('#target').addEventListener('input',function(){var v=Number(this.value);if(v>0){S.target=v;renderGauge();}});
+/* the message box can grow so the whole message can be read before it is copied */
+$('#expand').addEventListener('click',function(){
+  var big=$('#reply').classList.toggle('big');
+  this.setAttribute('aria-expanded',big?'true':'false');this.textContent=big?'Collapse message':'Expand message';});
 $('#reset').addEventListener('click',function(){ITEMS.forEach(function(i){S.choice[i.id]='keep';});
-  document.querySelectorAll('input[type=radio][data-item]').forEach(function(r){r.checked=(r.value==='keep');});
+  document.querySelectorAll('input[type=checkbox][data-item]').forEach(function(r){r.checked=false;});
   document.querySelectorAll('.trow.leaf').forEach(function(r){r.classList.remove('marked');});
   renderGauge();renderSticky();renderDetail();updateStatus();});
 
 $('#target').value=DATA.target;
 if(DATA.example)$('#example').hidden=false;
 $('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
-syncScan();syncAgent();
-renderGauge();renderGpu();renderPie();renderBars();renderPivot();renderChips();renderTree();renderDetail();renderSticky();
+syncScan();
+renderGauge();renderGpu();renderResults();renderOverview();renderPie();renderBars();renderPivot();applyView();updateStatus();renderDetail();renderSticky();
+/* after a cleanup the page opens on its numbers; the example data does not pop anything open */
+if(DATA.runs&&!DATA.example)togglePop('results');
 })();
 </script>
 </body>

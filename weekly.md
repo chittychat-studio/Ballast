@@ -40,7 +40,7 @@ Claude Code transcripts     0.1 GB      0.6 GB  +0.5     Yellow
 
 ## 5. Offer cleanup
 
-Present the dashboard ([dashboard.md](dashboard.md)). The user chooses; you build a manifest and ask per item (steps
+Give the user the dashboard link by default ([dashboard.md](dashboard.md)), with the growth since last time. The user chooses; you build a manifest and ask per item (steps
 05 and 06), following [permissions.md](permissions.md) for any blocker. Items skipped last time are shown again,
 with their blockers.
 

@@ -16,6 +16,14 @@ Per item: deleted, moved to the Recycle Bin (and confirmed there), skipped, bloc
 much is still in the Recycle Bin and that it has not freed space yet. List every blocked item with the option you
 recommended and the permission you need from the user.
 
+## 3b. Show the dashboard again, with the numbers (by default)
+
+After any deletion, give the user a **new dashboard link** by default. Re-measure what you touched, rebuild the page
+([dashboard.md](../dashboard.md)), and add a `runs` block with your measured numbers: free space before and after,
+items and GB cleared, items skipped (with the reasons from your log), and items that failed (with the reason). The page
+then opens on a **Results** view with those numbers. Quote only what you measured; a run's free space can fall if a
+program wrote files at the same time, and the page says so.
+
 ## 4. Offer to empty the Recycle Bin (only now)
 
 If the user asks you to empty the Recycle Bin on its own, without a cleanup run, skip the wait for section 2, but

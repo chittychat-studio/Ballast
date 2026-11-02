@@ -1,7 +1,9 @@
 # Step 5: present and let the user choose
 
-1. Build the dashboard as described in [dashboard.md](../dashboard.md): fill the data block of the HTML template
-   (or show the Markdown table), give the user the link, and ask before opening it.
+1. **By default, after every scan, give the user the dashboard link.** Build it as described in
+   [dashboard.md](../dashboard.md): fill the data block of the HTML template and print the full link. Show the
+   Markdown table instead only if the user declines the page or you cannot create the file. Ask before opening it
+   in the browser (unless the user has just asked you to show it).
 2. Show Red items as locked so the user sees what is protected. Show Grey items with what is missing.
 3. **Select nothing for the user.** Every item starts as Keep. Do not offer "all green". State what the user can
    choose and let them choose.
