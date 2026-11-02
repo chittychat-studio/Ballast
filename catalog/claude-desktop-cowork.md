@@ -9,7 +9,7 @@ closed (including its system-tray process) for most rows to be removable.
 | ID | Path | What it is | Tier | Evidence before delete | Cost / rebuild | Status |
 |---|---|---|---|---|---|---|
 | CD-001 | `%LOCALAPPDATA%\Claude-Data\<package-family>\vm_bundles\claudevm.bundle\` (disk images, compressed originals, kernel and initrd files) | The Cowork virtual machine | Yellow | Desktop app is not running; the VM worker is not holding the files. Do not force-test by deleting: a lock means stop and follow [permissions.md](../permissions.md) | **Wipes Cowork session data stored in the VM.** The app rebuilds the VM (about 9 GB) the next time Cowork is used | `review` |
-| CD-002 | `...\<package-family>\Cache`, `Code Cache`, `GPUCache`, `GrShaderCache` | Browser-style caches of the app | Green | Desktop app is not running | Rebuilt as you use the app | `review` |
+| CD-002 | `...\<package-family>\Cache`, `Code Cache`, `GPUCache`, `GrShaderCache` | Browser-style caches of the app | Yellow | Desktop app is not running | Expected to rebuild as you use the app; relaunch after removal not yet observed | `review` |
 | CD-003 | `...\<package-family>\claude-code`, `claude-code-vm` | Downloaded command-line binaries for the app | Yellow | Desktop app is not running | Re-downloaded when needed | `review` |
 | CD-004 | `...\<package-family>\local-agent-mode-sessions`, `claude-code-sessions` | Small session records | Yellow | Desktop app is not running | Loses those session records | `review` |
 
