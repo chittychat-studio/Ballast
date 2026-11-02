@@ -47,6 +47,7 @@ block with each of these. Run them in a real browser. Results are from headless 
 | D2 | A name with an image tag whose error handler sets the page title; a note with a script tag; a name and path containing a right-to-left override character; a Red item marked `Permanent` | Nothing runs, no element is added, the tags show as text, the override character is replaced, the Red item has no radio buttons | Passed (no script ran, no image added, tags literal, no override character left on screen, Red locked) |
 | D3 | A tier that is not Green, Yellow, Grey or Red | The page refuses with a short message and shows nothing else | Passed |
 | D4 | No data block at all | The page refuses with a short message | Passed |
+| D5 | The optional `gpu` block: (a) dedicated memory with a known total, (b) integrated graphics with no dedicated total, (c) no `gpu` block, (d) a negative number, (e) a name with an image tag whose error handler sets the page title and a right-to-left override character | (a) text and a bar; (b) text only, no bar; (c) and (d) the graphics line is hidden and the rest of the page is unaffected; (e) the name shows as plain text, nothing runs, the override character is replaced | Passed (all five, headless Microsoft Edge, 2026-11-02) |
 
 D2 caught a real bug the first time it ran: three places wrote data to the page without sanitising it. They were fixed by
 sanitising every string once, when the data is validated. Re-run D2 after any change to the page.

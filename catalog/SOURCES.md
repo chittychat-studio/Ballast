@@ -7,7 +7,8 @@ Every catalog row must be traceable. Ballast does not copy rules from other clea
 | Files | Source | Date | Notes |
 |---|---|---|---|
 | claude-code.md, claude-desktop-cowork.md, orphan-processes-ram.md | The authors' own observations on one Windows 11 machine, while freeing disk space | 2026-11-02 | Claude Code VS Code extension 2.1.314; Claude desktop app 4.4212.0.0 (Store install). Sizes and behaviour are as observed, not guaranteed elsewhere |
-| other-ai-tools.md | Folder names and sizes seen on the same machine; contents **not inspected**. Some rows are from general public knowledge and are labelled as unverified | 2026-11-02 | All `review` |
+| other-ai-tools.md | Folder names and sizes seen on the same machine; contents **not inspected**. Some rows are from general public knowledge and are labelled as unverified | 2026-11-02 | OT-001 to OT-008 `review`; OT-009 to OT-016 `planned` |
+| gpu-memory.md | The reading commands were run on the same machine (integrated Intel Iris Xe, no discrete card, no `nvidia-smi`). The vendor-tool commands come from the tools' own documentation and were not run | 2026-11-02 | GPU-002 `review`; GPU-001 and GPU-003 `planned` |
 
 ## Further observations
 

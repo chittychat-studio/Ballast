@@ -60,6 +60,9 @@ h2{margin:0 0 6px;font-size:16px;font-weight:700;color:var(--blue-ink)}
 .pfill{position:absolute;inset:0;background:var(--prog);transform-origin:left center}
 .pgain{position:absolute;top:0;bottom:0;background:var(--prog);opacity:.45}
 .ppct{font-weight:700;font-size:16px;min-width:46px;text-align:right}
+.gpu{display:flex;flex-direction:column;gap:4px;padding-top:6px;border-top:1px solid var(--line)}
+.gpu[hidden]{display:none}
+.gpu .ptrack{height:10px}
 .gline{display:flex;flex-wrap:wrap;gap:4px 14px;align-items:center;font-size:14.5px}
 .tgt{display:flex;align-items:center;gap:6px;font-weight:600;white-space:nowrap}
 input[type=number]{width:58px;padding:2px 6px;border:1px solid var(--line);border-radius:3px;background:var(--input);color:var(--ink);font:inherit;font-weight:600}
@@ -230,6 +233,10 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
       <div class="gblock">
         <div class="gline"><span id="gtext" aria-live="polite"></span><label class="tgt">Target <input id="target" type="number" min="1" max="500" step="1" value="90"> GB</label></div>
         <div class="prog"><div class="ptrack" id="gauge" role="img"></div><div class="ppct" id="ppct"></div></div>
+        <div class="gpu" id="gpu" hidden>
+          <div class="gline" id="gpu-text"></div>
+          <div class="prog" id="gpu-bar-row"><div class="ptrack" id="gpu-bar" role="img"></div></div>
+        </div>
       </div>
       <div class="choices">
         <div class="sum" id="sum" aria-live="polite"></div>
@@ -345,6 +352,7 @@ textarea.req{width:100%;resize:none;padding:8px;border:1px solid var(--line);bor
   "totalGB": 256,
   "targetGB": 60,
   "ballastPath": "%USERPROFILE%\\Ballast",
+  "gpu": {"name": "Example graphics card", "dedicatedUsedGB": 3.1, "dedicatedTotalGB": 8, "sharedUsedGB": 0.4},
   "scopeNote": "Example scope: the user profile and AppData\\Local. Not scanned: AppData\\Roaming, ProgramData, other drives. System folders are never offered.",
   "items": [
     {"id": 1, "name": "Browser-style app caches", "tool": "Claude desktop", "tier": "Green", "sizeGB": 0.70, "maker": "High", "method": "Permanent",
@@ -420,7 +428,14 @@ function validate(d){
       row:T(String(it.catalogRow||'')),paths:paths,why:T(String(it.why||'')),cost:T(String(it.cost||'')),missing:it.missing?T(String(it.missing)):'',ev:ev});
   }
   return {free:free,total:total,date:T(String(d.scanDate||'')),ballast:T(String(d.ballastPath||'')),target:num(d.targetGB,1,1e6)||90,
-    example:!!d.example,scope:T(String(d.scopeNote||'')),items:items};
+    example:!!d.example,scope:T(String(d.scopeNote||'')),gpu:gpuOf(d.gpu),items:items};
+}
+/* graphics memory is optional: anything missing or unreadable simply hides the bar */
+function gpuOf(g){
+  if(!g||typeof g!=='object')return null;
+  var used=num(g.dedicatedUsedGB,0,1e5),tot=g.dedicatedTotalGB==null?0:num(g.dedicatedTotalGB,0,1e5),sh=num(g.sharedUsedGB,0,1e5);
+  if(used===null||tot===null||sh===null)return null;
+  return {name:T(String(g.name||'Graphics')),used:used,total:tot,shared:sh};
 }
 var DATA=null;
 try{DATA=validate(JSON.parse(document.getElementById('ballast-data').textContent));}catch(err){DATA=null;}
@@ -458,6 +473,20 @@ function renderGauge(){
   box.append(fill,gain);
   $('#ppct').textContent=Math.floor(g*100)+'%';
   $('#gtext').textContent='Free '+f1(FREE)+' GB of '+TOTAL+' GB'+(sel>0?', projected '+f1(proj)+' GB':'')+'. '+(proj>=tg?'Target reached.':f1(tg-proj)+' GB short.');
+}
+/* graphics memory in use: hidden when the scan has no readable numbers */
+function renderGpu(){
+  var g=DATA.gpu,box=$('#gpu'),bar=clear($('#gpu-bar'));
+  if(!g){box.hidden=true;return;}
+  box.hidden=false;
+  var line=g.name+': '+(g.total>0?'dedicated '+f1(g.used)+' of '+f1(g.total)+' GB, ':'no dedicated memory, ')+'shared '+f1(g.shared)+' GB (borrowed from system RAM).';
+  clear($('#gpu-text')).append(document.createTextNode(T(line)));
+  $('#gpu-bar-row').hidden=!(g.total>0);
+  if(g.total>0){
+    var fill=h('div',{class:'pfill'});fill.style.transform='scaleX('+Math.min(1,g.used/g.total)+')';
+    bar.setAttribute('aria-label','Dedicated graphics memory '+f1(g.used)+' of '+f1(g.total)+' gigabytes in use');
+    bar.append(fill);
+  }
 }
 /* the message that goes to the agent: every chosen item with its full paths */
 function manifest(a){return a.map(function(i){
@@ -705,7 +734,7 @@ $('#target').value=DATA.target;
 if(DATA.example)$('#example').hidden=false;
 $('#scope').textContent=DATA.scope||'Scope: ask your agent which locations this scan covered.';
 syncScan();syncAgent();
-renderGauge();renderPie();renderBars();renderPivot();renderChips();renderTree();renderDetail();renderSticky();
+renderGauge();renderGpu();renderPie();renderBars();renderPivot();renderChips();renderTree();renderDetail();renderSticky();
 })();
 </script>
 </body>

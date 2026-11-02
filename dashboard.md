@@ -40,6 +40,7 @@ For a rescan, repeat from step 1 and give a new link.
   "totalGB": 219,
   "targetGB": 90,
   "ballastPath": "%USERPROFILE%\\Ballast",
+  "gpu": { "name": "Intel(R) Iris(R) Xe Graphics", "dedicatedUsedGB": 0, "dedicatedTotalGB": null, "sharedUsedGB": 0.6 },
   "scopeNote": "Scanned: user profile and AppData\\Local. Not scanned: ...",
   "items": [ { ... } ]
 }
@@ -52,6 +53,7 @@ For a rescan, repeat from step 1 and give a new link.
 | `scanDate`, `freeGB`, `totalGB`, `targetGB` | Measured or user-provided values. Numbers must be finite and not negative |
 | `ballastPath` | Where the user's Ballast folder is, so "Scan again" can name it. Ask the user; do not search the disk for it |
 | `scopeNote` | An honest sentence saying which locations the scan covered and which it did not |
+| `gpu` | Optional. Graphics memory you measured ([catalog/gpu-memory.md](catalog/gpu-memory.md)): `name`, `dedicatedUsedGB`, `dedicatedTotalGB` (`null` or `0` when there is no dedicated memory or the size is unknown) and `sharedUsedGB`. Leave the whole block out if you did not measure it. If any number is missing or invalid, the page hides the graphics line instead of guessing. The bar is drawn only when `dedicatedTotalGB` is above 0 |
 | `items` | Up to 500 items. Every `id` is a unique whole number, starting at 1 |
 
 ### One item

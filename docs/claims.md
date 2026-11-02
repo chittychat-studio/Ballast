@@ -22,6 +22,7 @@ walks this table. If a claim has no enforcement, remove the claim or mark it "pl
 | Every release has a SHA-256 checksum file and a build attestation (SECURITY) | [.github/workflows/release.yml](../.github/workflows/release.yml), actions pinned to commit SHAs | `gh release view <tag>` lists the zip and `SHA256SUMS`; `gh attestation verify <zip> --repo chittychat-studio/Ballast` passes |
 | Signed git tags (SECURITY) | **Planned.** Needs a maintainer signing key | SECURITY.md says "planned" |
 | macOS and Linux rows (README, catalog) | catalog/macos.md and catalog/linux.md say every row is `planned` and Grey because none was observed | Check no row there is Yellow or Green or `active` |
+| Graphics memory (VRAM) is read, never changed, and only measured numbers are shown (README, catalog/gpu-memory.md) | gpu-memory.md rules; cleanup.md H0, H13; the page hides the graphics line when numbers are missing | Read gpu-memory.md; run dev/tests.md D5; confirm no command there stops a process or resets a driver without approval |
 | The safety tests are written down with real results (dev) | [dev/tests.md](../dev/tests.md) | Each "Result" is either a measured outcome with a date and machine, or "Not yet run" |
 | "A cloned repository can be tampered with, so users pin and check a version" (comparison, SECURITY) | AGENTS.md integrity check (shows the version, refuses a dirty tree) | Read AGENTS.md section "Do this first" |
 

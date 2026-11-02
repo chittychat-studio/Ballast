@@ -4,7 +4,7 @@
 
 Ballast is a set of plain-text instructions that your AI coding agent follows to find and clear the disk and memory
 leftovers that AI tools leave behind: Claude Code and Claude desktop (chat and Cowork), Codex, Gemini, Antigravity, local
-models, MCP servers, headless browsers, and the scratch projects agents create.
+models and the graphics memory they hold, MCP servers, headless browsers, and the scratch projects agents create.
 
 There is **nothing to install and no program to run**. The instructions are Markdown. The repo also holds one
 static dashboard page (HTML that runs only in your browser, makes no network requests, and cannot delete anything)
@@ -74,8 +74,8 @@ instructions if you tell it to read `AGENTS.md`.
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
 and gives you a link to a local copy. Open the template directly to see it with example data. It has a folder view
-with Keep / Clear / Check first choices, a free-space bar, charts, a breakdown table, light and dark themes, and a
-"Scan again" button. See [dashboard.md](dashboard.md).
+with Keep / Clear / Check first choices, a free-space bar, a graphics-memory line (shown only when your scan measured
+it), charts, a breakdown table, light and dark themes, and a "Scan again" button. See [dashboard.md](dashboard.md).
 
 ## What is in this repo
 

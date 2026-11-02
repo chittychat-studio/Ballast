@@ -12,7 +12,8 @@ check before deleting, and what deleting costs. Agents read these tables in [ste
 | [claude-code.md](claude-code.md) | Claude Code: transcripts, plugin leftovers, scratch folders |
 | [claude-desktop-cowork.md](claude-desktop-cowork.md) | Claude desktop app: chat caches and the Cowork virtual machine |
 | [orphan-processes-ram.md](orphan-processes-ram.md) | Processes AI tools leave running and the memory they hold |
-| [other-ai-tools.md](other-ai-tools.md) | Codex, Gemini, local models, browser automation (`review` rows) |
+| [gpu-memory.md](gpu-memory.md) | Graphics memory (VRAM and shared) held by local AI tools, and how to read it |
+| [other-ai-tools.md](other-ai-tools.md) | Codex, Gemini, local models, image tools, shader caches, browser automation |
 | [macos.md](macos.md) | macOS starter rows and commands (all `planned`, none observed yet) |
 | [linux.md](linux.md) | Linux starter rows and commands (all `planned`, none observed yet) |
 | [SOURCES.md](SOURCES.md) | Where each rule came from |

@@ -30,6 +30,13 @@ Get-ChildItem -LiteralPath $path -Recurse -Force -Attributes ReparsePoint -Error
 
 Rows with no matching path are simply absent: skip them quietly.
 
+## 1b. Graphics memory (read-only, optional)
+
+If the user uses local models or image tools (or asks about slowness), read graphics memory as described in
+[catalog/gpu-memory.md](../catalog/gpu-memory.md): the adapter, dedicated and shared usage, and which processes hold
+it. Report numbers you measured and "not measured" for anything you could not read. This changes nothing. Stopping a
+process that holds graphics memory goes through the same ask-first rules as any process.
+
 ## 2. Unknown space (AI-related roots first)
 
 Measure the immediate children of the places where AI tools commonly leave things, largest first, top 15 each:

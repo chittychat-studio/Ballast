@@ -18,7 +18,7 @@ from, when it started, and whether the user started it deliberately.
 | RAM-002 | Headless or automation browsers (headless Chrome, test browsers) | Yellow | No visible window; parent is gone or finished; not the user's own browser | Loses that automation run | `review` |
 | RAM-003 | Cowork VM worker (`vmwp`) and `vmmem` | Yellow | The desktop app has been closed. The VM worker also serves other tools (WSL, Docker, sandboxes), so **prefer a reboot**. Stop one only if exactly one candidate matches the Claude VM, nothing else shares it, and the user approves | Stops the Cowork VM and its session, and a forced stop can corrupt the VM disk. Needs administrator rights, since it is a system process | `review` |
 | RAM-004 | MCP servers started by agents (processes whose command line names an MCP server) | Yellow | The agent session that started them has ended | The server stops; it restarts with its agent | `review` |
-| RAM-005 | Local model runners that keep a model loaded in memory | Yellow | Prefer the tool's own stop command if it has one; no request is running | Next request reloads the model | `review` |
+| RAM-005 | Local model runners that keep a model loaded in memory (graphics memory too: see [gpu-memory.md](gpu-memory.md)) | Yellow | Prefer the tool's own stop command if it has one; no request is running | Next request reloads the model | `review` |
 
 ## Never stop, without naming it and asking
 
