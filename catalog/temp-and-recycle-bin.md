@@ -43,6 +43,7 @@ limit.
 | TMP-003 | `claude\<project>\<session-id>\` (Claude Code session scratch) | As [CC-006](claude-code.md): Yellow when the session is finished, Grey if live | As CC-006. Never the folder of the session you are in | As CC-006 | `review` |
 | TMP-004 | Anything in Temp that is in use, locked, unreadable, contains a link, or has a document-recovery name | **Grey** | Not selectable. Report the total and what is holding each one; it can be re-checked after the program closes. Recent changes alone do **not** make an item Grey | Not applicable | `review` |
 | TMP-005 | `C:\Windows\Temp` (system Temp) | Grey | It is outside the user's profile, so the path guard refuses it, and clearing it needs administrator rights. Do not elevate. Show the user how to clear it themselves (Windows Settings, System, Storage, Temporary files) | Not applicable | `planned` |
+| TMP-006 | `remotion-webpack-bundle-*`, `remotion-v*-assets*` and `puppeteer_dev_chrome_profile-*` (video-rendering and headless-browser tools that AI coding agents often drive) | Yellow when nothing is open and no render or browser process is running; **a render in progress makes them Grey** | Process list (yes/no match for `node`, `remotion` or a headless browser started from inside the folder); nothing inside can be opened exclusively; no links. Bundles can be about 1.9 GB each and are created again for every render | The next render rebuilds the bundle, which takes time | `review` (seen: two to three 1.9 GB bundles appeared during one render; nothing was deleted) |
 
 ### Many small files: the group rule
 
@@ -135,6 +136,9 @@ drive's profile.
   about 54 seconds. 1,452 were `pip-*` folders (1.47 GB), 1 was the Claude Code scratch folder (0.23 GB), 28 were in
   use, unreadable or held a link (under 0.01 GB together), and the other 6 were small. With age shown but not used
   as a gate, 1,458 entries were Yellow and 29 were Grey.
+- **First real deletion** (2026-11-02, author's laptop): see C14 in [dev/tests.md](../dev/tests.md). 1,771 Temp entries, 2.09 GB, were
+  deleted from an approved manifest; 100 were skipped and 1 failed because another process held it open. During the same
+  hour a video render kept adding about 1.9 GB bundles, so free space fell although Ballast freed space.
 - **Recycle Bin, read-only (the author's laptop; always measure your own):** the shell view read it and reported 0
   items (it had been emptied earlier). Nothing was
   deleted by these rows, and `Clear-RecycleBin` was **not** run, so BIN-001 emptying is untested.
