@@ -9,7 +9,9 @@ scratch projects agents create.
 
 There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
 page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, and the
-two small JSON files that let Claude Code install it as a plugin. Your own agent reads the instructions, runs
+two small JSON files that let Claude Code install it as a plugin. Beyond that there are only repository settings
+files (issue forms, a pull request template, the release workflow, Dependabot and editor settings), none of which
+you run. Your own agent reads the instructions, runs
 read-only checks through its own tools, and **asks you before every deletion**.
 
 ## What it does
@@ -117,9 +119,12 @@ See [dashboard.md](dashboard.md).
 | [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template and the logo |
 | [providers/](providers) | Notes for each AI agent, including the plugin install |
 | [.claude-plugin/](.claude-plugin) | The plugin and marketplace manifests (JSON) for Claude Code |
+| [.github/](.github) | Repository settings, not something you run: code owners, issue forms, pull request template, Dependabot, the release workflow |
 | [skills/](skills) | The `ballast` skill that starts a scan |
 | [dev/](dev) | For maintainers: the test fixtures and tests, with real results |
 | [SAFETY.md](SAFETY.md) · [PRIVACY.md](PRIVACY.md) · [SECURITY.md](SECURITY.md) | The safety, privacy and security promises |
+| [CHANGELOG.md](CHANGELOG.md) · [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · [CONTRIBUTING.md](CONTRIBUTING.md) | What changed in each release, how we behave, how to contribute |
+| `.gitignore` · `.editorconfig` | Git and editor settings (plain text, not run) |
 | [docs/](docs) | Comparison with similar tools, legal notes, claims register |
 
 ## Status

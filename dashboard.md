@@ -66,7 +66,7 @@ For a rescan, repeat from step 1 and give a new link.
   "id": 1,
   "name": "Browser-style app caches",
   "tool": "Claude desktop",
-  "tier": "Green",
+  "tier": "Yellow",
   "sizeGB": 0.70,
   "maker": "High",
   "method": "Permanent",

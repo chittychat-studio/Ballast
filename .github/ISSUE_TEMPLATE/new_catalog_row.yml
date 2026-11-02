@@ -1,0 +1,75 @@
+name: New catalog row proposal
+description: Propose a new known AI leftover for the catalog.
+labels: ["catalog", "enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        New rows start with status `review` and tier Yellow or Grey. A row becomes `active` or Green only after it
+        was observed to work, with the tool still functioning afterwards, and a maintainer recorded that
+        ([CONTRIBUTING.md](https://github.com/chittychat-studio/Ballast/blob/main/CONTRIBUTING.md)).
+
+        **Use `%USERPROFILE%`, `%LOCALAPPDATA%`, `%APPDATA%` (Windows) or `~` (macOS, Linux) in paths. Remove
+        usernames and personal paths.** Write your own wording; do not copy rules from other cleaners or rule
+        databases without checking their licence.
+  - type: input
+    id: path
+    attributes:
+      label: Path
+      description: For example `%LOCALAPPDATA%\ExampleTool\Cache`.
+    validations:
+      required: true
+  - type: textarea
+    id: what-it-is
+    attributes:
+      label: What it is
+      description: Which tool makes it and what it holds.
+    validations:
+      required: true
+  - type: dropdown
+    id: tier
+    attributes:
+      label: Suggested tier
+      description: New rows start as Yellow or Grey. Red items are never deletable.
+      options:
+        - Yellow (regenerable at a cost, or an app is affected)
+        - Grey (in use, unknown, or evidence incomplete)
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence before delete
+      description: What the agent must check first (for example the app is not running, nothing depends on it).
+    validations:
+      required: true
+  - type: textarea
+    id: cost
+    attributes:
+      label: Cost / rebuild
+      description: What deleting costs and what the tool does afterwards.
+    validations:
+      required: true
+  - type: input
+    id: verified
+    attributes:
+      label: Verified (date, OS, tool version)
+      description: When and where you saw this, or "not verified".
+    validations:
+      required: true
+  - type: textarea
+    id: source
+    attributes:
+      label: Where this rule came from
+      description: Your own observation, or a public document (link). It is recorded in catalog/SOURCES.md.
+    validations:
+      required: true
+  - type: markdown
+    attributes:
+      value: |
+        The catalog row format, for reference:
+
+        | ID | Path | What it is | Tier | Evidence before delete | Cost / rebuild | Status |
+        |---|---|---|---|---|---|---|
+
+        A maintainer assigns the ID and the status.

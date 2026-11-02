@@ -1,0 +1,55 @@
+name: Bug report
+description: Something in the instructions, the dashboard or the plugin does not work as written.
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting. Before you send this, remove usernames and personal paths. Write `%USERPROFILE%`,
+        `%LOCALAPPDATA%` or `~` instead. For a security problem, use the Security tab instead of this form.
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened
+      description: What you did, what you expected, and what you saw instead.
+    validations:
+      required: true
+  - type: input
+    id: version
+    attributes:
+      label: Ballast version
+      description: The release tag or commit your agent showed at the start (for example v0.1.0).
+    validations:
+      required: true
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      description: For example Windows 11 23H2, macOS 15, Ubuntu 24.04.
+    validations:
+      required: true
+  - type: input
+    id: agent
+    attributes:
+      label: AI agent and version
+      description: For example Claude Code 2.1.x, Gemini CLI, Codex CLI.
+    validations:
+      required: true
+  - type: dropdown
+    id: where
+    attributes:
+      label: Where did it go wrong
+      options:
+        - Instructions (cleanup.md, steps, permissions)
+        - Dashboard page
+        - Claude Code plugin install
+        - Documentation
+        - Something else
+    validations:
+      required: true
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Paste only what is needed, with personal paths removed.
+      render: text
