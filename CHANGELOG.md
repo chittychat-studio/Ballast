@@ -6,6 +6,10 @@ All notable changes to Ballast are listed here, newest first. The format follows
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.1.1] - 2026-11-03
+
 ### Notice about the v0.1.0 tag
 
 The `v0.1.0` tag was moved to a newer commit several times on 2 November 2026, while the first release was still
@@ -18,6 +22,8 @@ now has a tag ruleset that blocks updating or deleting any `v*` tag.
 
 ### Changed
 
+- The install instructions and the plugin manifest now point at `v0.1.1`, the first tag that is covered by the
+  tag ruleset. `v0.1.0` stays in place and is never moved again.
 - Catalog row CD-002 (Claude desktop browser-style caches) is now Yellow instead of Green. Its status is still
   `review`, and `review` rows must be Yellow or Grey ([catalog/README.md](catalog/README.md)). The example item in
   [dashboard.md](dashboard.md) that cites CD-002 uses the same tier.
