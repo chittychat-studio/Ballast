@@ -85,7 +85,7 @@ instructions if you tell it to read `AGENTS.md`.
 
 <picture>
   <source media="(prefers-color-scheme: dark)" srcset="dashboard/sample-dark.svg">
-  <img src="dashboard/sample-light.svg" alt="The Ballast dashboard showing example data: a folder list with Keep, Clear and Check first choices, a free-space bar, a share-by-tier chart, a size-by-tool chart and the checks for the selected item" width="100%">
+  <img src="dashboard/sample-light.svg" alt="The Ballast dashboard showing example data: a folder list with Keep, Clear and Check first choices, a free-space bar, a GPU memory line and bar, a share-by-tier chart, a size-by-tool chart and the checks for the selected item" width="100%">
 </picture>
 
 <sub>A picture of the dashboard with example data. Your own scan fills it with your folders.</sub>

@@ -41,7 +41,7 @@ with Windows PowerShell 5.1.26100**, in a scratch folder, on dummy files only.
 | ID | Check | Must happen | Result |
 |---|---|---|---|
 | P1 | `claude plugin validate .` in the repo root | Both manifests pass | Passed with one warning (Claude Code 2.1.296, 2026-11-02): a plugin ignores the root `CLAUDE.md`. It is kept for people who clone |
-| P2 | Install the plugin and run `/ballast:ballast` | The skill finds `AGENTS.md` in the plugin folder and shows the version | **Not yet run** |
+| P2 | Install the plugin and run `/ballast:ballast` | The skill finds `AGENTS.md` in the plugin folder and shows the version | **Install part passed** (Claude Code 2.1.296, Windows 11, 2026-11-02, in a separate temporary config folder): `/plugin marketplace add chittychat-studio/Ballast#v0.1.0` then `/plugin install ballast@ballast` succeeded, the plugin showed as version 0.1.0 and enabled, and its folder held `AGENTS.md`, `skills/` and the catalog, with **no `.git` folder** (so the version comes from `.claude-plugin/plugin.json`). Running `/ballast:ballast` itself was **not run**. In a first attempt the add failed because the temporary config folder's path was very long (git reported `'$GIT_DIR' too big`); a short path worked |
 | P3 | Copy `skills/ballast` alone into a skills folder | The skill sees an unreplaced variable and asks for the cloned folder | **Not yet run** |
 
 ## Dashboard page tests
