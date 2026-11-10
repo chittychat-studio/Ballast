@@ -8,7 +8,7 @@ models (their files on disk, and the **GPU memory (VRAM)** they keep loaded), MC
 scratch projects agents create.
 
 There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
-page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo and its square icon, and the
+page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, the plugin's icon (a PNG picture), and the
 two small JSON files that let Claude Code install it as a plugin. Beyond that there are only repository settings
 files (issue forms, a pull request template, the release workflow, Dependabot and editor settings), none of which
 you run. Your own agent reads the instructions, runs
@@ -20,17 +20,18 @@ read-only checks through its own tools, and **asks you before every deletion**.
    caches, and finds large unknown folders. (It shows the Windows Installer cache so you can see where space goes,
    but never offers it.) For local AI it also reads
    **GPU memory (dedicated VRAM, and the shared memory integrated graphics borrow from RAM)** and which process holds
-   it ([catalog/gpu-memory.md](catalog/gpu-memory.md)). Nothing is changed.
+   it ([catalog/gpu-memory.md](plugin/catalog/gpu-memory.md)). Nothing is changed.
 2. **Runs eight checks before judging** (last used, in use now, is it a program, anything depends on it, unsaved
    work, cloud or shared, protected name, how to get it back). A folder is never classified from its name or date.
 3. **Sorts everything into tiers** (below) and gives you a link to a dashboard by default, again after any cleanup,
-   with the numbers: space freed, items cleared, skipped and failed.
+   with the numbers: space freed, items cleared, skipped and failed. (A plugin install shows the same as a table in
+   the chat: see Quick start.)
 4. **You choose** Keep, Clear or Check first per item, then paste a message with your choices to your agent.
 5. **Asks again, per item,** with the full path, before anything is deleted. Your choice selects; your approval
    authorises.
 6. **Deletes only what you approved,** to the Recycle Bin or Trash where that really works, and logs what happened.
 7. **Never just says "I can't."** If something is locked or needs admin rights, the agent explains why, asks for the
-   permission it needs, and shows the workaround. See [permissions.md](permissions.md).
+   permission it needs, and shows the workaround. See [permissions.md](plugin/permissions.md).
 8. **Tells you how to stop it coming back.**
 
 **The rule above all others: if the agent is unsure about anything, it asks you.** It never decides for you.
@@ -38,7 +39,7 @@ read-only checks through its own tools, and **asks you before every deletion**.
 ## What it never does
 
 - Deletes personal files, anything named backup, credentials, browser profile data, git history, or AI memory files.
-  These are the Red tier and cannot be selected. See [catalog/_protected.md](catalog/_protected.md).
+  These are the Red tier and cannot be selected. See [catalog/_protected.md](plugin/catalog/_protected.md).
 - Ships or runs installers, binaries or scripts.
 - Sends file contents anywhere, or collects any data. See [PRIVACY.md](PRIVACY.md).
 - Works around your agent's permission system, your operating system's protections, or your security software.
@@ -60,17 +61,21 @@ Pick one way in. Either way, **pin a release**: do not let an agent fetch and fo
 **A. Claude Code plugin** (one install, pinned to a release tag)
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.2
+/plugin marketplace add chittychat-studio/Ballast#v0.1.3
 /plugin install ballast@ballast
 ```
 
 Then run `/ballast:ballast`. Leave plugin auto-update off and update on purpose. A plugin install does not run the
 checksum check below, so if you want that, use B.
 
+The plugin is the [`plugin`](plugin) folder: the instructions and the catalog, and nothing else. It does **not**
+include the dashboard page, because Claude's plugin directory accepts only text and pictures from publishers it has
+not verified. A plugin install shows the same results as a table in the chat. For the page, use B.
+
 **B. Clone** (works with any agent)
 
 ```
-git clone --branch v0.1.2 https://github.com/chittychat-studio/Ballast.git
+git clone --branch v0.1.3 https://github.com/chittychat-studio/Ballast.git
 ```
 
 Each release has a checksum file and a build attestation, so you can check what you downloaded
@@ -79,7 +84,7 @@ Each release has a checksum file and a build attestation, so you can check what 
 
 Then, either way:
 
-1. Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md) yourself. They are short.
+1. Read [cleanup.md](plugin/cleanup.md) and [permissions.md](plugin/permissions.md) yourself. They are short.
 2. For a recurring check, say: **"Run weekly.md."** (Stay present: it never runs unattended.)
 
 ### Example prompts
@@ -92,7 +97,7 @@ begins with the version check and the two consent questions, and the scan is rea
 - **"My laptop is struggling. What is holding memory and GPU memory right now?"** Looks at leftover processes
   (MCP servers, headless browsers, model runners) and the graphics memory they hold.
 - **"Run the weekly Ballast check and show me what has grown since last time."** Follows
-  [weekly.md](weekly.md) and compares with your saved baseline.
+  [weekly.md](plugin/weekly.md) and compares with your saved baseline.
 
 Per-tool notes: [Claude Code](providers/claude.md) · [Gemini CLI](providers/gemini.md) · [Codex CLI](providers/codex.md) ·
 [Antigravity](providers/antigravity.md). Any other agent that can read files and run commands can follow the same
@@ -108,7 +113,8 @@ instructions if you tell it to read `AGENTS.md`.
 <sub>A picture of the dashboard with example data. Your own scan fills it with your folders.</sub>
 
 After a scan your agent fills the data block of [`dashboard/ballast-dashboard.html`](dashboard/ballast-dashboard.html)
-and gives you a link to a local copy. Open the template directly to see it with example data.
+and gives you a link to a local copy. Open the template directly to see it with example data. The page comes with
+a clone (Quick start B); a plugin install has no page and shows the same information as a table in the chat.
 
 - **Header:** your free-space bar and target, on every tab.
 - **Overview (opens here):** the last cleanup, what can be cleared (with tick boxes), and your folders by tool, each with
@@ -117,22 +123,24 @@ and gives you a link to a local copy. Open the template directly to see it with 
   numbers: space freed, items cleared, skipped and failed. There is a back button and the Esc key.
 - Also: a GPU memory line (only when your scan measured it), a breakdown table, light and dark themes, and "Scan again".
 
-See [dashboard.md](dashboard.md).
+See [dashboard.md](plugin/dashboard.md).
 
 ## What is in this repo
 
 | Path | Purpose |
 |---|---|
-| [cleanup.md](cleanup.md) | The master prompt: rules and flow |
-| [permissions.md](permissions.md) | Ask-first protocol and the blocked-item playbook |
-| [weekly.md](weekly.md) | Recurring routine with growth tracking |
-| [steps/](steps) | The eight steps, one file each |
-| [catalog/](catalog) | Known AI leftovers by tool, with tier, evidence needed and status |
-| [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template, the logo and the icon |
+| [plugin/](plugin) | Everything an agent follows, and the whole of the Claude Code plugin: the next six rows, the `ballast` skill, the plugin manifest, the icon, and copies of the licence and notice |
+| [AGENTS.md](AGENTS.md) · `CLAUDE.md` · `GEMINI.md` | Short pointers that send an agent started in a clone to [plugin/AGENTS.md](plugin/AGENTS.md), the agent entry point |
+| [cleanup.md](plugin/cleanup.md) | The master prompt: rules and flow |
+| [permissions.md](plugin/permissions.md) | Ask-first protocol and the blocked-item playbook |
+| [weekly.md](plugin/weekly.md) | Recurring routine with growth tracking |
+| [steps/](plugin/steps) | The eight steps, one file each |
+| [catalog/](plugin/catalog) | Known AI leftovers by tool, with tier, evidence needed and status |
+| [dashboard.md](plugin/dashboard.md) and [dashboard/](dashboard) | Spec and data contract; the static dashboard template, the logo and the sample pictures (in a clone only, not in the plugin) |
 | [providers/](providers) | Notes for each AI agent, including the plugin install |
-| [.claude-plugin/](.claude-plugin) | The plugin and marketplace manifests (JSON) for Claude Code |
+| [.claude-plugin/](.claude-plugin) and [plugin/.claude-plugin/](plugin/.claude-plugin) | The marketplace manifest and the plugin manifest (JSON) for Claude Code |
 | [.github/](.github) | Repository settings, not something you run: code owners, issue forms, pull request template, Dependabot, the release workflow |
-| [skills/](skills) | The `ballast` skill that starts a scan |
+| [skills/](plugin/skills) | The `ballast` skill that starts a scan |
 | [dev/](dev) | For maintainers: the test fixtures and tests, with real results |
 | [SAFETY.md](SAFETY.md) · [PRIVACY.md](PRIVACY.md) · [SECURITY.md](SECURITY.md) | The safety, privacy and security promises |
 | [CHANGELOG.md](CHANGELOG.md) · [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md) · [CONTRIBUTING.md](CONTRIBUTING.md) | What changed in each release, how we behave, how to contribute |
@@ -143,7 +151,7 @@ See [dashboard.md](dashboard.md).
 
 Windows 11 is the first supported system. The Claude Code, Claude desktop (Cowork) and orphan-process catalogs come
 from observations on one real machine; rows marked `review` have not yet been confirmed across versions. macOS and
-Linux have starter rows in [catalog/macos.md](catalog/macos.md) and [catalog/linux.md](catalog/linux.md). None of
+Linux have starter rows in [catalog/macos.md](plugin/catalog/macos.md) and [catalog/linux.md](plugin/catalog/linux.md). None of
 those has been observed on a real machine yet, so they are all `planned` and Grey. GPU memory reading was tested only
 on integrated Intel graphics; the rows for a discrete card (for example NVIDIA with `nvidia-smi`) and for local model
 runners holding VRAM are `planned` until someone with that hardware confirms them. Contributions are welcome: see

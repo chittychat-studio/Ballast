@@ -3,7 +3,7 @@
 Check Antigravity's current documentation for exact option names; they change. This page does not assume that
 Antigravity reads `AGENTS.md` on its own, so it tells the agent to read it explicitly.
 
-1. Clone this repo, pin a version, and read [cleanup.md](../cleanup.md) and [permissions.md](../permissions.md).
+1. Clone this repo, pin a version, and read [cleanup.md](../plugin/cleanup.md) and [permissions.md](../plugin/permissions.md).
 2. Open the cloned folder in Antigravity.
 3. In its agent panel, say: **"Read AGENTS.md in this folder and follow it. Run cleanup.md."** For the recurring
    routine: **"Read AGENTS.md and run weekly.md."**
@@ -12,7 +12,7 @@ Antigravity reads `AGENTS.md` on its own, so it tells the agent to read it expli
 
 - Keep command approval on during the delete phase. Do not use any mode that runs commands without asking.
 - If a command is denied, the agent should say what was denied, ask for the permission it needs, and offer options
-  ([permissions.md](../permissions.md)) rather than work around it.
+  ([permissions.md](../plugin/permissions.md)) rather than work around it.
 
 ## Things to know
 

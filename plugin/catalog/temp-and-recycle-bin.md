@@ -136,7 +136,7 @@ drive's profile.
   about 54 seconds. 1,452 were `pip-*` folders (1.47 GB), 1 was the Claude Code scratch folder (0.23 GB), 28 were in
   use, unreadable or held a link (under 0.01 GB together), and the other 6 were small. With age shown but not used
   as a gate, 1,458 entries were Yellow and 29 were Grey.
-- **First real deletion** (2026-11-02, author's laptop): see C14 in [dev/tests.md](../dev/tests.md). 1,771 Temp entries, 2.09 GB, were
+- **First real deletion** (2026-11-02, author's laptop): see C14 in [dev/tests.md](https://github.com/chittychat-studio/Ballast/blob/main/dev/tests.md). 1,771 Temp entries, 2.09 GB, were
   deleted from an approved manifest; 100 were skipped and 1 failed because another process held it open. During the same
   hour a video render kept adding about 1.9 GB bundles, so free space fell although Ballast freed space.
 - **Recycle Bin, read-only (the author's laptop; always measure your own):** the shell view read it and reported 0

@@ -4,8 +4,8 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
 
 ## Ground rules
 
-- **Instructions in Markdown, plus one dashboard template, a logo, its square icon and the two plugin manifests in
-  `.claude-plugin/` (plain JSON metadata), plus repository settings files (`.github/` issue forms, pull request
+- **Instructions in Markdown, plus one dashboard template, a logo, the plugin's icon (a PNG picture) and the two
+  manifests in `.claude-plugin/` and `plugin/.claude-plugin/` (plain JSON metadata), plus repository settings files (`.github/` issue forms, pull request
   template, Dependabot and workflow files, `.gitignore`, `.editorconfig`).** No scripts, binaries, installers or build steps in the user-facing repo. Example commands inside `.md` files must be short and clearly labelled, and
   destructive ones must sit behind the approval steps.
 - **The dashboard page is code.** Changes to `dashboard/ballast-dashboard.html` need a maintainer review. It must stay
@@ -15,7 +15,7 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
   submitting.
 - **Write your own rules.** Do not copy rules from other cleaners or rule databases without checking
   their licence. GPL-licensed lists in particular cannot be copied into this Apache-2.0 repo.
-  Record where every rule came from in [catalog/SOURCES.md](catalog/SOURCES.md).
+  Record where every rule came from in [catalog/SOURCES.md](plugin/catalog/SOURCES.md).
 - **Sign off your commits** (`git commit -s`). That certifies the
   [Developer Certificate of Origin](https://developercertificate.org/): you wrote the contribution or
   have the right to submit it under this repo's licence.
@@ -23,17 +23,21 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
 
 ## Adding or changing a catalog row
 
-1. Copy the row format from [catalog/README.md](catalog/README.md).
+1. Copy the row format from [catalog/README.md](plugin/catalog/README.md).
 2. Fill every column, including *Verified* (date, OS, tool version) and *Rebuild/cost*.
 3. New rows start with status `review` and tier **Yellow or Grey**. A row becomes `active` or Green only after
    it has been observed to work, with the tool still functioning afterwards, and a maintainer has recorded that.
-4. Never add anything to the Red list's contents as deletable. Additions to [catalog/_protected.md](catalog/_protected.md) are welcome.
+4. Never add anything to the Red list's contents as deletable. Additions to [catalog/_protected.md](plugin/catalog/_protected.md) are welcome.
 5. Remove usernames and personal paths. Use `%USERPROFILE%`, `%LOCALAPPDATA%`, `~`.
 
 ## Changing core instructions
 
 Changes to `AGENTS.md`, `cleanup.md`, `permissions.md`, `steps/` or the safety files need a maintainer
-review and an explanation of how the change affects what an agent may delete.
+review and an explanation of how the change affects what an agent may delete. These files are in `plugin/`.
+
+**`plugin/` holds only Markdown, plain text, JSON and PNG files.** It is what Claude's plugin directory publishes,
+and the directory refuses any other kind of file (HTML and SVG included). Nothing in `plugin/` may link to a file
+outside it, because a plugin install has only that folder.
 
 ## Reporting a harmful rule
 

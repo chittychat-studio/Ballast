@@ -8,8 +8,8 @@
   "plugins": [
     {
       "name": "ballast",
-      "source": "./",
-      "description": "The Ballast instructions, catalog and dashboard template, with a skill that starts a read-only scan and asks before every deletion.",
+      "source": "./plugin",
+      "description": "The Ballast instructions and catalog, with a skill that starts a read-only scan and asks before every deletion.",
       "license": "Apache-2.0"
     }
   ]

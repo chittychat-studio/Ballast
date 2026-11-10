@@ -33,12 +33,12 @@ with Windows PowerShell 5.1.26100**, in a scratch folder, on dummy files only.
 
 | ID | What was tested | Result |
 |---|---|---|
-| C1 | The link guard in [steps/06](../steps/06-approve-and-run.md) on a clean folder | `ok` |
+| C1 | The link guard in [steps/06](../plugin/steps/06-approve-and-run.md) on a clean folder | `ok` |
 | C2 | The same guard on a folder containing a junction, and on the junction itself | Both: `STOP: contains a link or junction` |
 | C3 | Does `Remove-Item -Recurse -Force` on a folder holding a junction delete what the junction points at? | **No.** The folder was removed and the file behind the junction survived. The guard stays as a precaution, because other tools and builds may behave differently |
 | C4 | `[IO.Path]::GetFullPath` on a path containing `..` | Expanded correctly |
 | C5 | Whether `Get-Item` or the Windows scripting file-system object expands an 8.3 short name | **No, neither does.** So the guard refuses short names instead of resolving them |
-| C6 | `git status` in a repository whose own settings run a command | **It ran the repository's command.** This is why [steps/03](../steps/03-evidence.md) uses the hardened form |
+| C6 | `git status` in a repository whose own settings run a command | **It ran the repository's command.** This is why [steps/03](../plugin/steps/03-evidence.md) uses the hardened form |
 | C7 | `git -c core.fsmonitor= -c core.hooksPath=NUL status --porcelain` in the same repository | The repository's command did **not** run |
 | C8 | Removing the junction with `[IO.Directory]::Delete(<link>, $false)` | Link removed, target and its file intact |
 | C9 | The Recycle Bin method on a folder bigger than the Bin's limit | **Not tested.** It would put test files into the real Recycle Bin. Test it on a disposable drive or a virtual machine |
@@ -52,9 +52,9 @@ with Windows PowerShell 5.1.26100**, in a scratch folder, on dummy files only.
 
 | ID | Check | Must happen | Result |
 |---|---|---|---|
-| P1 | `claude plugin validate .` in the repo root | Both manifests pass | Passed with one warning (Claude Code 2.1.296, 2026-11-02): a plugin ignores the root `CLAUDE.md`. It is kept for people who clone |
+| P1 | `claude plugin validate .` in the repo root, and `claude plugin validate plugin --strict` | Both manifests pass, with no warning | Passed, both, with no warning (Claude Code 2.1.296, 2026-11-10). The plugin is now the `plugin` folder, so the root `CLAUDE.md` is outside it. Claude's plugin directory refused 0.1.2 for holding an HTML file; its own validation of this layout is recorded in the changelog once run |
 | P2 | Install the plugin and run `/ballast:ballast` | The skill finds `AGENTS.md` in the plugin folder and shows the version | **Install part passed** (Claude Code 2.1.296, Windows 11, 2026-11-02, in a separate temporary config folder): `/plugin marketplace add chittychat-studio/Ballast#v0.1.0` then `/plugin install ballast@ballast` succeeded, the plugin showed as version 0.1.0 and enabled, and its folder held `AGENTS.md`, `skills/` and the catalog, with **no `.git` folder** (so the version comes from `.claude-plugin/plugin.json`). Running `/ballast:ballast` itself was **not run**. In a first attempt the add failed because the temporary config folder's path was very long (git reported `'$GIT_DIR' too big`); a short path worked |
-| P3 | Copy `skills/ballast` alone into a skills folder | The skill sees an unreplaced variable and asks for the cloned folder | **Not yet run** |
+| P3 | Copy `plugin/skills/ballast` alone into a skills folder | The skill sees an unreplaced variable and asks for the cloned folder | **Not yet run** |
 
 ## Dashboard page tests
 

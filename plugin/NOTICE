@@ -1,0 +1,14 @@
+Ballast
+Copyright 2026 chittychat-studio and Ballast contributors
+
+Licensed under the Apache License, Version 2.0. See LICENSE.
+
+This repository contains instructions, documentation, one static HTML dashboard template and a
+logo, all original works of the authors. It includes no third-party source code and no
+third-party cleanup rule sets. Catalog rules are written from the
+authors' own observations; see catalog/SOURCES.md.
+
+Product and company names mentioned in this repository (including Claude, Anthropic, Gemini,
+Google, Codex, OpenAI, Windows, Microsoft, Chrome, Ollama, Playwright and others) are trademarks
+or property of their respective owners. They appear only to identify the tools, files and folders
+that Ballast refers to. This project is not affiliated with, sponsored by, or endorsed by them.
