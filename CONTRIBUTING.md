@@ -4,7 +4,7 @@ Thanks for helping. Ballast only works if its rules are accurate and cautious.
 
 ## Ground rules
 
-- **Instructions in Markdown, plus one dashboard template, a logo and the two plugin manifests in
+- **Instructions in Markdown, plus one dashboard template, a logo, its square icon and the two plugin manifests in
   `.claude-plugin/` (plain JSON metadata), plus repository settings files (`.github/` issue forms, pull request
   template, Dependabot and workflow files, `.gitignore`, `.editorconfig`).** No scripts, binaries, installers or build steps in the user-facing repo. Example commands inside `.md` files must be short and clearly labelled, and
   destructive ones must sit behind the approval steps.
