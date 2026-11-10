@@ -8,7 +8,7 @@ models (their files on disk, and the **GPU memory (VRAM)** they keep loaded), MC
 scratch projects agents create.
 
 There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
-page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, and the
+page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo and its square icon, and the
 two small JSON files that let Claude Code install it as a plugin. Beyond that there are only repository settings
 files (issue forms, a pull request template, the release workflow, Dependabot and editor settings), none of which
 you run. Your own agent reads the instructions, runs
@@ -82,6 +82,18 @@ Then, either way:
 1. Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md) yourself. They are short.
 2. For a recurring check, say: **"Run weekly.md."** (Stay present: it never runs unattended.)
 
+### Example prompts
+
+With the plugin installed, or with your agent open in the cloned folder, any of these starts Ballast. Each one
+begins with the version check and the two consent questions, and the scan is read-only.
+
+- **"I'm low on disk space. Find what my AI tools have left behind."** A full scan, then the dashboard link with
+  everything sorted into tiers.
+- **"My laptop is struggling. What is holding memory and GPU memory right now?"** Looks at leftover processes
+  (MCP servers, headless browsers, model runners) and the graphics memory they hold.
+- **"Run the weekly Ballast check and show me what has grown since last time."** Follows
+  [weekly.md](weekly.md) and compares with your saved baseline.
+
 Per-tool notes: [Claude Code](providers/claude.md) · [Gemini CLI](providers/gemini.md) · [Codex CLI](providers/codex.md) ·
 [Antigravity](providers/antigravity.md). Any other agent that can read files and run commands can follow the same
 instructions if you tell it to read `AGENTS.md`.
@@ -116,7 +128,7 @@ See [dashboard.md](dashboard.md).
 | [weekly.md](weekly.md) | Recurring routine with growth tracking |
 | [steps/](steps) | The eight steps, one file each |
 | [catalog/](catalog) | Known AI leftovers by tool, with tier, evidence needed and status |
-| [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template and the logo |
+| [dashboard.md](dashboard.md) and [dashboard/](dashboard) | Spec, data contract, the static dashboard template, the logo and the icon |
 | [providers/](providers) | Notes for each AI agent, including the plugin install |
 | [.claude-plugin/](.claude-plugin) | The plugin and marketplace manifests (JSON) for Claude Code |
 | [.github/](.github) | Repository settings, not something you run: code owners, issue forms, pull request template, Dependabot, the release workflow |
@@ -136,6 +148,12 @@ those has been observed on a real machine yet, so they are all `planned` and Gre
 on integrated Intel graphics; the rows for a discrete card (for example NVIDIA with `nvidia-smi`) and for local model
 runners holding VRAM are `planned` until someone with that hardware confirms them. Contributions are welcome: see
 [CONTRIBUTING.md](CONTRIBUTING.md).
+
+## Support
+
+Questions and bugs: [open an issue](https://github.com/chittychat-studio/Ballast/issues) (there are forms for a
+bug, a wrong or harmful catalog row, and a new row). Security problems: report them privately, as described in
+[SECURITY.md](SECURITY.md).
 
 ## Disclaimer
 
