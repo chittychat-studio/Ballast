@@ -22,7 +22,8 @@ After any deletion, give the user a **new dashboard link** by default. Re-measur
 ([dashboard.md](../dashboard.md)), and add a `runs` block with your measured numbers: free space before and after,
 items and GB cleared, items skipped (with the reasons from your log), and items that failed (with the reason). The page
 then opens on a **Results** view with those numbers. Quote only what you measured; a run's free space can fall if a
-program wrote files at the same time, and the page says so.
+program wrote files at the same time, and the page says so. With no template (a plugin install), show the Markdown
+dashboard again with the same numbers and say that yourself.
 
 ## 4. Offer to empty the Recycle Bin (only now)
 
@@ -49,5 +50,5 @@ agree to. Remember that such a file will later be read back by an agent, so it h
 ## 7. Clean up after yourself (H12)
 
 Confirm no background scan, browser, server or script you started is still running. Delete the temporary dashboard
-file (unless the user asked to keep it), remove your own temp files, and tell the user. Do not stop anything you did
+file if you made one (unless the user asked to keep it), remove your own temp files, and tell the user. Do not stop anything you did
 not start.

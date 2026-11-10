@@ -43,4 +43,4 @@ assume a name. Show the candidates to the user and ask (H0).
 
 If you run Ballast on a Mac, please record what you actually find (path, size, newest file, what the tool did after
 the removal) and send it as an issue or a pull request. A row only moves from `planned` to `review` with that
-observation. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+observation. See [CONTRIBUTING.md](https://github.com/chittychat-studio/Ballast/blob/main/CONTRIBUTING.md).

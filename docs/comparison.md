@@ -31,5 +31,5 @@ Nothing is copied from either project's text or code.
   instruction files and the dashboard page, so both are reviewed like code.
 - **Evidence before judgement.** Newest file inside, running processes, package manifests, git state.
 - **A hard-locked Red tier.** Personal files and backups cannot be selected, even by asking.
-- **"I can't" is never the end.** See [permissions.md](../permissions.md).
+- **"I can't" is never the end.** See [permissions.md](../plugin/permissions.md).
 - **Focus.** AI-tool leftovers, including memory held by processes the tools leave running.

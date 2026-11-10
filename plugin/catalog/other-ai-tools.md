@@ -46,4 +46,4 @@ when it sits under a row below or the user points to it). For where graphics mem
 ## Adding a tool
 
 Add a row only after you have seen the folder yourself, measured it, and listed its children. Start at `review`
-and Grey or Yellow. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+and Grey or Yellow. See [CONTRIBUTING.md](https://github.com/chittychat-studio/Ballast/blob/main/CONTRIBUTING.md).

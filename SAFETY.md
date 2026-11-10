@@ -10,7 +10,7 @@ Deleting files can cause permanent loss. Ballast is built to make that unlikely,
   shared machine without permission from whoever administers it.
 - **Have a backup or restore point** for anything you cannot afford to lose. Your agent will ask you to
   confirm this before any deletion step.
-- **Read [cleanup.md](cleanup.md) and [permissions.md](permissions.md).** They are the whole behaviour of
+- **Read [cleanup.md](plugin/cleanup.md) and [permissions.md](plugin/permissions.md).** They are the whole behaviour of
   the tool. Pin the version you read.
 
 ## What Ballast does to protect you

@@ -8,6 +8,32 @@ All notable changes to Ballast are listed here, newest first. The format follows
 
 Nothing yet.
 
+## [0.1.3] - 2026-11-10
+
+Version 0.1.2 was merged but never tagged, so 0.1.3 is the first release after 0.1.1.
+
+### Changed
+
+- **The instructions moved into the [`plugin`](plugin) folder**, which is now the whole Claude Code plugin:
+  `AGENTS.md`, `cleanup.md`, `permissions.md`, `weekly.md`, `dashboard.md`, `steps/`, `catalog/`, the skill and
+  the plugin manifest. The root [AGENTS.md](AGENTS.md) is now a short pointer to
+  [plugin/AGENTS.md](plugin/AGENTS.md), so "Read AGENTS.md and run cleanup.md" still works in a clone. The rules
+  for what an agent may delete have not changed.
+- **A plugin install no longer includes the dashboard page.** Claude's plugin directory refused 0.1.2 because it
+  accepts only text and picture files from publishers it has not verified, and the page is HTML. A plugin install
+  now shows the results as a table in the chat ([dashboard.md](plugin/dashboard.md)); the agent is told never to
+  search for, download or write a page itself. A clone still has the page.
+- The plugin's icon is now a PNG inside the plugin folder (`plugin/ballast-icon.png`); the SVG icon added in
+  0.1.2 is removed.
+- The install instructions and the plugin manifest point at `v0.1.3`.
+
+### Added
+
+- `plugin/README.md` (what the plugin is, for its directory listing) and copies of the licence and notice in
+  `plugin/`.
+- After a cleanup, the table in the chat shows the results (space before and after, items cleared, skipped and
+  failed), as the page's Results view does.
+
 ## [0.1.2] - 2026-11-10
 
 ### Changed
@@ -38,8 +64,8 @@ now has a tag ruleset that blocks updating or deleting any `v*` tag.
 - The install instructions and the plugin manifest now point at `v0.1.1`, the first tag that is covered by the
   tag ruleset. `v0.1.0` stays in place and is never moved again.
 - Catalog row CD-002 (Claude desktop browser-style caches) is now Yellow instead of Green. Its status is still
-  `review`, and `review` rows must be Yellow or Grey ([catalog/README.md](catalog/README.md)). The example item in
-  [dashboard.md](dashboard.md) that cites CD-002 uses the same tier.
+  `review`, and `review` rows must be Yellow or Grey ([catalog/README.md](plugin/catalog/README.md)). The example item in
+  [dashboard.md](plugin/dashboard.md) that cites CD-002 uses the same tier.
 - README and the claims register list the new non-Markdown files, so the claim "no program to install or run"
   stays checkable.
 
@@ -60,14 +86,14 @@ First release.
 
 ### Added
 
-- The instruction set: [cleanup.md](cleanup.md) (rules and flow), [permissions.md](permissions.md) (ask-first
-  protocol and the blocked-item playbook), [weekly.md](weekly.md), and the eight steps in [steps/](steps).
+- The instruction set: [cleanup.md](plugin/cleanup.md) (rules and flow), [permissions.md](plugin/permissions.md) (ask-first
+  protocol and the blocked-item playbook), [weekly.md](plugin/weekly.md), and the eight steps in [steps/](plugin/steps).
 - The catalog of known AI leftovers: Claude Code, the Claude desktop app and Cowork, orphan processes and the memory
   they hold, graphics memory (VRAM), the Temp folder and Recycle Bin, browser, Office and Windows caches, Codex,
   Gemini, local models and image tools. Starter rows for macOS and Linux are all `planned` and Grey. The Red list
-  of never-deletable items is in [catalog/_protected.md](catalog/_protected.md).
+  of never-deletable items is in [catalog/_protected.md](plugin/catalog/_protected.md).
 - A static dashboard template ([dashboard/ballast-dashboard.html](dashboard/ballast-dashboard.html)) and its spec
-  ([dashboard.md](dashboard.md)): Overview, tabs by tier, a Results view, a free-space gauge and light and dark
+  ([dashboard.md](plugin/dashboard.md)): Overview, tabs by tier, a Results view, a free-space gauge and light and dark
   themes. It makes no network requests and cannot delete anything.
 - Sample pictures of the dashboard and the logo.
 - Notes for Claude Code, Gemini CLI, Codex CLI and Antigravity ([providers/](providers)), and the Claude Code plugin

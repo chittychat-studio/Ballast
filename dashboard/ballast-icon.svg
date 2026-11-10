@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="48" height="48" role="img" aria-label="Ballast">
-  <title>Ballast</title>
-  <rect x="2" y="2" width="44" height="44" rx="10" fill="#2a78cc"/>
-  <circle cx="24" cy="12" r="3.6" fill="none" stroke="#ffffff" stroke-width="2.4"/>
-  <path d="M17 17.5h14l5 15a2 2 0 0 1-1.9 2.6H13.9a2 2 0 0 1-1.9-2.6z" fill="#ffffff"/>
-  <path d="M9 39.5c3-2 6-2 9 0s6 2 9 0 6-2 9 0" fill="none" stroke="#ffffff" stroke-width="2" opacity="0.85"/>
-</svg>

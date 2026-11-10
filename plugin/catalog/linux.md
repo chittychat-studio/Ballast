@@ -48,4 +48,4 @@ virtual-machine or container process is something to show the user and ask about
 
 If you run Ballast on Linux, please record what you actually find (path, size, newest file, what the tool did after
 the removal) and send it as an issue or a pull request. A row only moves from `planned` to `review` with that
-observation. See [CONTRIBUTING.md](../CONTRIBUTING.md).
+observation. See [CONTRIBUTING.md](https://github.com/chittychat-studio/Ballast/blob/main/CONTRIBUTING.md).
