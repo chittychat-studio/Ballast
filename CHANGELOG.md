@@ -8,6 +8,24 @@ All notable changes to Ballast are listed here, newest first. The format follows
 
 Nothing yet.
 
+## [0.1.4] - 2026-11-10
+
+### Added
+
+- **Codex plugin packaging.** `plugin/plugin.json` (the manifest Codex and OpenAI's plugin directory read) and
+  `.agents/plugins/marketplace.json` (so Codex can install from this repo). Install notes are in
+  [providers/codex.md](providers/codex.md). This route was written from Codex's documentation and has not yet
+  been run by the maintainers.
+- Each release now also has `ballast-plugin-<tag>.zip`, the `plugin` folder alone, covered by the same checksum
+  file and build attestation.
+
+### Changed
+
+- The `ballast` skill can find its instructions when a plugin is installed in an agent other than Claude Code:
+  the plugin's folder is two levels above the skill file, used only when the agent knows the path the file was
+  loaded from. It still never searches the disk and never fetches instructions from the web.
+- The install instructions and both plugin manifests point at `v0.1.4`.
+
 ## [0.1.3] - 2026-11-10
 
 Version 0.1.2 was merged but never tagged, so 0.1.3 is the first release after 0.1.1.

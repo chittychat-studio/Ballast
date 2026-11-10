@@ -9,7 +9,7 @@ scratch projects agents create.
 
 There is **no program to install or run**. The instructions are Markdown. The repo also holds one static dashboard
 page (HTML that runs only in your browser, makes no network requests, and cannot delete anything), a logo, the plugin's icon (a PNG picture), and the
-two small JSON files that let Claude Code install it as a plugin. Beyond that there are only repository settings
+four small JSON files that let Claude Code and Codex install it as a plugin. Beyond that there are only repository settings
 files (issue forms, a pull request template, the release workflow, Dependabot and editor settings), none of which
 you run. Your own agent reads the instructions, runs
 read-only checks through its own tools, and **asks you before every deletion**.
@@ -61,12 +61,15 @@ Pick one way in. Either way, **pin a release**: do not let an agent fetch and fo
 **A. Claude Code plugin** (one install, pinned to a release tag)
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.3
+/plugin marketplace add chittychat-studio/Ballast#v0.1.4
 /plugin install ballast@ballast
 ```
 
 Then run `/ballast:ballast`. Leave plugin auto-update off and update on purpose. A plugin install does not run the
 checksum check below, so if you want that, use B.
+
+The same folder is a **Codex plugin**: `codex plugin marketplace add chittychat-studio/Ballast --ref v0.1.4`, then
+open `/plugins` in Codex and install Ballast ([notes](providers/codex.md)).
 
 The plugin is the [`plugin`](plugin) folder: the instructions and the catalog, and nothing else. It does **not**
 include the dashboard page, because Claude's plugin directory accepts only text and pictures from publishers it has
@@ -75,7 +78,7 @@ not verified. A plugin install shows the same results as a table in the chat. Fo
 **B. Clone** (works with any agent)
 
 ```
-git clone --branch v0.1.3 https://github.com/chittychat-studio/Ballast.git
+git clone --branch v0.1.4 https://github.com/chittychat-studio/Ballast.git
 ```
 
 Each release has a checksum file and a build attestation, so you can check what you downloaded
@@ -139,6 +142,7 @@ See [dashboard.md](plugin/dashboard.md).
 | [dashboard.md](plugin/dashboard.md) and [dashboard/](dashboard) | Spec and data contract; the static dashboard template, the logo and the sample pictures (in a clone only, not in the plugin) |
 | [providers/](providers) | Notes for each AI agent, including the plugin install |
 | [.claude-plugin/](.claude-plugin) and [plugin/.claude-plugin/](plugin/.claude-plugin) | The marketplace manifest and the plugin manifest (JSON) for Claude Code |
+| [.agents/plugins/](.agents/plugins) and [plugin/plugin.json](plugin/plugin.json) | The marketplace manifest and the plugin manifest (JSON) for Codex |
 | [.github/](.github) | Repository settings, not something you run: code owners, issue forms, pull request template, Dependabot, the release workflow |
 | [skills/](plugin/skills) | The `ballast` skill that starts a scan |
 | [dev/](dev) | For maintainers: the test fixtures and tests, with real results |
