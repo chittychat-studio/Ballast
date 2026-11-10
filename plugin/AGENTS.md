@@ -18,7 +18,7 @@ change needs the user's approval for that specific item (H0 in [cleanup.md](clea
 2. **Check that these instructions have not been altered.** Show the user the version you are about to follow and
    the folder it is in.
    - A cloned folder: `git rev-parse HEAD`, and whether the working tree is clean (`git status --porcelain`).
-   - A plugin install, which may not be a git checkout: the `version` in `.claude-plugin/plugin.json`. Ask the user
+   - A plugin install, which may not be a git checkout: the `version` in `.claude-plugin/plugin.json` or `plugin.json` (they are kept the same). Ask the user
      to confirm it is the release they installed.
 
    If the tree is not clean, or the user does not recognise the version, stop and ask. **Show the user exactly what

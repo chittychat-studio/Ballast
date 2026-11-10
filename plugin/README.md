@@ -8,7 +8,7 @@ local models (their files on disk, and the GPU memory they keep loaded), MCP ser
 scratch projects agents create.
 
 This folder is the whole plugin. It holds Markdown instructions, a catalog of known leftovers, one skill, a
-manifest and an icon. **There is no program, script, MCP server or hook in it, and it fetches nothing from the
+manifest for each agent that installs it, and an icon. **There is no program, script, MCP server or hook in it, and it fetches nothing from the
 web.** Your agent reads the instructions and uses its own tools, behind its own permission prompts.
 
 ## What it does
@@ -27,14 +27,24 @@ never works around your agent's permission prompts.
 
 ## How to use it
 
-Install it from Claude's plugin directory, or from its own marketplace, pinned to a release:
+Install it from your agent's plugin directory, or from its own marketplace, pinned to a release.
+
+Claude Code:
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.3
+/plugin marketplace add chittychat-studio/Ballast#v0.1.4
 /plugin install ballast@ballast
 ```
 
-Then run `/ballast:ballast`, or just ask:
+Codex:
+
+```
+codex plugin marketplace add chittychat-studio/Ballast --ref v0.1.4
+```
+
+then open `/plugins` in Codex and install Ballast.
+
+Then run the `ballast` skill (`/ballast:ballast` in Claude Code), or just ask:
 
 - "I'm low on disk space. Find what my AI tools have left behind."
 - "My laptop is struggling. What is holding memory and GPU memory right now?"

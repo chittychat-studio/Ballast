@@ -1,4 +1,5 @@
-# Builds a release when a version tag is pushed: a zip of the repository at that tag, a SHA-256 checksum file,
+# Builds a release when a version tag is pushed: a zip of the repository at that tag, a zip of the plugin folder
+# alone (for plugin directories that take an upload), a SHA-256 checksum file,
 # and a signed build attestation (so anyone can check the zip came from this repository).
 # Actions are pinned to full commit SHAs, not moving tags.
 name: release
@@ -26,8 +27,9 @@ jobs:
         run: |
           mkdir dist
           git archive --format=zip --prefix="ballast-${TAG}/" -o "dist/ballast-${TAG}.zip" "${TAG}"
+          git archive --format=zip --prefix="ballast/" -o "dist/ballast-plugin-${TAG}.zip" "${TAG}:plugin"
           cd dist
-          sha256sum "ballast-${TAG}.zip" > SHA256SUMS
+          sha256sum "ballast-${TAG}.zip" "ballast-plugin-${TAG}.zip" > SHA256SUMS
           cat SHA256SUMS
 
       - name: Attest the build
@@ -40,7 +42,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           TAG: ${{ github.ref_name }}
         run: |
-          gh release create "${TAG}" "dist/ballast-${TAG}.zip" dist/SHA256SUMS \
+          gh release create "${TAG}" "dist/ballast-${TAG}.zip" "dist/ballast-plugin-${TAG}.zip" dist/SHA256SUMS \
             --title "Ballast ${TAG}" \
             --verify-tag \
             --notes "Check this download before you use it: SECURITY.md, section 'Verifying a release'. Pin this version, and read cleanup.md and permissions.md first."

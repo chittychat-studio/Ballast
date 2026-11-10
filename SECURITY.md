@@ -26,8 +26,8 @@ reproduce it, and which agent and version you used.
 
 ## Verifying a release
 
-Each release on the [Releases page](https://github.com/chittychat-studio/Ballast/releases) has a zip, a `SHA256SUMS`
-file and a build attestation made by GitHub's own release workflow ([.github/workflows/release.yml](.github/workflows/release.yml)).
+Each release on the [Releases page](https://github.com/chittychat-studio/Ballast/releases) has a zip of the repository, from 0.1.4 a second zip of the `plugin` folder alone (`ballast-plugin-<tag>.zip`, the
+file uploaded to plugin directories that take a zip), a `SHA256SUMS` file covering both, and a build attestation made by GitHub's own release workflow ([.github/workflows/release.yml](.github/workflows/release.yml)).
 
 1. Download the zip and `SHA256SUMS`, then check the hash matches: `sha256sum -c SHA256SUMS`
    (on Windows PowerShell: `Get-FileHash <zip> -Algorithm SHA256`, then compare with the line in `SHA256SUMS`).
@@ -44,7 +44,7 @@ use a later release.
 ## For users
 
 - Do not let an agent fetch and follow instructions from a live web address. Clone a release and pin it, or install
-  the plugin pinned to a release tag (`/plugin marketplace add chittychat-studio/Ballast#v0.1.3`). Keep plugin
+  the plugin pinned to a release tag (`/plugin marketplace add chittychat-studio/Ballast#v0.1.4`). Keep plugin
   auto-update off. A plugin install is not covered by the checksum and attestation, and tags are not signed yet.
 - Read `cleanup.md` and `permissions.md` before running. Check the release checksum when one is published.
 - Do not run your agent in a mode that skips permission prompts during the delete phase.

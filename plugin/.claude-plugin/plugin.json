@@ -2,7 +2,7 @@
   "name": "ballast",
   "displayName": "Ballast",
   "description": "Instructions your AI agent follows to find and clear disk and memory leftovers from AI tools. Read-only scan first; asks before every deletion.",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": {
     "name": "chittychat-studio",
     "email": "hello@cardzo.co.in",

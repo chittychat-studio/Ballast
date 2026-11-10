@@ -13,7 +13,7 @@ The repo's `plugin` folder is a Claude Code plugin, and the repo is its own mark
 under you:
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.3
+/plugin marketplace add chittychat-studio/Ballast#v0.1.4
 /plugin install ballast@ballast
 ```
 
