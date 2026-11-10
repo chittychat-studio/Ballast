@@ -44,7 +44,7 @@ use a later release.
 ## For users
 
 - Do not let an agent fetch and follow instructions from a live web address. Clone a release and pin it, or install
-  the plugin pinned to a release tag (`/plugin marketplace add chittychat-studio/Ballast#v0.1.1`). Keep plugin
+  the plugin pinned to a release tag (`/plugin marketplace add chittychat-studio/Ballast#v0.1.2`). Keep plugin
   auto-update off. A plugin install is not covered by the checksum and attestation, and tags are not signed yet.
 - Read `cleanup.md` and `permissions.md` before running. Check the release checksum when one is published.
 - Do not run your agent in a mode that skips permission prompts during the delete phase.

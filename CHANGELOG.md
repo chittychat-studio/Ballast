@@ -8,6 +8,19 @@ All notable changes to Ballast are listed here, newest first. The format follows
 
 Nothing yet.
 
+## [0.1.2] - 2026-11-10
+
+### Changed
+
+- The install instructions and the plugin manifest now point at `v0.1.2`.
+
+### Added
+
+- Listing details in the plugin manifest for Claude's plugin directory: a display name, an icon, and links to the
+  documentation, support and privacy pages, and a contact email. Nothing about what the plugin does has changed.
+- A square icon, `dashboard/ballast-icon.svg` (the mark from the logo, without the word).
+- Three example prompts and a Support section in the README.
+
 ## [0.1.1] - 2026-11-03
 
 ### Notice about the v0.1.0 tag

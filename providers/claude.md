@@ -12,7 +12,7 @@ The repo is also a Claude Code plugin and its own marketplace. **Pin a release**
 under you:
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.1
+/plugin marketplace add chittychat-studio/Ballast#v0.1.2
 /plugin install ballast@ballast
 ```
 
