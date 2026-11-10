@@ -6,6 +6,14 @@ All notable changes to Ballast are listed here, newest first. The format follows
 
 ## [Unreleased]
 
+Nothing yet.
+
+## [0.1.2] - 2026-11-10
+
+### Changed
+
+- The install instructions and the plugin manifest now point at `v0.1.2`.
+
 ### Added
 
 - Listing details in the plugin manifest for Claude's plugin directory: a display name, an icon, and links to the

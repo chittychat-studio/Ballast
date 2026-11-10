@@ -60,7 +60,7 @@ Pick one way in. Either way, **pin a release**: do not let an agent fetch and fo
 **A. Claude Code plugin** (one install, pinned to a release tag)
 
 ```
-/plugin marketplace add chittychat-studio/Ballast#v0.1.1
+/plugin marketplace add chittychat-studio/Ballast#v0.1.2
 /plugin install ballast@ballast
 ```
 
@@ -70,7 +70,7 @@ checksum check below, so if you want that, use B.
 **B. Clone** (works with any agent)
 
 ```
-git clone --branch v0.1.1 https://github.com/chittychat-studio/Ballast.git
+git clone --branch v0.1.2 https://github.com/chittychat-studio/Ballast.git
 ```
 
 Each release has a checksum file and a build attestation, so you can check what you downloaded
