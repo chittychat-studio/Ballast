@@ -17,7 +17,7 @@ Nothing yet.
 ### Added
 
 - Listing details in the plugin manifest for Claude's plugin directory: a display name, an icon, and links to the
-  documentation, support and privacy pages. Nothing about what the plugin does has changed.
+  documentation, support and privacy pages, and a contact email. Nothing about what the plugin does has changed.
 - A square icon, `dashboard/ballast-icon.svg` (the mark from the logo, without the word).
 - Three example prompts and a Support section in the README.
 
